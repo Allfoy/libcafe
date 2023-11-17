@@ -4,10 +4,11 @@ function openWinNh() {
   // Set the URL after opening to avoid opening a blank tab
   newWindow.location.href = 'https://apps.noordhoff.nl/se/home/overview';
 
-  // Check if the URL contains '/content/' and close the window if true
-  newWindow.addEventListener("load", function() {
+  // Check the URL at intervals and close the window if it contains '/content/'
+  var interval = setInterval(function() {
     if (newWindow.location.href.indexOf("/content/") !== -1) {
       newWindow.close();
+      clearInterval(interval); // Stop checking once closed
     }
-  });
+  }, 2000); // Adjust the interval as needed; adjust to every 2 seconds
 }
