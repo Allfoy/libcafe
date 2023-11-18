@@ -26,8 +26,7 @@ ul {
   height: 100%;
   border-radius: 34px;
   background-color: #3498db;
-  will-change: left; /* Indicates that 'left' property will change */
-  transition: background-color 0.3s, left 0.3s; /* Smooth transition for 'left' property */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
 }
 
 .switch-input {
@@ -36,7 +35,6 @@ ul {
 
 .switch-input:checked + .switch-label .switch-inner {
   background-color: #2ecc71;
-  left: 100%;
 }
 
 .switch-handle {
@@ -48,9 +46,9 @@ ul {
   border-radius: 50%;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: left 0.3s;
+  transition: transform 0.3s ease; /* Smooth transition for handle movement */
 }
 
 .switch-input:checked + .switch-label .switch-handle {
-  left: calc(100% - 4px);
+  transform: translateX(26px);
 }
