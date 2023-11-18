@@ -9,17 +9,18 @@ function toggleContent() {
 
   isSchool = !isSchool;
 
-  if (isSchool) {
-    bookList.style.display = "block";
-    foodList.style.display = "none";
-    toggleButton.textContent = "Toggle: School";
-    slider.style.left = "0";
-  } else {
-    bookList.style.display = "none";
-    foodList.style.display = "block";
-    toggleButton.textContent = "Toggle: Schooln't";
-    slider.style.left = "50%";
-  }
+      if (isSchool) {
+      bookList.style.display = "block";
+      foodList.style.display = "none";
+      toggleSwitch.textContent = "Toggle: School";
+      slider.style.left = "0";
+    } else {
+      bookList.style.display = "none";
+      foodList.style.display = "block";
+      toggleSwitch.textContent = "Toggle: Schooln't";
+      slider.style.left = "50%";
+    }
+
 }
 
 function sortList() {
