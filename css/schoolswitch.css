@@ -26,7 +26,9 @@ ul {
   height: 100%;
   border-radius: 34px;
   background-color: #3498db;
-  transition: background-color 0.3s ease; /* Smooth transition for background color */
+  background-image: url('/img/porteumlogo.jpg'); /* Updated background image */
+  background-size: cover;
+  transition: background-color 0.3s ease, background-image 0.3s ease; /* Smooth transitions */
 }
 
 .switch-input {
@@ -35,6 +37,7 @@ ul {
 
 .switch-input:checked + .switch-label .switch-inner {
   background-color: #2ecc71;
+  background-image: url('/img/fruit.png'); /* Change background image when checked */
 }
 
 .switch-handle {
@@ -51,4 +54,22 @@ ul {
 
 .switch-input:checked + .switch-label .switch-handle {
   transform: translateX(26px);
+}
+
+#slider {
+  position: absolute;
+  top: 50%;
+  left: 0; /* Initial position */
+  width: 50%; /* Initial width */
+  height: 80px; /* Adjust as needed */
+  background-color: #2ecc71; /* Initial background color */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: left 0.3s, width 0.3s, background-color 0.3s; /* Smooth transitions */
+}
+
+#toggleSwitch:checked + .switch-label #slider {
+  left: 50%;
+  width: 50%;
+  background-color: #3498db;
 }
