@@ -13,5 +13,5 @@ function openWinNh() {
       // Send a message to the console of the original window
       window.opener.console.log("Checking the URL...");
     }
-  }, 1000); // Every second
-} */
+  }, 1000); // Every second */
+}
