@@ -44,9 +44,6 @@ ul {
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease; /* Smooth transition for handle movement */
   overflow: hidden; /* Clip the content inside the circle */
 }
 
@@ -56,6 +53,19 @@ ul {
   object-fit: cover; /* Ensure the image covers the entire container */
 }
 
-.switch-input:checked + .switch-label .switch-handle {
-  transform: translateX(26px);
+#slider {
+  position: absolute;
+  top: 50%;
+  left: 0; /* Initial position */
+  width: 50%; /* Initial width */
+  height: 80px; /* Adjust as needed */
+  background-color: #2ecc71; /* Initial background color */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: left 0.3s, width 0.3s; /* Smooth transitions */
+}
+
+#toggleSwitch:checked + .switch-label #slider {
+  left: 50%;
+  width: 50%;
 }
