@@ -4,7 +4,7 @@ let ascendingOrder = true;
 function toggleContent() {
   const bookList = document.getElementById("bookList");
   const foodList = document.getElementById("foodList");
-  const toggleButton = document.getElementById("toggleButton");
+  const toggleButton = document.getElementById("toggleSwitch");
   const slider = document.getElementById("slider");
 
   isSchool = !isSchool;
