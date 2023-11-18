@@ -12,7 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
 		<link rel="stylesheet" type="text/css" href="css/demo.css" />
 		<link rel="stylesheet" type="text/css" href="css/book.css" />
-		<link rel="stylesheet" type="text/css" href="css/trynaexist.css" />
+		<link rel="stylesheet" type="text/css" href="css/schoolswitch.css" />
 		<script src="js/modernizr.custom.js"></script>
 		<script src="js/closelogging.js"></script>
 		<script src="js/localserver.js"></script>
@@ -29,7 +29,21 @@
 			<header>
 				<div class="center"><h1>Home:prototype <span>a library for us	</span></h1></div>	
 				<nav class="codrops-demos"></nav>
+				<div class="switch-container">
+				  <input type="checkbox" class="switch-input" id="toggleSwitch" onclick="toggleContent()">
+				  <label for="toggleSwitch" class="switch-label">
+				    <div class="switch-inner"></div>
+				    <div class="switch-handle"></div>
+				  </label>
+				</div>
+				
+				<button onclick="toggleContent()" id="toggleButton">
+				  <div id="slider"></div>
+				  <div id="slider-reset"></div>
+				  Toggle: School
+				</button>
 				<button onclick="sortList()" id="sortButton">Sort A-Z</button>
+				
 			</header>
 			<div class="component">
 
