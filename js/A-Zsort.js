@@ -1,22 +1,45 @@
-  let ascendingOrder = true;
+let isSchool = true;
+let ascendingOrder = true;
 
-  function sortList() {
-    const mainList = document.getElementById("sbooklist");
-    const items = mainList.children;
+function toggleContent() {
+  const bookList = document.getElementById("bookList");
+  const foodList = document.getElementById("foodList");
+  const toggleButton = document.getElementById("toggleButton");
+  const slider = document.getElementById("slider");
 
-    const sortedItems = Array.from(items).sort((a, b) => {
-      const textA = a.firstChild.textContent.trim();
-      const textB = b.firstChild.textContent.trim();
+  isSchool = !isSchool;
 
-      if (ascendingOrder) {
-        return textA.localeCompare(textB);
-      } else {
-        return textB.localeCompare(textA);
-      }
-    });
+  if (isSchool) {
+    bookList.style.display = "block";
+    foodList.style.display = "none";
+    toggleButton.textContent = "Toggle: School";
+    slider.style.left = "0";
+  } else {
+    bookList.style.display = "none";
+    foodList.style.display = "block";
+    toggleButton.textContent = "Toggle: Schooln't";
+    slider.style.left = "50%";
+  }
+}
 
-    sortedItems.forEach(item => mainList.appendChild(item));
-    ascendingOrder = !ascendingOrder;
+function sortList() {
+  const listToSort = isSchool ? document.getElementById("bookList") : document.getElementById("foodList");
+  const items = listToSort.children;
 
-    const sortButton = document.getElementById("sortButton");
-    sortButton.textContent = ascendingOrder ? "Sort A-Z" : "Sort Z-A";
+  const sortedItems = Array.from(items).sort((a, b) => {
+    const textA = a.firstChild.textContent.trim();
+    const textB = b.firstChild.textContent.trim();
+
+    if (ascendingOrder) {
+      return textA.localeCompare(textB);
+    } else {
+      return textB.localeCompare(textA);
+    }
+  });
+
+  sortedItems.forEach(item => listToSort.appendChild(item));
+  ascendingOrder = !ascendingOrder;
+
+  const sortButton = document.getElementById("sortButton");
+  sortButton.textContent = ascendingOrder ? "Sort A-Z" : "Sort Z-A";
+}
