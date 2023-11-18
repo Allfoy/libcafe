@@ -5,7 +5,7 @@ function openWinNh() {
   newWindow.location.href = 'https://apps.noordhoff.nl/se/home/overview';
 
   // Set an interval to send a message to the original window every second
-  var interval = setInterval(function() {
+/*  var interval = setInterval(function() {
     if (newWindow.location.href.indexOf("/content/") !== -1) {
       clearInterval(interval); // Stop the interval if the condition is met
       newWindow.close();
@@ -14,4 +14,4 @@ function openWinNh() {
       window.opener.console.log("Checking the URL...");
     }
   }, 1000); // Every second
-}
+} */
