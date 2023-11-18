@@ -4,23 +4,25 @@ let ascendingOrder = true;
 function toggleContent() {
   const bookList = document.getElementById("bookList");
   const foodList = document.getElementById("foodList");
-  const toggleButton = document.getElementById("toggleSwitch");
+  const toggleSwitch = document.getElementById("toggleSwitch");
   const slider = document.getElementById("slider");
+  const handleImage = document.getElementById("handleImage");
 
   isSchool = !isSchool;
 
-      if (isSchool) {
-      bookList.style.display = "block";
-      foodList.style.display = "none";
-      toggleSwitch.textContent = "Toggle: School";
-      slider.style.left = "0";
-    } else {
-      bookList.style.display = "none";
-      foodList.style.display = "block";
-      toggleSwitch.textContent = "Toggle: Schooln't";
-      slider.style.left = "50%";
-    }
-
+  if (isSchool) {
+    bookList.style.display = "block";
+    foodList.style.display = "none";
+    toggleSwitch.textContent = "Toggle: School";
+    slider.style.left = "0";
+    handleImage.src = "/img/porteumlogo.jpg";
+  } else {
+    bookList.style.display = "none";
+    foodList.style.display = "block";
+    toggleSwitch.textContent = "Toggle: Schooln't";
+    slider.style.left = "50%";
+    handleImage.src = "/img/fruit.png";
+  }
 }
 
 function sortList() {
