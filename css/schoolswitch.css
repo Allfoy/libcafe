@@ -1,14 +1,3 @@
-ul {
-  list-style-type: none;
-}
-#foodList {
-  display: none;
-}
-#bookList {
-  display: none;
-}
-
-/* add radio slider here*/
 :root {
   --accent: #04da97;
   --border-width: 6px;

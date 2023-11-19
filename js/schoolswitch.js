@@ -1,4 +1,6 @@
 const st = {};
+const foodList = document.getElementById('foodList');
+const bookList = document.getElementById('bookList');
 
 st.flap = document.querySelector('#flap');
 st.toggle = document.querySelector('.toggle');
@@ -9,11 +11,18 @@ st.choice2 = document.querySelector('#choice2');
 st.flap.addEventListener('transitionend', () => {
 
     if (st.choice1.checked) {
+        // Display foodList
+        foodList.style.display = 'block';
+        bookList.style.display = 'none';
         st.toggle.style.transform = 'rotateY(-15deg)';
         setTimeout(() => st.toggle.style.transform = '', 400);
+
     } else {
+        bookList.style.display = 'block';
+        foodList.style.display = 'none';
         st.toggle.style.transform = 'rotateY(15deg)';
         setTimeout(() => st.toggle.style.transform = '', 400);
+
     }
 
 })
