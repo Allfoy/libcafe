@@ -11,15 +11,10 @@ st.choice2 = document.querySelector('#choice2');
 st.flap.addEventListener('transitionend', () => {
 
     if (st.choice1.checked) {
-        // Display foodList
-        foodList.style.display = 'block';
-        bookList.style.display = 'none';
         st.toggle.style.transform = 'rotateY(-15deg)';
         setTimeout(() => st.toggle.style.transform = '', 400);
 
     } else {
-        bookList.style.display = 'block';
-        foodList.style.display = 'none';
         st.toggle.style.transform = 'rotateY(15deg)';
         setTimeout(() => st.toggle.style.transform = '', 400);
 
@@ -41,3 +36,16 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('click', (e) => st.clickHandler(e));
+
+
+
+
+// functionality
+function school(){
+if (st.choice2.checked){
+bookList.style.display = 'none';
+foodList.style.display = 'block';}
+else{
+bookList.style.display = 'block';
+foodList.style.display = 'none';
+}}
