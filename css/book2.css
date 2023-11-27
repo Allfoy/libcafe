@@ -25,8 +25,8 @@ html {
 }
 
 body {
-	background: #ecf0f1;
-	color: #34495e;
+	background: #f9f1e3;
+	color: #4d2d2a;
 	font-family: 'Lato', 'Arial', sans-serif;
 	font-weight: 400;
 	line-height: 1.2;
@@ -60,7 +60,7 @@ a {
 }
 
 .btn:hover {
-	color: #16a085;
+	color: #814b46;
 }
 
 /* basic grid, only for this demo */
@@ -437,13 +437,13 @@ figcaption h1 {
 }
 
 figcaption span {
-	color: #16a085;
+	color: #824b46;
 	padding: 0.6em 0 1em 0;
 	display: block;
 }
 
 figcaption p {
-	color: #63707d;
+	color: #a8615a;
 	line-height: 1.3;
 }
 
