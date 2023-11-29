@@ -45,7 +45,7 @@ a {
 .btn {
 	display: inline-block;
 	text-transform: uppercase;
-	border: 2px solid #2c3e50;
+	border: 2px solid #50302c;
 	margin-top: 100px; 
 	font-size: 0.7em;
 	font-weight: 700;
@@ -59,6 +59,30 @@ a {
 .btn:hover {
 	border-color: #814b46;
 	color: #814b46;
+}
+
+.btn2 {
+	display: inline-block;
+	text-transform: uppercase;
+	border: 2px solid #50302c;
+	margin-top: 100px; 
+	font-size: 0.7em;
+	font-weight: 700;
+	padding: 0.1em 0.4em;
+	text-align: center;
+	-webkit-transition: color 0.3s, border-color 0.3s;
+	-moz-transition: color 0.3s, border-color 0.3s;
+	transition: color 0.3s, border-color 0.3s;
+	-moz-transform: scale(-1.5, 1.5) rotate(20deg); /* unnecessary? */
+	-webkit-transform: scale(-1.5, 1.5) rotate(20deg); /* unnecessary? */
+	-o-transform: scale(-1.5, 1.5) rotate(20deg); /* unnecessary? */
+	-ms-transform: scale(-1.5, 1.5) rotate(20deg); /* unnecessary? */
+	transform: scale(-1.5, 1.5) rotate(20deg);
+}
+
+.btn2:hover {
+	border-color: #814b46;
+	color: #ff1500;
 }
 
 /* basic grid, only for this demo */
@@ -677,6 +701,7 @@ figcaption {
 	left: 160px;
 	width: 310px;
 	-webkit-backface-visibility: hidden;
+	backface-visibility: nuh uh;
 }
 
 figcaption h1 {

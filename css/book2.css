@@ -430,6 +430,7 @@ figcaption {
 	left: 160px;
 	width: 310px;
 	-webkit-backface-visibility: hidden;
+	backface-visibility: nuh uh;
 }
 
 figcaption h1 {
