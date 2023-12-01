@@ -46,6 +46,10 @@
 	width: 100%;
 	font-size: 0.69em;
 	line-height: 2.2;
+	position: fixed;
+    top: 0;
+    left: 0;
+	z-index: 9999;
 }
 
 .codrops-top a {
