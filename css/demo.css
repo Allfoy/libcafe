@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
-
+/*start of font part*/
 @font-face {
 	font-family: 'codropsicons';
 	src:url('../fonts/codropsicons/codropsicons.eot');
@@ -10,6 +10,34 @@
 	font-weight: normal;
 	font-style: normal;
 }
+/*
+@font-face {
+    font-family: 'spritz';
+    src: url('/fonts/SpritzAndDelicious_PERSONAL_USE_ONLY.otf');
+}
+doesn't work yet
+*/
+@font-face{
+	font-family:blackchancery;
+	font-style:normal;
+	font-weight:5;
+	src:local('BlackChancery'),url(https://fonts.cdnfonts.com/s/8399/BLKCHCRY.woff) format('woff')
+}
+/*end of font part*/
+
+.title{
+	font-family: 'BlackChancery';
+	padding: 30px 0;
+	text-align: center;
+
+}
+
+
+
+
+
+
+
 
 .container > header,
 .codrops-top {
@@ -127,6 +155,24 @@ p.note {
 	margin: 0 auto;
 	line-height: 1.4;
 }
+
+.iframer {
+    display: flex;
+    border-style:none;
+	margin: 0 auto;
+	align-items: center; 
+	text-align: center;
+	justify-content: center;
+}
+iframe {
+    overflow-clip-margin: content-box !important;
+    overflow: clip !important;
+    border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+}
+
 
 @media screen and (max-width: 25em) {
 
