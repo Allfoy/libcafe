@@ -14,7 +14,6 @@ html {
   align-items: center;
   justify-content: center;
   background: #ece9e6;
-  background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
 }
 
 html body {
@@ -93,7 +92,9 @@ html body .heading a .fab {
   opacity: 0.6;
   background-color: white;
   color: black;
-  border: 2px solid #04AA6D
+  border: 2px solid #04AA6D;
+  font-size: 4em;
+  padding: 15px;
 }
 .rbutton{
   cursor: pointer;
@@ -105,14 +106,14 @@ html body .heading a .fab {
   opacity: 0.6;
   background-color: white;
   color: black;
-  border: 2px solid #04AA6D
+  border: 2px solid #04AA6D;
+  font-size: 4em;
+  padding: 15px;
 }
-.lbutton:hover {opacity: 1; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);}
-.rbutton:hover {opacity: 1; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);}
-.lbutton:after {background-color: #3e8e41; transition: all 2s}
-.rbutton:after {background-color: #3e8e41; transition: all 2s}
-.lbutton:active {background-color: #3e8e41;}
-.rbutton:active {background-color: #3e8e41;}
+.lbutton:hover {opacity: 1; background-color: #04AA6D; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19); transition: all 1s;}
+.rbutton:hover {opacity: 1; background-color: #04AA6D; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19); transition: all 1s;}
+.lbutton:active {background-color: #3e8e41; transition: all 9s;}
+.rbutton:active {background-color: #3e8e41; transition: all 9s;}
 
 .card-carousel .my-card:after {
   content: '';
@@ -263,7 +264,9 @@ html body .heading a .fab {
   opacity: 0.6;
   pointer-events: auto;
   transition: 1s;
-  overflow: visible;
+  overflow: hidden;
+  -webkit-filter: blur(8px);
+  filter: blur(8px);
 }
 </style>
 </head>
@@ -272,8 +275,8 @@ html body .heading a .fab {
   <h1>da widget Carousel</h1>
 </div>
 <div>
-  <button class="lbutton" onclick="lclick()">←</button>
-  <button class="rbutton" onclick="rclick()">→</button>
+  <button class="lbutton" onclick="lclick()">&lt;</button>
+  <button class="rbutton" onclick="rclick()">&gt;</button>
 </div>
   <div class="card-carousel">
   <div class="my-card"></div>
