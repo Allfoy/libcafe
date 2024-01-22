@@ -1,147 +1,156 @@
+<!DOCTYPE html>
 <html>
-    <head>
-    </head>
-<body bgcolor="black" text="white" link="#00ffff" vlink="green" alink="yellow">
-<script>
-    
-var clientId = '141900096791-rsuf46uu3n8tj0s63nve3cm4lo90bhgi.apps.googleusercontent.com'; //choose web app client Id, redirect URI and Javascript origin set to http://localhost
-var apiKey = 'AIzaSyBN5tKMnysG_JqUbk2f0P6ilWioKStUFfg'; //choose public apiKey, any IP allowed (leave blank the allowed IP boxes in Google Dev Console)
-var userEmail = "allfijabiullah2007@gmail.com"; //your calendar Id
-var userTimeZone = "Amsterdam"; //example "Rome" "Los_Angeles" ecc...
-var maxRows = 10; //events to shown
-var calName = "SchoolSchedule"; //name of calendar (write what you want, doesn't matter)
-    
-var scopes = 'https://www.googleapis.com/auth/calendar';
-    
-//--------------------- Add a 0 to numbers
-function padNum(num) {
-    if (num <= 9) {
-        return "0" + num;
-    }
-    return num;
-}
-//--------------------- end    
-    
-//--------------------- From 24h to Am/Pm
-function AmPm(num) {
-    if (num <= 12) { return "am " + num; }
-    return "pm " + padNum(num - 12);
-}
-//--------------------- end    
+  <head>
+    <title>Google Calendar API Quickstart</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <p>Google Calendar API Quickstart</p>
 
-//--------------------- num Month to String
-function monthString(num) {
-         if (num === "01") { return "JAN"; } 
-    else if (num === "02") { return "FEB"; } 
-    else if (num === "03") { return "MAR"; } 
-    else if (num === "04") { return "APR"; } 
-    else if (num === "05") { return "MAJ"; } 
-    else if (num === "06") { return "JUN"; } 
-    else if (num === "07") { return "JUL"; } 
-    else if (num === "08") { return "AUG"; } 
-    else if (num === "09") { return "SEP"; } 
-    else if (num === "10") { return "OCT"; } 
-    else if (num === "11") { return "NOV"; } 
-    else if (num === "12") { return "DEC"; }
-}
-//--------------------- end
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
+    <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
 
-//--------------------- from num to day of week
-function dayString(num){
-         if (num == "1") { return "mon" }
-    else if (num == "2") { return "tue" }
-    else if (num == "3") { return "wed" }
-    else if (num == "4") { return "thu" }
-    else if (num == "5") { return "fri" }
-    else if (num == "6") { return "sat" }
-    else if (num == "0") { return "sun" }
-}
-//--------------------- end
+    <pre id="content" style="white-space: pre-wrap;"></pre>
 
-//--------------------- client CALL
-function handleClientLoad() {
-    gapi.client.setApiKey(apiKey);
-    checkAuth();
-}
-//--------------------- end
+    <script type="text/javascript">
+      /* exported gapiLoaded */
+      /* exported gisLoaded */
+      /* exported handleAuthClick */
+      /* exported handleSignoutClick */
 
-//--------------------- check Auth
-function checkAuth() {
-    gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
-}
-//--------------------- end
+      // TODO(developer): Set to client ID and API key from the Developer Console
+      const CLIENT_ID = '<141900096791-rsuf46uu3n8tj0s63nve3cm4lo90bhgi.apps.googleusercontent.com>';
+      const API_KEY = '<AIzaSyBN5tKMnysG_JqUbk2f0P6ilWioKStUFfg>';
 
-//--------------------- handle result and make CALL
-function handleAuthResult(authResult) {
-    if (authResult) {
-        makeApiCall();
-    }
-}
-//--------------------- end
+      // Discovery doc URL for APIs used by the quickstart
+      const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
 
-//--------------------- API CALL itself
-function makeApiCall() {
-    var today = new Date(); //today date
-    gapi.client.load('calendar', 'v3', function () {
-        var request = gapi.client.calendar.events.list({
-            'calendarId' : userEmail,
-            'timeZone' : userTimeZone, 
-            'singleEvents': true, 
-            'timeMin': today.toISOString(), //gathers only events not happened yet
-            'maxResults': maxRows, 
-            'orderBy': 'startTime'});
-    request.execute(function (resp) {
-            for (var i = 0; i < resp.items.length; i++) {
-                var li = document.createElement('li');
-                var item = resp.items[i];
-                var classes = [];
-                var allDay = item.start.date? true : false;
-                var startDT = allDay ? item.start.date : item.start.dateTime;
-                var dateTime = startDT.split("T"); //split date from time
-                var date = dateTime[0].split("-"); //split yyyy mm dd
-                var startYear = date[0];
-                var startMonth = monthString(date[1]);
-                var startDay = date[2];
-                var startDateISO = new Date(startMonth + " " + startDay + ", " + startYear + " 00:00:00");
-                var startDayWeek = dayString(startDateISO.getDay());
-                if( allDay == true){ //change this to match your needs
-                    var str = [
-                    '<font size="4" face="courier">',
-                    startDayWeek, ' ',
-                    startMonth, ' ',
-                    startDay, ' ',
-                    startYear, '</font><font size="5" face="courier"> @ ', item.summary , '</font><br><br>'
-                    ];
-                }
-                else{
-                    var time = dateTime[1].split(":"); //split hh ss etc...
-                    var startHour = AmPm(time[0]);
-                    var startMin = time[1];
-                    var str = [ //change this to match your needs
-                        '<font size="4" face="courier">',
-                        startDayWeek, ' ',
-                        startMonth, ' ',
-                        startDay, ' ',
-                        startYear, ' - ',
-                        startHour, ':', startMin, '</font><font size="5" face="courier"> @ ', item.summary , '</font><br><br>'
-                        ];
-                }
-                li.innerHTML = str.join('');
-                li.setAttribute('class', classes.join(' '));
-                document.getElementById('events').appendChild(li);
-            }
-        document.getElementById('updated').innerHTML = "updated " + today;
-        document.getElementById('calendar').innerHTML = calName;
+      // Authorization scopes required by the API; multiple scopes can be
+      // included, separated by spaces.
+      const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
+
+      let tokenClient;
+      let gapiInited = false;
+      let gisInited = false;
+
+      document.getElementById('authorize_button').style.visibility = 'hidden';
+      document.getElementById('signout_button').style.visibility = 'hidden';
+
+      /**
+       * Callback after api.js is loaded.
+       */
+      function gapiLoaded() {
+        gapi.load('client', initializeGapiClient);
+      }
+
+      /**
+       * Callback after the API client is loaded. Loads the
+       * discovery doc to initialize the API.
+       */
+      async function initializeGapiClient() {
+        await gapi.client.init({
+          apiKey: API_KEY,
+          discoveryDocs: [DISCOVERY_DOC],
         });
-    });
-}
-//--------------------- end
-</script>
-<script src='https://apis.google.com/js/client.js?onload=handleClientLoad'></script>
-    <div id='content'>
-    <h1 id='calendar' style="color:grey">LOADING . . . .</h1>
-    <ul id='events'></ul>
-    </div>
-    <p id='updated' style="font-size:12; color:grey">updating . . . . .</p>
-    </body>
+        gapiInited = true;
+        maybeEnableButtons();
+      }
+
+      /**
+       * Callback after Google Identity Services are loaded.
+       */
+      function gisLoaded() {
+        tokenClient = google.accounts.oauth2.initTokenClient({
+          client_id: CLIENT_ID,
+          scope: SCOPES,
+          callback: '', // defined later
+        });
+        gisInited = true;
+        maybeEnableButtons();
+      }
+
+      /**
+       * Enables user interaction after all libraries are loaded.
+       */
+      function maybeEnableButtons() {
+        if (gapiInited && gisInited) {
+          document.getElementById('authorize_button').style.visibility = 'visible';
+        }
+      }
+
+      /**
+       *  Sign in the user upon button click.
+       */
+      function handleAuthClick() {
+        tokenClient.callback = async (resp) => {
+          if (resp.error !== undefined) {
+            throw (resp);
+          }
+          document.getElementById('signout_button').style.visibility = 'visible';
+          document.getElementById('authorize_button').innerText = 'Refresh';
+          await listUpcomingEvents();
+        };
+
+        if (gapi.client.getToken() === null) {
+          // Prompt the user to select a Google Account and ask for consent to share their data
+          // when establishing a new session.
+          tokenClient.requestAccessToken({prompt: 'consent'});
+        } else {
+          // Skip display of account chooser and consent dialog for an existing session.
+          tokenClient.requestAccessToken({prompt: ''});
+        }
+      }
+
+      /**
+       *  Sign out the user upon button click.
+       */
+      function handleSignoutClick() {
+        const token = gapi.client.getToken();
+        if (token !== null) {
+          google.accounts.oauth2.revoke(token.access_token);
+          gapi.client.setToken('');
+          document.getElementById('content').innerText = '';
+          document.getElementById('authorize_button').innerText = 'Authorize';
+          document.getElementById('signout_button').style.visibility = 'hidden';
+        }
+      }
+
+      /**
+       * Print the summary and start datetime/date of the next ten events in
+       * the authorized user's calendar. If no events are found an
+       * appropriate message is printed.
+       */
+      async function listUpcomingEvents() {
+        let response;
+        try {
+          const request = {
+            'calendarId': 'primary',
+            'timeMin': (new Date()).toISOString(),
+            'showDeleted': false,
+            'singleEvents': true,
+            'maxResults': 10,
+            'orderBy': 'startTime',
+          };
+          response = await gapi.client.calendar.events.list(request);
+        } catch (err) {
+          document.getElementById('content').innerText = err.message;
+          return;
+        }
+
+        const events = response.result.items;
+        if (!events || events.length == 0) {
+          document.getElementById('content').innerText = 'No events found.';
+          return;
+        }
+        // Flatten to string to display
+        const output = events.reduce(
+            (str, event) => `${str}${event.summary} (${event.start.dateTime || event.start.date})\n`,
+            'Events:\n');
+        document.getElementById('content').innerText = output;
+      }
+    </script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+  </body>
 </html>
