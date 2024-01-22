@@ -20,9 +20,7 @@ function fetchEventsAndUpdateTime() {
 
                 if (eventStart <= now && eventEnd >= now) {
                     currentEvent = event;
-                }
-
-                if (eventStart > now && (!upcomingEvent || eventStart < new Date(upcomingEvent.start.dateTime))) {
+                } else if (eventStart > now && (!upcomingEvent || eventStart < new Date(upcomingEvent.start.dateTime))) {
                     upcomingEvent = event;
                 }
             }
