@@ -47,10 +47,14 @@
                     const eventStart = new Date(upcomingEvent.start.dateTime);
                     const eventEnd = new Date(upcomingEvent.end.dateTime);
 
-                    // Display the upcoming event in the container
+                    // Display the current time
+                    const currentTime = now.toLocaleTimeString();
+
+                    // Display the upcoming event and current time in the container
                     eventContainer.innerHTML = `
                         <h2>${eventTitle}</h2>
                         <p>${eventStart.toDateString()} from ${eventStart.toLocaleTimeString()} to ${eventEnd.toLocaleTimeString()}</p>
+                        <p>Current Time: ${currentTime}</p>
                     `;
                 } else {
                     eventContainer.innerHTML = '<p>No upcoming events.</p>';
