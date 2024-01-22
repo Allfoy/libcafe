@@ -10,6 +10,7 @@
             font-family: Arial, sans-serif;
         }
     </style>
+    <script src="js/Grabbyevent.js"></script>
 </head>
 <body>
 
@@ -17,53 +18,10 @@
         <!-- Events will be displayed here -->
     </div>
 
-    <script>
-        // Replace 'YOUR_API_KEY_HERE' with your actual Google Calendar API key
-        const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
-        const calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com'; // Replace with your actual calendar ID
+    <div id="upcoming-event-container">
+        <!-- Upcoming event and countdown will be displayed here -->
+    </div>
 
-        // Fetch events from Google Calendar API
-        fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`)
-            .then(response => response.json())
-            .then(data => {
-                const events = data.items;
-                const now = new Date();
-                let upcomingEvent = null;
-
-                // Find the first upcoming event
-                for (const event of events) {
-                    const eventStart = new Date(event.start.dateTime);
-
-                    if (eventStart > now) {
-                        upcomingEvent = event;
-                        break;
-                    }
-                }
-
-                const eventContainer = document.getElementById('event-container');
-
-                if (upcomingEvent) {
-                    const eventTitle = upcomingEvent.summary;
-                    const eventStart = new Date(upcomingEvent.start.dateTime);
-                    const eventEnd = new Date(upcomingEvent.end.dateTime);
-
-                    // Display the current time
-                    const currentTime = now.toLocaleTimeString();
-
-                    // Display the upcoming event and current time in the container
-                    eventContainer.innerHTML = `
-                        <h2>${eventTitle}</h2>
-                        <p>${eventStart.toDateString()} from ${eventStart.toLocaleTimeString()} to ${eventEnd.toLocaleTimeString()}</p>
-                        <p>Current Time: ${currentTime}</p>
-                    `;
-                } else {
-                    eventContainer.innerHTML = '<p>No upcoming events.</p>';
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching events:', error);
-            });
-    </script>
 
 </body>
 </html>
