@@ -46,13 +46,14 @@ function fetchEventsAndUpdateTime() {
                 const eventStart = new Date(currentEvent.start.dateTime);
                 const eventEnd = new Date(currentEvent.end.dateTime);
 
-                // Display the current time in military format
-                const currentTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                // Display the current time in military format for Amsterdam timezone
+                const currentTime = now.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
+
 
                 // Display the current event and time in the container
                 eventContainer.innerHTML = `
                     <h2>${eventTitle}</h2>
-                    <p>${eventStart.toDateString()} from ${eventStart.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} to ${eventEnd.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</p>
+                    <p>${eventStart.toDateString()} from ${eventStart.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false })} to ${eventEnd.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false })}</p>
                     <p>Current Time: ${currentTime}</p>
                 `;
 
