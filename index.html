@@ -17,7 +17,7 @@
 		<link rel="stylesheet" type="text/css" href="css/schoolswitch.css" />
 		<script src="js/modernizr.custom.js"></script>
 		<script src="js/closelogging.js"></script>
-		<script src="js/A-Zsort.js"></script>
+		<script src="js/iframestuff.js"></script>
 		<script src="js/schoolswitch.js"></script>
 		<script src="js/Grabbyevent.js"></script>
 		
@@ -25,10 +25,18 @@
 	<body>
 		<div class="container">
 			<!-- Top Navigation -->
-			<div class="codrops-top clearfix">
+			<div class="navbar">
 				<a class="codrops-icon codrops-icon-prev" href="https://svol.magister.net/magister/#/vandaag/"><span>To magister agenda</span></a>
 				<span class="right"><a class="codrops-icon codrops-icon-drop" onclick="openWinNh()" ><span>To noordhoff login</span></a></span>
 			</div>
+			<!-- sticky tab -->
+			<div class="tabby">
+				<!-- Events will be displayed here -->
+					<div id="event-container"></div>
+				<!-- Upcoming event and countdown will be displayed here -->
+					<div id="upcoming-event-container"></div>
+			</div>
+			<!-- Top header -->
 			<header>
 				<div class="title"><h1 href="allfoy.github.io/Libcafe">Libcafe <span>a library for us	</span></h1></div>	
 				<nav class="codrops-demos"></nav>
@@ -571,7 +579,16 @@
 				</ul>
 
 				<p class="note">note that this is version 1 and is subject to change</p>
-				<div class="iframer"><iframe src="https://www.numworks.com/simulator/embed/" width="368px" height="720px"></iframe><script src="https://www.numworks.com/simulator/embed.js"></script></div>
+				<div class="iframer" id="numworksy"><iframe src="https://www.numworks.com/simulator/embed/" width="368px" height="720px"></iframe><script src="https://www.numworks.com/simulator/embed.js"></script></div>
+				<button class="centeredbutton" onclick="toggleIframe('numworksy')">Toggle numworks</button>
+				<br></br>
+				<button class="centeredbutton" onclick="toggleIframe('weather')">Toggle weather</button>
+				<div>
+					<a class="weatherwidget-io" id="weather" href="https://forecast7.com/en/52d525d47/lelystad/" data-label_1="LELYSTAD" data-label_2="WEATHER" data-font="Trebuchet MS" data-icons="Climacons Animated" data-days="3" data-basecolor="rgb(129, 75, 70)" data-textcolor="#f9f1e3" data-highcolor="#f9f1e3" data-lowcolor="#f9f1e3" data-suncolor="#f9f1e3" data-mooncolor="#f9f1e3" data-cloudcolor="#f9f1e3" data-raincolor="#f9f1e3" data-snowcolor="#f9f1e3" >LELYSTAD WEATHER</a>
+					<script>
+					!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+					</script>
+				</div>
 			</div>
 		</div><!-- /container -->
 	</body>

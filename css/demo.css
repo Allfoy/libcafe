@@ -67,8 +67,8 @@ doesn't work yet
 	padding: 0 0 0.6em 0.1em;
 }
 
-/* To Navigation Style */
-.codrops-top {
+/* Top Navigation Style */
+.navbar {
 	background: #814b46;
 	text-transform: uppercase;
 	width: 100%;
@@ -77,10 +77,10 @@ doesn't work yet
 	position: fixed;
     top: 0;
     left: 0;
-	z-index: 9999;
+	z-index: 9;
 }
 
-.codrops-top a {
+.navbar a {
 	text-decoration: none;
 	padding: 0 1em;
 	letter-spacing: 0.1em;
@@ -88,16 +88,16 @@ doesn't work yet
 	display: inline-block;
 }
 
-.codrops-top a:hover {
+.navbar a:hover {
 	background: rgba(255,255,255,0.1);
 	color: #fff;
 }
 
-.codrops-top span.right {
+.navbar span.right {
 	float: right;
 }
 
-.codrops-top span.right a {
+.navbar span.right a {
 	float: left;
 	display: block;
 }
@@ -156,8 +156,11 @@ p.note {
 	line-height: 1.4;
 }
 
+.weatherwidget-io{
+	display: none;
+}
 .iframer {
-    display: flex;
+    display: none;
     border-style:none;
 	margin: 0 auto;
 	align-items: center; 
@@ -185,4 +188,25 @@ iframe {
 .center {
 	padding: 30px 0;
 	text-align: center;
-  }
+}
+
+.centeredbutton {
+	display: flex;
+	border-style:none;
+	margin: 0 auto;
+	align-items: center; 
+	text-align: center;
+	justify-content: center;
+	font-size: larger;
+}
+
+.tabby{
+	background-color: #efdabf;
+	position: fixed;
+	height:auto;
+	width: 400px;
+	padding: 20px;
+	top: 200px;
+	left: 0px;
+	z-index: 9;
+}
