@@ -211,3 +211,14 @@ iframe {
 	z-index: 9;
 	border-radius: 0px 25px 25px 0px;
 }
+.ybbat{
+	background-color: #f7c8a6;
+	position: fixed;
+	height: auto;
+	width: auto+20px;
+	padding: 20px;
+	top: 200px;
+	right: 0px;
+	z-index: 9;
+	border-radius: 25px 0px 0px 25px;
+}

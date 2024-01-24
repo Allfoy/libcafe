@@ -1,4 +1,4 @@
-// Replace 'YOUR_API_KEY_HERE' with your actual Google Calendar API key
+
 const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
 const calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com'; // Replace with your actual calendar ID
 
@@ -13,7 +13,7 @@ const keywordLinks = {
 'wisd': 'https://apps.noordhoff.nl/se/content/book/4acdfa97-1845-4bf6-8320-10181b908e29/ebooks/a476fd26-1eeb-4c59-979c-16b971e37cc1'
     // Add more keywords and links as needed
 };
-
+//  here code for current events and current time (split it later for clean code)
 // Function to fetch events and update time
 function fetchEventsAndUpdateTime() {
     // Fetch events from Google Calendar API
@@ -62,9 +62,9 @@ function fetchEventsAndUpdateTime() {
                 eventButton.href = link;
             } else {
                 eventContainer.innerHTML = '<p>No ongoing events.</p>';
-                eventButton.href = 'https://allfoy.github.io/libcafe/error2'; // Set a default link or disable the button if no ongoing event
+                eventButton.href = 'https://allfoy.github.io/libcafe/error1'; // Set a default link or disable the button if no ongoing event
             }
-
+// here code for upcoming event and time remaining
             if (upcomingEvent) {
                 const upcomingEventTitle = upcomingEvent.summary;
                 const upcomingEventStart = new Date(upcomingEvent.start.dateTime);
@@ -94,7 +94,7 @@ fetchEventsAndUpdateTime();
 
 // Set up interval to update time every 1 second (adjust as needed)
 setInterval(fetchEventsAndUpdateTime, 1000);
-
+// here code for adaptive book
 // Function to get the link for the event based on its title
 function getLinkForEvent(title) {
     // Check if any keyword in the title matches, and return the corresponding link
@@ -115,3 +115,36 @@ function redirectToLink() {
         window.location.href = eventButton.href;
     }
 }
+
+//here code for start and end event times
+// Update the fetchEventsAndUpdateTime function
+function fetchEventsAndUpdateTime() {
+    // Fetch events from Google Calendar API
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`)
+        .then(response => response.json())
+        .then(data => {
+            const events = data.items;
+
+            // Find the first and last events
+            const { firstEvent, lastEvent } = findFirstLastEvents(events);
+            // Display the first and last events
+            const firstAndLastEventTimesContainer = document.getElementById('FirstAndLastEventTimes');
+
+            if (firstEvent) {
+                const firstEventStart = new Date(firstEvent.start.dateTime);
+                const firstEventStartTimeString = firstEventStart.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
+                firstAndLastEventTimesContainer.innerHTML = `<p>First event starts at ${firstEventStartTimeString}</p>`;
+            }
+
+            if (lastEvent) {
+                const lastEventEnd = new Date(lastEvent.end.dateTime);
+                const lastEventEndTimeString = lastEventEnd.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
+                firstAndLastEventTimesContainer.innerHTML += `<p>Last event ends at ${lastEventEndTimeString}</p>`;
+            }
+
+        })
+        .catch(error => {
+            console.error('Error fetching events:', error);
+        });
+}
+
