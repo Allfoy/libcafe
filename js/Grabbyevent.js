@@ -62,7 +62,7 @@ function fetchEventsAndUpdateTime() {
                 eventButton.href = link;
             } else {
                 eventContainer.innerHTML = '<p>No ongoing events.</p>';
-                eventButton.href = 'https://allfoy.github.io/libcafe/error2'; // Set a default link or disable the button if no ongoing event
+                eventButton.href = 'https://allfoy.github.io/libcafe/error1'; // Set a default link or disable the button if no ongoing event
             }
 
             if (upcomingEvent) {
