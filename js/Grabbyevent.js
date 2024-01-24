@@ -130,18 +130,22 @@ function fetchEventsAndUpdateTime() {
             // Display the first and last events
             const firstAndLastEventTimesContainer = document.getElementById('FirstAndLastEventTimes');
 
+            let content = ''; // Build the content string
+
             if (firstEvent) {
                 const firstEventStart = new Date(firstEvent.start.dateTime);
                 const firstEventStartTimeString = firstEventStart.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
-                firstAndLastEventTimesContainer.innerHTML = `<p>First event starts at ${firstEventStartTimeString}</p>`;
+                content += `<p>First event starts at ${firstEventStartTimeString}</p>`;
             }
 
             if (lastEvent) {
                 const lastEventEnd = new Date(lastEvent.end.dateTime);
                 const lastEventEndTimeString = lastEventEnd.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
-                firstAndLastEventTimesContainer.innerHTML += `<p>Last event ends at ${lastEventEndTimeString}</p>`;
+                content += `<p>Last event ends at ${lastEventEndTimeString}</p>`;
             }
 
+            // Update the container's innerHTML once with the built content
+            firstAndLastEventTimesContainer.innerHTML = content;
         })
         .catch(error => {
             console.error('Error fetching events:', error);
