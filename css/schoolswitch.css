@@ -13,12 +13,12 @@ Usage: codyhouse.co/license
   /* variables */
   :root {
     /* colors */
-    --ri5-color-primary-hsl: 25, 75%, 67%;
-    --ri5-color-bg-hsl: 0, 0%, 100%;
-    --ri5-color-contrast-high-hsl: 230, 7%, 23%;
-    --ri5-color-contrast-higher-hsl: 230, 13%, 9%;
-    --ri5-color-bg-darker-hsl: 5, 30%, 39%;
-    --ri5-color-white-hsl: 38, 100%, 90%;
+    --ri5-color-primary-hsl: 25, 75%, 67%; /* #EAA06C */
+    --ri5-color-bg-hsl: 0, 0%, 100%; /* #ffffff */
+    --ri5-color-contrast-high-hsl: 230, 7%, 23%; /* #37383f */
+    --ri5-color-contrast-higher-hsl: 230, 13%, 9%; /* #14151a */
+    --ri5-color-bg-darker-hsl: 5, 30%, 39%; /* #814b46 */
+    --ri5-color-white-hsl: 38, 100%, 90%; /* #ffeccc */
   
     /* typography */
     --ri5-text-sm: 0.833rem;
