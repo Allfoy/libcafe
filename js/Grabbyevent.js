@@ -118,37 +118,47 @@ function redirectToLink() {
 
 //here code for start and end event times
 // Update the fetchEventsAndUpdateTime function
-function fetchEventsAndUpdateTime() {
-    // Fetch events from Google Calendar API
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`)
-        .then(response => response.json())
-        .then(data => {
-            const events = data.items;
 
-            // Find the first and last events
-            const { firstEvent, lastEvent } = findFirstLastEvents(events);
-            // Display the first and last events
-            const firstAndLastEventTimesContainer = document.getElementById('FirstAndLastEventTimes');
+document.addEventListener('DOMContentLoaded', function() {
+    function fetchEventsAndUpdateTime() {
+        function fetchEventsAndUpdateTime() {
+            // Fetch events from Google Calendar API
+            fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    const events = data.items;
+        
+                    // Find the first and last events
+                    const { firstEvent, lastEvent } = findFirstLastEvents(events);
+                    // Display the first and last events
+                    const firstAndLastEventTimesContainer = document.getElementById('FirstAndLastEventTimes');
+        
+                    let content = ''; // Build the content string
+        
+                    if (firstEvent) {
+                        const firstEventStart = new Date(firstEvent.start.dateTime);
+                        const firstEventStartTimeString = firstEventStart.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
+                        content += `<p>First event starts at ${firstEventStartTimeString}</p>`;
+                    }
+        
+                    if (lastEvent) {
+                        const lastEventEnd = new Date(lastEvent.end.dateTime);
+                        const lastEventEndTimeString = lastEventEnd.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
+                        content += `<p>Last event ends at ${lastEventEndTimeString}</p>`;
+                    }
+        
+                    // Update the container's innerHTML once with the built content
+                    firstAndLastEventTimesContainer.innerHTML = content;
+                })
+                .catch(error => {
+                    console.error('Error fetching events:', error);
+                });
+        }
+    }
 
-            let content = ''; // Build the content string
+    // Initial fetch and time update
+    fetchEventsAndUpdateTime();
 
-            if (firstEvent) {
-                const firstEventStart = new Date(firstEvent.start.dateTime);
-                const firstEventStartTimeString = firstEventStart.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
-                content += `<p>First event starts at ${firstEventStartTimeString}</p>`;
-            }
-
-            if (lastEvent) {
-                const lastEventEnd = new Date(lastEvent.end.dateTime);
-                const lastEventEndTimeString = lastEventEnd.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
-                content += `<p>Last event ends at ${lastEventEndTimeString}</p>`;
-            }
-
-            // Update the container's innerHTML once with the built content
-            firstAndLastEventTimesContainer.innerHTML = content;
-        })
-        .catch(error => {
-            console.error('Error fetching events:', error);
-        });
-}
-
+    // Set up interval to update time every 1 second (adjust as needed)
+    setInterval(fetchEventsAndUpdateTime, 1000);
+});
