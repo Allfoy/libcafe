@@ -117,35 +117,3 @@ function redirectToLink() {
 }
 
 //here code for start and end event times
-// Update the fetchEventsAndUpdateTime function
-function fetchEventsAndUpdateTime() {
-    // Fetch events from Google Calendar API
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`)
-        .then(response => response.json())
-        .then(data => {
-            const events = data.items;
-
-            // Find the first and last events
-            const { firstEvent, lastEvent } = findFirstLastEvents(events);
-
-            // Display the first and last events
-            const firstAndLastEventTimesContainer = document.getElementById('FirstAndLastEventTimes');
-
-            if (firstEvent && lastEvent) {
-                const firstEventStart = new Date(firstEvent.start.dateTime);
-                const lastEventEnd = new Date(lastEvent.end.dateTime);
-
-                const firstEventStartTimeString = firstEventStart.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
-                const lastEventEndTimeString = lastEventEnd.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
-
-                firstAndLastEventTimesContainer.innerHTML = `<p>First event starts at ${firstEventStartTimeString}</p><p>Last event ends at ${lastEventEndTimeString}</p>`;
-            } else {
-                firstAndLastEventTimesContainer.innerHTML = '<p>No events found.</p>';
-            }
-
-            // Rest of your existing code...
-        })
-        .catch(error => {
-            console.error('Error fetching events:', error);
-        });
-}
