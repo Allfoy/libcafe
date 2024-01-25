@@ -13,15 +13,18 @@
     <script>
 const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
 const calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com';
+// Get today's date in UTC format
 const today = new Date().toISOString().split('T')[0];
-const startTimeLimit = new Date(today + 'T08:15:00Z').toISOString();
-const endTimeLimit = new Date(today + 'T16:45:00Z').toISOString();
-
+// Define time limits in Europe/Amsterdam timezone
+const startTimeLimit = new Date(today + 'T08:15:00Z').toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' });
+const endTimeLimit = new Date(today + 'T16:45:00Z').toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' });
+// Fetch events from the Google Calendar API
 fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?timeMin=${today}T00:00:00Z&timeMax=${today}T23:59:59Z&key=${apiKey}`)
     .then(response => response.json())
     .then(data => {
+        // Filter events within the specified time range
         const eventsWithinTimeRange = data.items.filter(event => {
-            const startTime = new Date(event.start.dateTime || event.start.date).toISOString();
+            const startTime = new Date(event.start.dateTime || event.start.date).toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' });
             return startTime >= startTimeLimit && startTime <= endTimeLimit;
         });
 
@@ -29,23 +32,27 @@ fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?tim
             // Sort events by end time
             eventsWithinTimeRange.sort((a, b) => new Date(a.end.dateTime || a.end.date) - new Date(b.end.dateTime || b.end.date));
 
+            // Extract details for the first and final events
             const firstEvent = {
                 summary: eventsWithinTimeRange[0].summary,
-                startTime: new Date(eventsWithinTimeRange[0].start.dateTime || eventsWithinTimeRange[0].start.date).toLocaleTimeString(),
+                startTime: new Date(eventsWithinTimeRange[0].start.dateTime || eventsWithinTimeRange[0].start.date).toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam' }),
             };
 
             const finalEvent = {
                 summary: eventsWithinTimeRange[eventsWithinTimeRange.length - 1].summary,
-                endTime: new Date(eventsWithinTimeRange[eventsWithinTimeRange.length - 1].end.dateTime || eventsWithinTimeRange[eventsWithinTimeRange.length - 1].end.date).toLocaleTimeString(),
+                endTime: new Date(eventsWithinTimeRange[eventsWithinTimeRange.length - 1].end.dateTime || eventsWithinTimeRange[eventsWithinTimeRange.length - 1].end.date).toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam' }),
             };
 
+            // Display the events on the HTML page
             displayEvents(firstEvent, finalEvent);
         } else {
+            // Display a message if no events are found within the specified time range
             displayEvents("No events for today within the specified time range", "No events for today within the specified time range");
         }
     })
     .catch(error => console.error('Error fetching data:', error));
 
+// Display events on the HTML page
 function displayEvents(firstEvent, finalEvent) {
     const eventsContainer = document.getElementById('events-container');
     eventsContainer.innerHTML = `
@@ -55,6 +62,6 @@ function displayEvents(firstEvent, finalEvent) {
     `;
 }
 
-    </script>
+</script>
 </body>
 </html>
