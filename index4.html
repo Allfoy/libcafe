@@ -13,14 +13,23 @@
     <script>
 const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
 const calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com';
+const today = new Date().toISOString().split('T')[0];
 
-fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`)
+fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?timeMin=${today}T00:00:00Z&timeMax=${today}T23:59:59Z&key=${apiKey}`)
     .then(response => response.json())
     .then(data => {
         const events = data.items;
         if (events.length > 0) {
-            const firstEvent = events[0].summary;
-            const lastEvent = events[events.length - 1].summary;
+            const firstEvent = {
+                summary: events[0].summary,
+                startTime: events[0].start.dateTime || events[0].start.date
+            };
+
+            const lastEvent = {
+                summary: events[events.length - 1].summary,
+                endTime: events[events.length - 1].end.dateTime || events[events.length - 1].end.date
+            };
+
             displayEvents(firstEvent, lastEvent);
         } else {
             displayEvents("No events for today", "No events for today");
@@ -30,9 +39,8 @@ fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key
 
 function displayEvents(firstEvent, lastEvent) {
     const eventsContainer = document.getElementById('events-container');
-    eventsContainer.innerHTML = `<p>First Event: ${firstEvent}</p><p>Last Event: ${lastEvent}</p>`;
+    eventsContainer.innerHTML = `<p>First Event: ${firstEvent.summary}, Start Time: ${firstEvent.startTime}</p><p>Last Event: ${lastEvent.summary}, End Time: ${lastEvent.endTime}</p>`;
 }
-
     </script>
 </body>
 </html>
