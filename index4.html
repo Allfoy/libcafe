@@ -26,6 +26,9 @@ fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?tim
         });
 
         if (eventsWithinTimeRange.length > 0) {
+            // Sort events by end time
+            eventsWithinTimeRange.sort((a, b) => new Date(a.end.dateTime || a.end.date) - new Date(b.end.dateTime || b.end.date));
+
             const firstEvent = {
                 summary: eventsWithinTimeRange[0].summary,
                 startTime: new Date(eventsWithinTimeRange[0].start.dateTime || eventsWithinTimeRange[0].start.date).toLocaleTimeString(),
@@ -51,6 +54,7 @@ function displayEvents(firstEvent, finalEvent) {
         <p><strong>Final Event:</strong> ${finalEvent.summary}, <strong>End Time:</strong> ${finalEvent.endTime}</p>
     `;
 }
+
     </script>
 </body>
 </html>
