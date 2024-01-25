@@ -117,3 +117,52 @@ function redirectToLink() {
 }
 
 //here code for start and end event times
+// Get today's date in UTC format
+const today = new Date().toISOString().split('T')[0];
+// Define time limits in Europe/Amsterdam timezone
+const startTimeLimit = new Date(today + 'T08:15:00Z').toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
+const endTimeLimit = new Date(today + 'T16:45:00Z').toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
+
+// Fetch events from the Google Calendar API
+fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?timeMin=${today}T00:00:00Z&timeMax=${today}T23:59:59Z&key=${apiKey}`)
+    .then(response => response.json())
+    .then(data => {
+        // Filter events within the specified time range
+        const eventsWithinTimeRange = data.items.filter(event => {
+            const startTime = new Date(event.start.dateTime || event.start.date).toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
+            return startTime >= startTimeLimit && startTime <= endTimeLimit;
+        });
+
+        if (eventsWithinTimeRange.length > 0) {
+            // Sort events by end time
+            eventsWithinTimeRange.sort((a, b) => new Date(a.end.dateTime || a.end.date) - new Date(b.end.dateTime || b.end.date));
+
+            // Extract details for the first and final events
+            const firstEvent = {
+                summary: eventsWithinTimeRange[0].summary,
+                startTime: new Date(eventsWithinTimeRange[0].start.dateTime || eventsWithinTimeRange[0].start.date).toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false }),
+            };
+
+            const finalEvent = {
+                summary: eventsWithinTimeRange[eventsWithinTimeRange.length - 1].summary,
+                endTime: new Date(eventsWithinTimeRange[eventsWithinTimeRange.length - 1].end.dateTime || eventsWithinTimeRange[eventsWithinTimeRange.length - 1].end.date).toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false }),
+            };
+
+            // Display the events on the HTML page
+            displayEvents(firstEvent, finalEvent);
+        } else {
+            // Display a message if no events are found within the specified time range
+            displayEvents("No events for today within the specified time range", "No events for today within the specified time range");
+        }
+    })
+    .catch(error => console.error('Error fetching data:', error));
+
+// Display events on the HTML page
+function displayEvents(firstEvent, finalEvent) {
+    const eventsContainer = document.getElementById('events-container');
+    eventsContainer.innerHTML = `
+        <h2>Today's Events</h2>
+        <p><strong>First Event:</strong> ${firstEvent.summary}, <strong>Start Time:</strong> ${firstEvent.startTime}</p>
+        <p><strong>Final Event:</strong> ${finalEvent.summary}, <strong>End Time:</strong> ${finalEvent.endTime}</p>
+    `;
+}
