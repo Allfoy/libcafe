@@ -22,24 +22,28 @@ fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?tim
         if (events.length > 0) {
             const firstEvent = {
                 summary: events[0].summary,
-                startTime: events[0].start.dateTime || events[0].start.date
+                startTime: new Date(events[0].start.dateTime || events[0].start.date).toLocaleTimeString(),
             };
 
-            const lastEvent = {
+            const finalEvent = {
                 summary: events[events.length - 1].summary,
-                endTime: events[events.length - 1].end.dateTime || events[events.length - 1].end.date
+                endTime: new Date(events[events.length - 1].end.dateTime || events[events.length - 1].end.date).toLocaleTimeString(),
             };
 
-            displayEvents(firstEvent, lastEvent);
+            displayEvents(firstEvent, finalEvent);
         } else {
             displayEvents("No events for today", "No events for today");
         }
     })
     .catch(error => console.error('Error fetching data:', error));
 
-function displayEvents(firstEvent, lastEvent) {
+function displayEvents(firstEvent, finalEvent) {
     const eventsContainer = document.getElementById('events-container');
-    eventsContainer.innerHTML = `<p>First Event: ${firstEvent.summary}, Start Time: ${firstEvent.startTime}</p><p>Last Event: ${lastEvent.summary}, End Time: ${lastEvent.endTime}</p>`;
+    eventsContainer.innerHTML = `
+        <h2>Today's Events</h2>
+        <p><strong>First Event:</strong> ${firstEvent.summary}, <strong>Start Time:</strong> ${firstEvent.startTime}</p>
+        <p><strong>Final Event:</strong> ${finalEvent.summary}, <strong>End Time:</strong> ${finalEvent.endTime}</p>
+    `;
 }
     </script>
 </body>
