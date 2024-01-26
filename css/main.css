@@ -1,0 +1,224 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
+/*start of font part*/
+@font-face {
+	font-family: 'codropsicons';
+	src:url('../fonts/codropsicons/codropsicons.eot');
+	src:url('../fonts/codropsicons/codropsicons.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/codropsicons/codropsicons.woff') format('woff'),
+		url('../fonts/codropsicons/codropsicons.ttf') format('truetype'),
+		url('../fonts/codropsicons/codropsicons.svg#codropsicons') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+/*
+@font-face {
+    font-family: 'spritz';
+    src: url('/fonts/SpritzAndDelicious_PERSONAL_USE_ONLY.otf');
+}
+doesn't work yet
+*/
+@font-face{
+	font-family:blackchancery;
+	font-style:normal;
+	font-weight:5;
+	src:local('BlackChancery'),url(https://fonts.cdnfonts.com/s/8399/BLKCHCRY.woff) format('woff')
+}
+/*end of font part*/
+
+.title{
+	font-family: 'BlackChancery';
+	padding: 30px 0;
+	text-align: center;
+
+}
+
+
+
+
+
+
+
+
+.container > header,
+.codrops-top {
+	font-family: 'Lato', Arial, sans-serif;
+	color: #efdabf;
+}
+
+.container > header {
+	margin: 0 auto;
+	padding: 0.25em;
+	text-align: center;
+	background: #efdabf;
+	color: #824b46;
+}
+
+.container > header h1 {
+	font-size: 4.625em;
+	line-height: 1;
+	margin: 0;
+	font-weight: 300;
+}
+
+.container > header span {
+	display: block;
+	font-size: 60%;
+	color: #a8615a;
+	padding: 0 0 0.6em 0.1em;
+}
+
+/* Top Navigation Style */
+.navbar {
+	background: #814b46;
+	text-transform: uppercase;
+	width: 100%;
+	font-size: 0.69em;
+	line-height: 2.2;
+	position: fixed;
+    top: 0;
+    left: 0;
+	z-index: 9;
+}
+
+.navbar a {
+	text-decoration: none;
+	padding: 0 1em;
+	letter-spacing: 0.1em;
+	color: #fff;
+	display: inline-block;
+}
+
+.navbar a:hover {
+	background: rgba(255,255,255,0.1);
+	color: #fff;
+}
+
+.navbar span.right {
+	float: right;
+}
+
+.navbar span.right a {
+	float: left;
+	display: block;
+}
+
+.codrops-icon:before {
+	font-family: 'codropsicons';
+	margin: 0 4px;
+	/* speak: none; */
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+.codrops-icon-drop:before {
+	content: "\e001";
+}
+
+.codrops-icon-prev:before {
+	content: "\e004";
+}
+
+/* Demo Buttons Style 
+.codrops-demos {
+	padding-top: 1em;
+	font-size: 0.9em;
+}
+
+.codrops-demos a {
+	text-decoration: none;
+	outline: none;
+	display: inline-block;
+	margin: 0.5em;
+	font-size: 1.1em;
+	padding: 0.7em 1.1em;
+	border: 3px solid #16a085;
+	color: #16a085;
+	font-weight: 700;
+}
+
+.codrops-demos a:hover,
+.codrops-demos a.current-demo,
+.codrops-demos a.current-demo:hover {
+	border-color: #fff;
+	color: #fff;
+}
+*/
+p.note {
+	font-size: 1.1em;
+	text-align: center;
+	padding: 40px 10px 100px;
+	max-width: 700px;
+	margin: 0 auto;
+	line-height: 1.4;
+}
+
+.weatherwidget-io{
+	display: none;
+}
+.iframer {
+    display: none;
+    border-style:none;
+	margin: 0 auto;
+	align-items: center; 
+	text-align: center;
+	justify-content: center;
+}
+iframe {
+    overflow-clip-margin: content-box !important;
+    overflow: clip !important;
+    border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+}
+
+
+@media screen and (max-width: 25em) {
+
+	.codrops-icon span {
+		display: none;
+	}
+
+}
+
+.center {
+	padding: 30px 0;
+	text-align: center;
+}
+
+.centeredbutton {
+	display: flex;
+	border-style:none;
+	margin: 0 auto;
+	align-items: center; 
+	text-align: center;
+	justify-content: center;
+	font-size: larger;
+}
+
+.tabby{
+	background-color: #f7c8a6;
+	position: fixed;
+	height: auto;
+	width: auto+20px;
+	padding: 20px;
+	top: 200px;
+	left: 0px;
+	z-index: 9;
+	border-radius: 0px 25px 25px 0px;
+}
+.ybbat{
+	background-color: #f7c8a6;
+	position: fixed;
+	height: auto;
+	width: auto+20px;
+	padding: 20px;
+	top: 400px;
+	left: 0px;
+	z-index: 9;
+	border-radius: 0px 25px 25px 0px;
+}
