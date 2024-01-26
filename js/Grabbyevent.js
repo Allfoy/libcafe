@@ -54,8 +54,9 @@ function fetchEventsAndUpdateTime() {
                 // Display the current event and time in the container
                 eventContainer.innerHTML = `
                     <h2>${eventTitle}</h2>
-                    <p>${eventStart.toDateString()} from ${eventStart.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false })} to ${eventEnd.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false })}</p>
-                    <p>Current Time: ${currentTime}</p>
+                    <p>${eventStart.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false })} to ${eventEnd.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false })}</p>
+                    <p>${eventStart.toDateString()}</p>
+                    <p>Current Time:${currentTime}</p>
                 `;
 
                 // Update the link for the event button based on the current event's title
