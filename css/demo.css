@@ -217,8 +217,8 @@ iframe {
 	height: auto;
 	width: auto+20px;
 	padding: 20px;
-	top: 200px;
-	right: 0px;
+	top: 350px;
+	left: 0px;
 	z-index: 9;
-	border-radius: 25px 0px 0px 25px;
+	border-radius: 0px 25px 25px 0px;
 }
