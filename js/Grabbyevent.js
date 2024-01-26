@@ -76,8 +76,7 @@ function fetchEventsAndUpdateTime() {
 
                 // Display the upcoming event and countdown in the container
                 upcomingEventContainer.innerHTML = `
-                    <h2>Upcoming Event</h2>
-                    <p>${upcomingEventTitle}</p>
+                    <h2>${upcomingEventTitle}</h2>
                     <p>Time Until Event: ${hoursUntilEvent} hours ${minutesUntilEvent} minutes</p>
                 `;
             } else {
