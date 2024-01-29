@@ -20,6 +20,8 @@
 		<script src="js/schoolswitch.js"></script>
 		<!--<script src="js/Grabbyevent.js"></script>-->
 		<script src="js/temp.js"></script>
+		<script src="jquery.js"></script> 
+    	<script> $(function(){$("#includedContent").load("lists.html");});</script>
 	</head>
 	<body>
 		<div class="container">
@@ -57,7 +59,7 @@
 				</header>
 			<div class="component">
 			
-				<div>some info goes here</div>
+				<div id="includedContent"></div>
 				
 				<p class="note">note that this is version 1 and is subject to change</p>
 				<div class="iframer" id="numworksy"><iframe src="https://www.numworks.com/simulator/embed/" width="368px" height="720px"></iframe><script src="https://www.numworks.com/simulator/embed.js"></script></div>
