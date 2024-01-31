@@ -127,6 +127,13 @@ const endTimeLimit = new Date(today + 'T16:45:01Z').toLocaleTimeString('en-US', 
 fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?timeMin=${today}T08:14:59Z&timeMax=${today}T16:45:01Z&key=${apiKey}`)
     .then(response => response.json())
     .then(data => {
+        // Log all events for today
+        console.log("Today's Schedule:");
+        data.items.forEach(event => {
+            const start = new Date(event.start.dateTime || event.start.date).toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' });
+            const end = new Date(event.end.dateTime || event.end.date).toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' });
+            console.log(`- ${event.summary}: from ${start} to ${end}`);
+        });
        // Filter events within the specified time range
         const eventsWithinTimeRange = data.items.filter(event => {
             const startTime = new Date(event.start.dateTime || event.start.date).toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
