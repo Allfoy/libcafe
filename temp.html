@@ -20,59 +20,618 @@
 		<script src="js/schoolswitch.js"></script>
 		<!--<script src="js/Grabbyevent.js"></script>-->
 		<script src="js/temp.js"></script>
-		<script src="jquery.js"></script> 
-    	<script> $(function(){$("#includedContent").load("lists.html");});</script>
-	</head>
-	<body>
-		<div class="container">
-			<!-- Top Navigation -->
-			<div class="navbar">
-				<a class="codrops-icon codrops-icon-prev" href="https://svol.magister.net/magister/#/vandaag/"><span>To magister agenda</span></a>
-				<span class="right"><a class="codrops-icon codrops-icon-drop" onclick="openWinNh()" ><span>To noordhoff login</span></a></span>
-			</div>
-			<!-- sticky tab -->
-			<div class="tabby">
-				<!-- Events will be displayed here -->
-					<div id="event-container"></div>
-				<!-- Upcoming event and countdown will be displayed here -->
-					<div id="upcoming-event-container"></div>
-			</div>
-			<!-- other tab -->
-			<div class="ybbat" id="events-container"></div>
-			<!-- Top header -->
-			<header>
-				<div class="title"><h1 href="allfoy.github.io/Libcafe">Libcafe <span>a library for us	</span></h1></div>	
-				<nav class="codrops-demos"></nav>
-				<ul class="radio-switch" >
-					<li class="radio-switch__item">
-					  <input class="radio-switch__input ri5-sr-only" type="radio" name="radio-switch-name" id="radio-1" value="" onclick="radio1()" checked>
-					  <label class="radio-switch__label" for="radio-1">School</label>
+</head>
+<body>
+	<div class="container">
+		<!-- Top Navigation -->
+		<div class="navbar">
+			<a class="codrops-icon codrops-icon-prev" href="https://svol.magister.net/magister/#/vandaag/"><span>To magister agenda</span></a>
+			<span class="right"><a class="codrops-icon codrops-icon-drop" onclick="openWinNh()" ><span>To noordhoff login</span></a></span>
+		</div>
+		<!-- sticky tab -->
+		<div class="tabby">
+			<!-- Events will be displayed here -->
+				<div id="event-container"></div>
+			<!-- Upcoming event and countdown will be displayed here -->
+				<div id="upcoming-event-container"></div>
+		</div>
+		<!-- other tab -->
+		<div class="ybbat" id="events-container"></div>
+		<!-- Top header -->
+		<header>
+			<div class="title"><h1 href="allfoy.github.io/Libcafe">Libcafe <span>a library for us	</span></h1></div>	
+			<nav class="codrops-demos"></nav>
+			<ul class="radio-switch" >
+				<li class="radio-switch__item">
+				  <input class="radio-switch__input ri5-sr-only" type="radio" name="radio-switch-name" id="radio-1" value="" onclick="radio1()" checked>
+				  <label class="radio-switch__label" for="radio-1">School</label>
+				</li>
+			  
+				<li class="radio-switch__item">
+				  <input class="radio-switch__input ri5-sr-only" type="radio" name="radio-switch-name" id="radio-2" value="" onclick="radio2()">
+				  <label class="radio-switch__label" for="radio-2">Schooln't</label>
+				  <div aria-hidden="true" class="radio-switch__marker"></div>
+				</li>
+			  </ul>
+			<div class="center"><h6>   </h6>  </div> <!--emptyline after switch-->
+			</header>
+		<div class="component">
+			<ul class="align" id="bookList"> <!-- list for school-->
+				<li>
+					<figure class='book'>
+
+						<!-- Front binas -->
+
+						<ul class='hardcover_front' id="adaptive">
+							<li>
+								<img src="img/bg.jpg" alt="" width="100%" height="100%">	
+							</li>
+							<li></li>
+						</ul>
+
+						<!-- Pages -->
+
+						<ul class='page' id="adaptive">
+							<li></li>
+							<li>
+								<button class="btn" id="event-button" onclick="redirectToLink()">Open</button>
+							</li>
+							<li></li>
+							<li></li>
+							<li></li>
+						</ul>
+
+						<!-- Back -->
+
+						<ul class='hardcover_back' id="adaptive">
+							<li></li>
+							<li></li>
+						</ul>
+						<ul class='book_spine' id="adaptive">
+							<li></li>
+							<li></li>
+						</ul>
+						<figcaption>
+							<h1>Adaptive</h1>
+							<span>By Allfoy :3</span>
+							<p>An adaptive book which goes to the current class' book, how convenient!</p>
+						</figcaption>
+					</figure>
+				</li>
+				<li>
+					<figure class='book'>
+
+						<!-- Front binas -->
+
+						<ul class='hardcover_front' id="binas">
+							<li>
+								<img src="img/binascover.jpg" alt="" width="100%" height="100%">	
+							</li>
+							<li></li>
+						</ul>
+
+						<!-- Pages -->
+
+						<ul class='page' id="binas">
+							<li></li>
+							<li>
+								<a class="btn" href="https://www.docdroid.net/sfy7X0P/binas-pdf">Open</a>
+							</li>
+							<li></li>
+							<li></li>
+							<li></li>
+						</ul>
+
+						<!-- Back -->
+
+						<ul class='hardcover_back' id="binas">
+							<li></li>
+							<li></li>
+						</ul>
+						<ul class='book_spine' id="binas">
+							<li></li>
+							<li></li>
+						</ul>
+						<figcaption>
+							<h1>BiNaS</h1>
+							<span>By Our Scientists</span>
+							<p>The BiNaS Scientists knew exactly what they were doing here. </p>
+						</figcaption>
+					</figure>
+				</li>
+				<li>
+					<figure class='book'>
+
+						<!-- Front ptad -->
+
+						<ul class='hardcover_front' id="ptad">
+							<li>
+								<img src="img/PTAD.png" alt="" width="100%" height="100%">
+							</li>
+							<li></li>
+						</ul>
+
+						<!-- Pages -->
+
+						<ul class='page' id="ptad">
+							<li></li>
+							<li>
+								<a class="btn" href="https://www.docdroid.net/vqnCakk/ptad-new-fr-pdf">Open</a>
+							</li>
+							<li></li>
+							<li></li>
+							<li></li>
+						</ul>
+
+						<!-- Back -->
+
+						<ul class='hardcover_back' id="ptad">
+							<li></li>
+							<li></li>
+						</ul>
+						<ul class='book_spine' id="ptad">
+							<li></li>
+							<li></li>
+						</ul>
+						<figcaption>
+							<h1>The new PTAD</h1>
+							<span>By Allfoy</span>
+							<p>this is the official 5vwo testschedule(outdated) + the PTA and PTD Merged for the subjects NT&NG+MathD </p>
+						</figcaption>
+					</figure>
+				</li>
+				<li>
+					<figure class='book'>
+
+					<!-- Front chem -->
+
+						<ul class='hardcover_front' id="chem">
+							<li>
+									<img src="img/CHEM.jpeg" alt="" width="100%" height="100%">
+							</li>
+							<li></li>
+						</ul>
+
+					<!-- Pages -->
+
+						<ul class='page' id="chem">
+							<li></li>
+							<li>
+								<a class="btn" href="https://apps.noordhoff.nl/se/content/book/3d237f12-c196-4650-839c-bea7f798792e/ebooks/3847b67a-6f0b-4d10-9f5e-d485d7496fda">Book</a>
+							</li>
+							<li><a class="btn2" href="">Theory</a></li>
+							<li></li>
+							<li></li>
+						</ul>
+
+					<!-- Back -->
+
+						<ul class='hardcover_back' id="chem">
+							<li></li>
+							<li></li>
+						</ul>
+						<ul class='book_spine' id="chem">
+							<li></li>
+							<li></li>
+						</ul>
+						<figcaption>
+							<h1>Chemistry</h1>
+							<span>By Noordhoff</span>
+							<p>The officially recognized chemistry book for 5VWO</p>
+						</figcaption>
+					</figure>
+				</li>
+				<li>
+					<figure class='book'>
+
+					<!-- Front bio -->
+
+						<ul class='hardcover_front' id="bio">
+							<li>
+								<img src="img/BIO.jpeg" alt="" width="100%" height="100%">
+							</li>
+							<li></li>
+						</ul>
+
+					<!-- Pages -->
+
+						<ul class='page' id="bio">
+							<li></li>
+							<li>
+								<a class="btn" href="https://apps.noordhoff.nl/se/content/book/3c9f39f7-6a4b-4403-a898-508d1ddcf68f/ebooks/2afd6210-0fb1-4007-8d2a-b63ef7cad649">Book</a>
+							</li>
+							<li><a class="btn2" href="">Theory</a></li>
+							<li></li>
+							<li></li>
+						</ul>
+
+					<!-- Back -->
+
+						<ul class='hardcover_back' id="bio">
+							<li></li>
+							<li></li>
+						</ul>
+						<ul class='book_spine' id="bio">
+							<li></li>
+							<li></li>
+						</ul>
+						<figcaption>
+							<h1>Biology</h1>
+							<span>By Noordhoff</span>
+							<p>The officially recognized Biology book for 5VWO</p>
+						</figcaption>
+					</figure>
+				</li>
+				<li>
+					<figure class='book'>
+
+					<!-- Front eng -->
+
+						<ul class='hardcover_front' id="eng">
+							<li>
+								<img src="img/ENG.jpeg" alt="" width="100%" height="100%">
+							</li>
+							<li></li>
+						</ul>
+
+					<!-- Pages -->
+
+						<ul class='page' id="eng">
+							<li></li>
+							<li>
+								<a class="btn" href="https://apps.noordhoff.nl/se/content/book/4e33ffb8-40c9-45fa-a67c-eae545d7dbea/ebooks/d6cafc0b-fb70-438c-8668-c017ee87ff73">Book</a>
+							</li>
+							<li><a class="btn2" href="">Theory</a></li>
+							<li></li>
+							<li></li>
+						</ul>
+
+					<!-- Back -->
+
+						<ul class='hardcover_back' id="eng">
+							<li></li>
+							<li></li>
+						</ul>
+						<ul class='book_spine' id="eng">
+							<li></li>
+							<li></li>
+						</ul>
+						<figcaption>
+							<h1>English</h1>
+							<span>By Noordhoff</span>
+							<p>The officially recognized English book for 5VWO</p>
+						</figcaption>
+					</figure>
+				</li>
+				<li>
+					<figure class='book'>
+
+					<!-- Front Span -->
+
+						<ul class='hardcover_front' id="span">
+							<li>
+								<img src="img/SPAN.jpeg" alt="" width="100%" height="100%">
+							</li>
+							<li></li>
+						</ul>
+
+					<!-- Pages -->
+
+						<ul class='page' id="span">
+							<li></li>
+							<li>
+								<a class="btn" href="https://apps.noordhoff.nl/se/content/book/443fbd5e-bef7-4222-ae56-f41d5e83e468/ebooks/f71f3bc8-a5aa-4aa4-8951-fbab795b35c0">Book</a>
+							</li>
+							<li><a class="btn2" href="https://www.docdroid.net/vrAnNUz/span-h3h4-pdf">Theory</a></li>
+							<li></li>
+							<li></li>
+						</ul>
+
+					<!-- Back -->
+
+						<ul class='hardcover_back' id="span">
+							<li></li>
+							<li></li>
+						</ul>
+						<ul class='book_spine' id="span">
+							<li></li>
+							<li></li>
+						</ul>
+						<figcaption>
+							<h1>Spanish</h1>
+							<span>By Noordhoff</span>
+							<p>Spanish or vanish</p>
+						</figcaption>
+					</figure>
 					</li>
-				  
-					<li class="radio-switch__item">
-					  <input class="radio-switch__input ri5-sr-only" type="radio" name="radio-switch-name" id="radio-2" value="" onclick="radio2()">
-					  <label class="radio-switch__label" for="radio-2">Schooln't</label>
-					  <div aria-hidden="true" class="radio-switch__marker"></div>
+					<li>
+					<figure class='book'>
+
+					<!-- Front Dutch -->
+
+						<ul class='hardcover_front' id="dutch">
+							<li>
+								<img src="img/DUTCH.jpeg" alt="" width="100%" height="100%">
+							</li>
+							<li></li>
+						</ul>
+
+					<!-- Pages -->
+
+						<ul class='page' id="dutch">
+							<li></li>
+							<li>
+								<a class="btn" href="https://apps.noordhoff.nl/se/content/book/a904673b-f07d-480a-8201-57b56d94112b/ebooks/89f0e06c-3f93-403f-9804-04bad7a197de">Book</a>
+							</li>
+							<li><a class="btn2" href="">Theory</a></li>
+							<li></li>
+							<li></li>
+						</ul>
+
+					<!-- Back -->
+
+						<ul class='hardcover_back' id="dutch">
+							<li></li>
+							<li></li>
+						</ul>
+						<ul class='book_spine' id="dutch">
+							<li></li>
+							<li></li>
+						</ul>
+						<figcaption>
+							<h1>Dutch</h1>
+							<span>By Noordhoff</span>
+							<p>The officially recognized Dutch book for VWO BB</p>
+						</figcaption>
+					</figure>
 					</li>
-				  </ul>
-				<div class="center"><h6>   </h6>  </div> <!--emptyline after switch-->
-				</header>
-			<div class="component">
-			
-				<div id="includedContent"></div>
+					<li>
+					<figure class='book'>
+
+					<!-- Front MathB -->
+
+						<ul class='hardcover_front' id="mathB">
+							<li>
+								<img src="img/MATHB.jpeg" alt="" width="100%" height="100%">
+							</li>
+							<li></li>
+						</ul>
+
+					<!-- Pages -->
+
+						<ul class='page' id="mathB">
+							<li></li>
+							<li>
+								<a class="btn" href="https://apps.noordhoff.nl/se/content/book/0818ce8f-cdb6-468d-b160-6874cfda8372/ebooks/e4405ab2-d6f8-4f64-abf9-d0d327474ab2">Book</a>
+							</li>
+							<li><a class="btn2" href="https://www.docdroid.net/r093keW/mathbh12h13h14-pdf">Theory</a></li>
+							<li></li>
+							<li></li>
+						</ul>
+
+					<!-- Back -->
+
+						<ul class='hardcover_back' id="mathB">
+							<li></li>
+							<li></li>
+						</ul>
+						<ul class='book_spine' id="mathB">
+							<li></li>
+							<li></li>
+						</ul>
+						<figcaption>
+							<h1>MathB</h1>
+							<span>By Noordhoff</span>
+							<p>The officially recognized MathB book for 5VWO</p>
+						</figcaption>
+					</figure>
+					</li>
+					<li>
+					<figure class='book'>
+
+					<!-- Front MathD -->
+
+						<ul class='hardcover_front' id="mathD">
+							<li>
+								<img src="img/MATHD.jpeg" alt="" width="100%" height="100%">
+							</li>
+							<li></li>
+						</ul>
+
+					<!-- Pages -->
+
+						<ul class='page' id="mathD">
+							<li></li>
+							<li>
+								<a class="btn" href="https://apps.noordhoff.nl/se/content/book/4acdfa97-1845-4bf6-8320-10181b908e29/ebooks/a476fd26-1eeb-4c59-979c-16b971e37cc1">Book</a>
+							</li>
+							<li><a class="btn2" href="">Theory</a></li>
+							<li></li>
+							<li></li>
+						</ul>
+
+					<!-- Back -->
+
+						<ul class='hardcover_back' id="mathD">
+							<li></li>
+							<li></li>
+						</ul>
+						<ul class='book_spine' id="mathD">
+							<li></li>
+							<li></li>
+						</ul>
+						<figcaption>
+							<h1>MathD</h1>
+							<span>By Noordhoff</span>
+							<p>The officially recognized MathD book for 5VWO</p>
+						</figcaption>
+					</figure>
+				</li>
 				
-				<p class="note">note that this is version 1 and is subject to change</p>
-				<div class="iframer" id="numworksy"><iframe src="https://www.numworks.com/simulator/embed/" width="368px" height="720px"></iframe><script src="https://www.numworks.com/simulator/embed.js"></script></div>
-				<button class="centeredbutton" onclick="toggleIframe('numworksy')">Toggle numworks</button>
-				<br></br>
-				<button class="centeredbutton" onclick="toggleIframe('weather')">Toggle weather</button>
-				<div>
-					<a class="weatherwidget-io" id="weather" href="https://forecast7.com/en/52d525d47/lelystad/" data-label_1="LELYSTAD" data-label_2="WEATHER" data-font="Trebuchet MS" data-icons="Climacons Animated" data-days="3" data-basecolor="rgb(129, 75, 70)" data-textcolor="#f9f1e3" data-highcolor="#f9f1e3" data-lowcolor="#f9f1e3" data-suncolor="#f9f1e3" data-mooncolor="#f9f1e3" data-cloudcolor="#f9f1e3" data-raincolor="#f9f1e3" data-snowcolor="#f9f1e3" >LELYSTAD WEATHER</a>
-					<script>
-					!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
-					</script>
-				</div>
+			</ul>
+			<ul class="align" id="foodList">
+				<li>
+					<figure class='book'>
+
+						<!-- Front -->
+
+						<ul class='paperback_front'>
+							<li>
+								<img src="img/bg.jpg" alt="" width="100%" height="100%">
+							</li>
+							<li></li>
+						</ul>
+
+						<!-- Pages -->
+
+						<ul class='ruled_paper'>
+							<li></li>
+							<li>
+								<a class="btn" href="https://cloudconvert.com/">Open</a>
+							</li>
+							<li></li>
+							<li></li>
+							<li></li>
+						</ul>
+
+						<!-- Back -->
+
+						<ul class='paperback_back'>
+							<li>
+								<img src="img/bg.jpg" alt="" width="100%" height="100%">
+							</li>
+							<li></li>
+						</ul>
+						<figcaption>
+							<h1>CloudConvert</h1>
+							<span>By Lunaweb GmbH</span>
+							<p>CloudConvert is an online file converter. Supports nearly all audio, video, document, ebook, archive, image, spreadsheet, and presentation formats.</p>
+						</figcaption>
+					</figure>
+				</li>
+				<li>
+					<figure class='book'>
+
+						<!-- Front -->
+
+						<ul class='paperback_front'>
+							<li>
+								<img src="img/paper.jpg" alt="" width="100%" height="100%">
+							</li>
+							<li></li>
+						</ul>
+
+						<!-- Pages -->
+
+						<ul class='ruled_paper'>
+							<li></li>
+							<li>
+								<a class="btn" href="https://pasteboard.co/">Open</a>
+							</li>
+							<li></li>
+							<li></li>
+							<li></li>
+						</ul>
+
+						<!-- Back -->
+
+						<ul class='paperback_back'>
+							<li>
+								<img src="img/paper.jpg" alt="" width="100%" height="100%">
+							</li>
+							<li></li>
+						</ul>
+						<figcaption>
+							<h1>Pasteboard</h1>
+							<span>By Joel Besada</span>
+							<p>Clipboard and drag & drop image sharing web app</p>
+						</figcaption>
+					</figure>
+				</li>
+				<li>
+					<figure class='book'>
+
+						<!-- Front -->
+
+						<ul class='paperback_front green'>
+							<li></li>
+							<li></li>
+						</ul>
+
+						<!-- Pages -->
+
+						<ul class='ruled_paper'>
+							<li></li>
+							<li>
+								<a class="btn" href="https://www.mathcha.io/editor">Open</a>
+							</li>
+							<li></li>
+							<li></li>
+							<li></li>
+						</ul>
+
+						<!-- Back -->
+
+						<ul class='paperback_back green'>
+							<li></li>
+							<li></li>
+						</ul>
+						<figcaption>
+							<h1>Mathcha</h1>
+							<span>By Bui Duc Nha</span>
+							<p>Online Mathematics Editor, a fast way to write and share mathematics</p>
+						</figcaption>
+					</figure>
+				</li>
+				<li>
+					<figure class='book'>
+
+						<!-- Front -->
+
+						<ul class='paperback_front red'>
+							<li></li>
+							<li></li>
+						</ul>
+
+						<!-- Pages -->
+
+						<ul class='ruled_paper'>
+							<li></li>
+							<li>
+								<a class="btn" href="https://skribbl.io/?4VCGC9OC">Open</a>
+							</li>
+							<li></li>
+							<li></li>
+							<li></li>
+						</ul>
+
+						<!-- Back -->
+
+						<ul class='paperback_back red'>
+							<li></li>
+							<li></li>
+						</ul>
+						<figcaption>
+							<h1>Skribbl</h1>
+							<span>By Skribbl</span>
+							<p>skribbl.io is a free online multiplayer drawing and guessing pictionary game.</p>
+						</figcaption>
+					</figure>
+				</li>
+			</ul>
+
+			<p class="note">note that this is version 1 and is subject to change</p>
+			<div class="iframer" id="numworksy"><iframe src="https://www.numworks.com/simulator/embed/" width="368px" height="720px"></iframe><script src="https://www.numworks.com/simulator/embed.js"></script></div>
+			<button class="centeredbutton" onclick="toggleIframe('numworksy')">Toggle numworks</button>
+			<br></br>
+			<button class="centeredbutton" onclick="toggleIframe('weather')">Toggle weather</button>
+			<div>
+				<a class="weatherwidget-io" id="weather" href="https://forecast7.com/en/52d525d47/lelystad/" data-label_1="LELYSTAD" data-label_2="WEATHER" data-font="Trebuchet MS" data-icons="Climacons Animated" data-days="3" data-basecolor="rgb(129, 75, 70)" data-textcolor="#f9f1e3" data-highcolor="#f9f1e3" data-lowcolor="#f9f1e3" data-suncolor="#f9f1e3" data-mooncolor="#f9f1e3" data-cloudcolor="#f9f1e3" data-raincolor="#f9f1e3" data-snowcolor="#f9f1e3" >LELYSTAD WEATHER</a>
+				<script>
+				!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+				</script>
 			</div>
-		</div><!-- /container -->
-	</body>
-</htmain2
+		</div>
+	</div><!-- /container -->
+</body>
+</html>
