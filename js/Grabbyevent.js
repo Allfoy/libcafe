@@ -130,7 +130,7 @@ fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?tim
     .then(data => {
         // Filter events within the specified time range
         const eventsWithinTimeRange = data.items.filter(event => {
-            const startTime = new Date(event.start.dateTime || event.start.date).toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
+            const startTime = new Date(event.start.dateTime || event.start.date);
             return startTime >= startTimeLimit && startTime <= endTimeLimit;
         });
 
