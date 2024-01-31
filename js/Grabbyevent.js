@@ -119,18 +119,19 @@ function redirectToLink() {
 // Get today's date in UTC format
 const today = new Date().toISOString().split('T')[0];
 // Define time limits in Europe/Amsterdam timezone
-/*
+
 const startTimeLimit = new Date(today + 'T08:14:59Z').toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
 const endTimeLimit = new Date(today + 'T16:45:01Z').toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
-*/
+
 // Fetch events from the Google Calendar API
-fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?timeMin=${today}T08:14:59Z&timeMax=${today}T16:45:01Z&key=${apiKey}`)    .then(response => response.json())
+fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`)
+    .then(response => response.json())
     .then(data => {
         // Filter events within the specified time range
-/*        const eventsWithinTimeRange = data.items.filter(event => {
+        const eventsWithinTimeRange = data.items.filter(event => {
             const startTime = new Date(event.start.dateTime || event.start.date).toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
             return startTime >= startTimeLimit && startTime <= endTimeLimit;
-        }); */
+        });
 
         if (eventsWithinTimeRange.length > 0) {
             // Sort events by end time
