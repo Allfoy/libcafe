@@ -204,10 +204,10 @@ iframe {
 	background-color: #f7c8a6;
 	position: fixed;
 	height: auto;
-	width: auto+20vw;
-	padding: 20vw;
-	top: 400vh;
-	left: 0vw;
+	width: auto+20px;
+	padding: 20px;
+	top: 200px;
+	left: 0px;
 	z-index: 9;
 	border-radius: 0px 25px 25px 0px;
 }
@@ -215,10 +215,10 @@ iframe {
 	background-color: #f7c8a6;
 	position: fixed;
 	height: auto;
-	width: auto+20vw;
-	padding: 20vw;
-	top: 400vh;
-	left: 0vw;
+	width: auto+20px;
+	padding: 20px;
+	top: 400px;
+	left: 0px;
 	z-index: 9;
 	border-radius: 0px 25px 25px 0px;
 }
