@@ -1,4 +1,3 @@
-
 const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
 const calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com'; // Replace with your actual calendar ID
 
@@ -117,30 +116,26 @@ function redirectToLink() {
 
 //here code for start and end event times
 // Get today's date in UTC format
-// Get today's date in UTC format
 const today = new Date().toISOString().split('T')[0];
-
 // Define time limits in Europe/Amsterdam timezone
-const startTimeLimit = new Date(today + 'T08:14:59Z').toISOString();
-const endTimeLimit = new Date(today + 'T16:45:01Z').toISOString();
+
+const startTimeLimit = new Date(today + 'T08:14:59Z').toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
+const endTimeLimit = new Date(today + 'T16:45:01Z').toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
 
 // Fetch events from the Google Calendar API
-fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?timeMin=${today}T00:00:00Z&timeMax=${today}T23:59:59Z&key=${apiKey}`)
+/* fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`) */
+fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?timeMin=${today}T08:14:59Z&timeMax=${today}T16:45:01Z&key=${apiKey}`)
     .then(response => response.json())
     .then(data => {
-        // Filter events within the specified time range
+       // Filter events within the specified time range
         const eventsWithinTimeRange = data.items.filter(event => {
-            const startTime = new Date(event.start.dateTime || event.start.date);
+            const startTime = new Date(event.start.dateTime || event.start.date).toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
             return startTime >= startTimeLimit && startTime <= endTimeLimit;
         });
 
         if (eventsWithinTimeRange.length > 0) {
-            // Sort events by start time
-            eventsWithinTimeRange.sort((a, b) => {
-                const startTimeA = new Date(a.start.dateTime || a.start.date);
-                const startTimeB = new Date(b.start.dateTime || b.start.date);
-                return startTimeA - startTimeB;
-            });
+            // Sort events by end time
+            eventsWithinTimeRange.sort((a, b) => new Date(a.end.dateTime || a.end.date) - new Date(b.end.dateTime || b.end.date));
 
             // Extract details for the first and final events
             const firstEvent = {
