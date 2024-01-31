@@ -121,8 +121,8 @@ function redirectToLink() {
 const today = new Date().toISOString().split('T')[0];
 
 // Define time limits in Europe/Amsterdam timezone
-const startTimeLimit = new Date(today + 'T08:14:59Z').toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
-const endTimeLimit = new Date(today + 'T16:45:01Z').toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
+const startTimeLimit = new Date(today + 'T08:14:59Z').toISOString();
+const endTimeLimit = new Date(today + 'T16:45:01Z').toISOString();
 
 // Fetch events from the Google Calendar API
 fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?timeMin=${today}T00:00:00Z&timeMax=${today}T23:59:59Z&key=${apiKey}`)
@@ -135,8 +135,12 @@ fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?tim
         });
 
         if (eventsWithinTimeRange.length > 0) {
-            // Sort events by end time
-            eventsWithinTimeRange.sort((a, b) => new Date(a.end.dateTime || a.end.date) - new Date(b.end.dateTime || b.end.date));
+            // Sort events by start time
+            eventsWithinTimeRange.sort((a, b) => {
+                const startTimeA = new Date(a.start.dateTime || a.start.date);
+                const startTimeB = new Date(b.start.dateTime || b.start.date);
+                return startTimeA - startTimeB;
+            });
 
             // Extract details for the first and final events
             const firstEvent = {
