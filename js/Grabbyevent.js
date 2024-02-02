@@ -47,13 +47,13 @@ function fetchEventsAndUpdateTime() {
                 const eventEnd = new Date(currentEvent.end.dateTime);
 
                 // Display the current time in military format for Amsterdam timezone
-                const currentTime = now.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
+                const currentTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
 
 
                 // Display the current event and time in the container
                 eventContainer.innerHTML = `
                     <h2>${eventTitle}</h2>
-                    <p>${eventStart.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false })} to ${eventEnd.toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false })}</p>
+                    <p>${eventStart.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} to ${eventEnd.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>
                 `;
 
                 // Update the link for the event button based on the current event's title
@@ -119,8 +119,8 @@ function redirectToLink() {
 const today = new Date().toISOString().split('T')[0];
 // Define time limits in Europe/Amsterdam timezone
 
-const startTimeLimit = new Date(today + 'T08:14:59Z').toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
-const endTimeLimit = new Date(today + 'T16:45:01Z').toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
+const startTimeLimit = new Date(today + 'T08:14:59Z').toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+const endTimeLimit = new Date(today + 'T16:45:01Z').toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
 
 // Fetch events from the Google Calendar API
 /* fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`) */
@@ -129,7 +129,7 @@ fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?tim
     .then(data => {
        // Filter events within the specified time range
         const eventsWithinTimeRange = data.items.filter(event => {
-            const startTime = new Date(event.start.dateTime || event.start.date).toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false });
+            const startTime = new Date(event.start.dateTime || event.start.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
             return startTime >= startTimeLimit && startTime <= endTimeLimit;
         });
 
@@ -148,12 +148,12 @@ fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?tim
             // Extract details for the first and final events
             const firstEvent = {
                 summary: eventsWithinTimeRange[0].summary,
-                startTime: new Date(eventsWithinTimeRange[0].start.dateTime || eventsWithinTimeRange[0].start.date).toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false }),
+                startTime: new Date(eventsWithinTimeRange[0].start.dateTime || eventsWithinTimeRange[0].start.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }),
             };
 
             const finalEvent = {
                 summary: eventsWithinTimeRange[eventsWithinTimeRange.length - 1].summary,
-                endTime: new Date(eventsWithinTimeRange[eventsWithinTimeRange.length - 1].end.dateTime || eventsWithinTimeRange[eventsWithinTimeRange.length - 1].end.date).toLocaleTimeString('en-US', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false }),
+                endTime: new Date(eventsWithinTimeRange[eventsWithinTimeRange.length - 1].end.dateTime || eventsWithinTimeRange[eventsWithinTimeRange.length - 1].end.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }),
             };
 
             // Display the events on the HTML page
