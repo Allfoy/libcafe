@@ -168,6 +168,67 @@ function checkTime() {
     fetchEvents(today);
 }
 
+// Function to find free periods
+function findFreePeriods(events) {
+    const freePeriods = [];
+    let expectedBlock = 1;
+
+    for (const event of events) {
+        const eventBlock = parseInt(event.summary.match(/^\d+/)[0]);
+        while (expectedBlock < eventBlock) {
+            const startTime = getTimeForBlock(expectedBlock);
+            const endTime = getTimeForBlock(expectedBlock + 1);
+            freePeriods.push({ block: expectedBlock, startTime, endTime });
+            expectedBlock++;
+        }
+        expectedBlock++;
+    }
+
+    return freePeriods;
+}
+
+// Function to display events
+function displayEvents(firstEvent, finalEvent) {
+    const eventsContainer = document.getElementById('events-container');
+    
+    // Format start time of first event
+    const startTime = new Date(firstEvent.start.dateTime);
+    const formattedStartTime = startTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+
+    // Format end time of final event
+    const endTime = new Date(finalEvent.end.dateTime);
+    const formattedEndTime = endTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+
+    eventsContainer.innerHTML = `
+        <h2>Today's Events</h2>
+        <p><strong>First Event:</strong> ${firstEvent.summary}, <strong>Start Time:</strong> ${formattedStartTime}</p>
+        <p><strong>Final Event:</strong> ${finalEvent.summary}, <strong>End Time:</strong> ${formattedEndTime}</p>
+    `;
+}
+
+// Function to display free periods
+function displayFreePeriods(freePeriods) {
+    const eventsContainer = document.getElementById('events-container');
+    eventsContainer.innerHTML += '<h2>Free Periods</h2>';
+
+    if (freePeriods.length === 0) {
+        eventsContainer.innerHTML += '<p>No free periods found.</p>';
+    } else {
+        freePeriods.forEach(period => {
+            eventsContainer.innerHTML += `<p>Block ${period.block}: ${period.startTime} - ${period.endTime}</p>`;
+        });
+    }
+}
+
+// Helper function to get time for a given block number
+function getTimeForBlock(block) {
+    const baseTime = new Date(today);
+    baseTime.setHours(8, 15, 0); // Start time for the first block
+    const minutesToAdd = 45 * (block - 1);
+    const time = new Date(baseTime.getTime() + minutesToAdd * 60000);
+    return time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+}
+
 // Check the time periodically
 setInterval(checkTime, 60000); // Check every minute
 
