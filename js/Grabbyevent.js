@@ -115,89 +115,56 @@ function redirectToLink() {
 }
 
 //here code for start and end event times and now also missingblocks AKA free periods
-// Get today's date in the format required by the Google Calendar API
-const today = new Date().toISOString().split('T')[0];
-const tomorrow = new Date();
+// Get today's date and tomorrow's date in the format required by the Google Calendar API
+let today = new Date().toISOString().split('T')[0];
+let tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);
-const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
+tomorrow = tomorrow.toISOString().split('T')[0];
 
-// Fetch events from Google Calendar API and check for missing blocks
-fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${today}T00:00:00Z&timeMax=${tomorrowFormatted}T00:00:00Z`)
-    .then(response => response.json())
-    .then(data => {
-        const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
-        const sortedEvents = events.sort((a, b) => {
-            const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
-            const numB = parseInt(b.summary.match(/^\d+/)[0]);
-            return numA - numB; // Sort events based on the numbers in their titles
-        });
+// Function to check if it's 10 minutes after the end time of the final event for today
+function checkTime() {
+    const finalEventEndTime = new Date(finalEvent.end.dateTime);
+    const tenMinutesAfterFinalEventEnd = new Date(finalEventEndTime.getTime() + 10 * 60000); // 10 minutes after final event ends
 
-        const missingBlocks = findMissingBlocks(sortedEvents);
-        const firstEvent = sortedEvents[0];
-        const finalEvent = sortedEvents[sortedEvents.length - 1];
-        displayEvents(firstEvent, finalEvent);
-        displayMissingBlocks(missingBlocks);
-    })
-    .catch(error => console.error('Error fetching data:', error));
+    const currentTime = new Date();
 
-// Display events on the HTML page
-function displayEvents(firstEvent, finalEvent) {
-    const eventsContainer = document.getElementById('events-container');
-    
-    // Format start time of first event
-    const startTime = new Date(firstEvent.start.dateTime);
-    const formattedStartTime = startTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+    if (currentTime >= tenMinutesAfterFinalEventEnd) {
+        // Display events for tomorrow
+        today = tomorrow;
+        tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow = tomorrow.toISOString().split('T')[0];
 
-    // Format end time of final event
-    const endTime = new Date(finalEvent.end.dateTime);
-    const formattedEndTime = endTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
-
-    eventsContainer.innerHTML = `
-        <h2>Today's Events</h2>
-        <p><strong>First Event:</strong> ${firstEvent.summary}, <strong>Start Time:</strong> ${formattedStartTime}</p>
-        <p><strong>Final Event:</strong> ${finalEvent.summary}, <strong>End Time:</strong> ${formattedEndTime}</p>
-    `;
-}
-
-// Function to find missing blocks
-function findMissingBlocks(events) {
-    const missingBlocks = [];
-    let expectedBlock = 1;
-
-    for (const event of events) {
-        const eventBlock = parseInt(event.summary.match(/^\d+/)[0]);
-        while (expectedBlock < eventBlock) {
-            missingBlocks.push(expectedBlock);
-            expectedBlock++;
-        }
-        expectedBlock++;
-    }
-
-    return missingBlocks;
-}
-
-// Function to display missing blocks
-function displayMissingBlocks(missingBlocks) {
-    const eventsContainer = document.getElementById('events-container');
-    eventsContainer.innerHTML += '<h2>Missing Blocks</h2>';
-
-    if (missingBlocks.length === 0) {
-        eventsContainer.innerHTML += '<p>No missing blocks found.</p>';
+        fetchEvents(tomorrow);
     } else {
-        eventsContainer.innerHTML += '<p>Missing Blocks:</p>';
-        missingBlocks.forEach(block => {
-            const startTime = getTimeForBlock(block);
-            const endTime = getTimeForBlock(block + 1);
-            eventsContainer.innerHTML += `<p>Block ${block}: ${startTime} - ${endTime}</p>`;
-        });
+        // Display events for today
+        fetchEvents(today);
     }
 }
 
-// Helper function to get time for a given block number
-function getTimeForBlock(block) {
-    const baseTime = new Date(today);
-    baseTime.setHours(8, 15, 0); // Start time for the first block
-    const minutesToAdd = 45 * (block - 1);
-    const time = new Date(baseTime.getTime() + minutesToAdd * 60000);
-    return time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+// Fetch events from Google Calendar API
+function fetchEvents(date) {
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${date}T00:00:00Z&timeMax=${date}T23:59:59Z`)
+        .then(response => response.json())
+        .then(data => {
+            const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
+            const sortedEvents = events.sort((a, b) => {
+                const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
+                const numB = parseInt(b.summary.match(/^\d+/)[0]);
+                return numA - numB; // Sort events based on the numbers in their titles
+            });
+
+            const freePeriods = findFreePeriods(sortedEvents);
+            const firstEvent = sortedEvents[0];
+            const finalEvent = sortedEvents[sortedEvents.length - 1];
+            displayEvents(firstEvent, finalEvent);
+            displayFreePeriods(freePeriods);
+        })
+        .catch(error => console.error('Error fetching data:', error));
 }
+
+// Check the time periodically
+setInterval(checkTime, 60000); // Check every minute
+
+// Initial check
+checkTime();
