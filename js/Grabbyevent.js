@@ -115,30 +115,36 @@ function redirectToLink() {
 }
 
 //here code for start and end event times and now also missingblocks AKA free periods
+
 // Get today's date and tomorrow's date in the format required by the Google Calendar API
 let today = new Date().toISOString().split('T')[0];
 let tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);
 tomorrow = tomorrow.toISOString().split('T')[0];
 
+let finalEvent; // Define finalEvent variable
+
 // Function to check if it's 10 minutes after the end time of the last event for today
 function checkTime() {
     const currentTime = new Date();
-    const lastEventEndTime = new Date(finalEvent.end.dateTime);
-    const tenMinutesAfterLastEventEnd = new Date(lastEventEndTime.getTime() + 10 * 60000); // 10 minutes after the last event ends
+    if (finalEvent) {
+        const lastEventEndTime = new Date(finalEvent.end.dateTime);
+        const tenMinutesAfterLastEventEnd = new Date(lastEventEndTime.getTime() + 10 * 60000); // 10 minutes after the last event ends
 
-    if (currentTime >= tenMinutesAfterLastEventEnd) {
-        // Display events for tomorrow
-        today = tomorrow;
-        tomorrow = new Date(today);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        tomorrow = tomorrow.toISOString().split('T')[0];
+        if (currentTime >= tenMinutesAfterLastEventEnd) {
+            // Display events for tomorrow
+            today = tomorrow;
+            tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow = tomorrow.toISOString().split('T')[0];
 
-        fetchEvents(tomorrow);
-    } else {
-        // Display events for today
-        fetchEvents(today);
+            fetchEvents(tomorrow);
+            return;
+        }
     }
+
+    // Display events for today
+    fetchEvents(today);
 }
 
 // Fetch events from Google Calendar API
@@ -167,4 +173,3 @@ setInterval(checkTime, 60000); // Check every minute
 
 // Initial check
 checkTime();
-
