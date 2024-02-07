@@ -124,6 +124,27 @@ tomorrow = tomorrow.toISOString().split('T')[0];
 
 let finalEvent; // Define finalEvent variable
 
+// Function to fetch events from Google Calendar API
+function fetchEvents(date) {
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${date}T00:00:00Z&timeMax=${date}T23:59:59Z`)
+        .then(response => response.json())
+        .then(data => {
+            const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
+            const sortedEvents = events.sort((a, b) => {
+                const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
+                const numB = parseInt(b.summary.match(/^\d+/)[0]);
+                return numA - numB; // Sort events based on the numbers in their titles
+            });
+
+            const freePeriods = findFreePeriods(sortedEvents);
+            const firstEvent = sortedEvents[0];
+            finalEvent = sortedEvents[sortedEvents.length - 1]; // Update finalEvent
+            displayEvents(firstEvent, finalEvent);
+            displayFreePeriods(freePeriods);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
+
 // Function to check if it's 10 minutes after the end time of the last event for today
 function checkTime() {
     const currentTime = new Date();
@@ -145,27 +166,6 @@ function checkTime() {
 
     // Display events for today
     fetchEvents(today);
-}
-
-// Fetch events from Google Calendar API
-function fetchEvents(date) {
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${date}T00:00:00Z&timeMax=${date}T23:59:59Z`)
-        .then(response => response.json())
-        .then(data => {
-            const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
-            const sortedEvents = events.sort((a, b) => {
-                const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
-                const numB = parseInt(b.summary.match(/^\d+/)[0]);
-                return numA - numB; // Sort events based on the numbers in their titles
-            });
-
-            const freePeriods = findFreePeriods(sortedEvents);
-            const firstEvent = sortedEvents[0];
-            finalEvent = sortedEvents[sortedEvents.length - 1]; // Update finalEvent
-            displayEvents(firstEvent, finalEvent);
-            displayFreePeriods(freePeriods);
-        })
-        .catch(error => console.error('Error fetching data:', error));
 }
 
 // Check the time periodically
