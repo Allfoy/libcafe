@@ -115,62 +115,40 @@ function redirectToLink() {
 }
 
 //here code for start and end event times
-// Get today's date in UTC format
-const today = new Date().toISOString().split('T')[0];
-// Define time limits in Europe/Amsterdam timezone
-
-const startTimeLimit = new Date(today + 'T08:14:59Z').toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-const endTimeLimit = new Date(today + 'T16:45:01Z').toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-
-// Fetch events from the Google Calendar API
 /* fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`) */
-fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?timeMin=${today}T08:14:59Z&timeMax=${today}T16:45:01Z&key=${apiKey}`)
+fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`)
     .then(response => response.json())
     .then(data => {
-       // Filter events within the specified time range
-        const eventsWithinTimeRange = data.items.filter(event => {
-            const startTime = new Date(event.start.dateTime || event.start.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-            return startTime >= startTimeLimit && startTime <= endTimeLimit;
+        const events = data.items.filter(event => {
+            // Filter events starting with a number and happening today
+            return /^\d/.test(event.summary) && isEventToday(event.start.dateTime);
+        });
+        const sortedEvents = events.sort((a, b) => {
+            const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
+            const numB = parseInt(b.summary.match(/^\d+/)[0]);
+            return numA - numB; // Sort events based on the numbers in their titles
         });
 
-        if (eventsWithinTimeRange.length > 0) {
-            // Sort events by end time
-            eventsWithinTimeRange.sort((a, b) => new Date(a.end.dateTime || a.end.date) - new Date(b.end.dateTime || b.end.date));
-
-            // Log all events for today
-        console.log("Today's Schedule:");
-        data.items.forEach(event => {
-            const start = new Date(event.start.dateTime || event.start.date).toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' });
-            const end = new Date(event.end.dateTime || event.end.date).toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' });
-            console.log(`- ${event.summary}: from ${start} to ${end}`);
-        });
-        
-            // Extract details for the first and final events
-            const firstEvent = {
-                summary: eventsWithinTimeRange[0].summary,
-                startTime: new Date(eventsWithinTimeRange[0].start.dateTime || eventsWithinTimeRange[0].start.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }),
-            };
-
-            const finalEvent = {
-                summary: eventsWithinTimeRange[eventsWithinTimeRange.length - 1].summary,
-                endTime: new Date(eventsWithinTimeRange[eventsWithinTimeRange.length - 1].end.dateTime || eventsWithinTimeRange[eventsWithinTimeRange.length - 1].end.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }),
-            };
-
-            // Display the events on the HTML page
-            displayEvents(firstEvent, finalEvent);
-        } else {
-            // Display a message if no events are found within the specified time range
-            displayEvents("No events for today within the specified time range", "No events for today within the specified time range");
-        }
+        const firstEvent = sortedEvents[0];
+        const finalEvent = sortedEvents[sortedEvents.length - 1];
+        displayEvents(firstEvent, finalEvent);
     })
     .catch(error => console.error('Error fetching data:', error));
+
+// Function to check if an event's date is today
+function isEventToday(eventDate) {
+    const eventDateTime = new Date(eventDate);
+    return eventDateTime.getFullYear() === now.getFullYear() &&
+            eventDateTime.getMonth() === now.getMonth() &&
+            eventDateTime.getDate() === now.getDate();
+}
 
 // Display events on the HTML page
 function displayEvents(firstEvent, finalEvent) {
     const eventsContainer = document.getElementById('events-container');
     eventsContainer.innerHTML = `
         <h2>Today's Events</h2>
-        <p><strong>First Event:</strong> ${firstEvent.summary}, <strong>Start Time:</strong> ${firstEvent.startTime}</p>
-        <p><strong>Final Event:</strong> ${finalEvent.summary}, <strong>End Time:</strong> ${finalEvent.endTime}</p>
+        <p><strong>First Event:</strong> ${firstEvent.summary}, <strong>Start Time:</strong> ${firstEvent.start.dateTime}</p>
+        <p><strong>Final Event:</strong> ${finalEvent.summary}, <strong>End Time:</strong> ${finalEvent.end.dateTime}</p>
     `;
 }
