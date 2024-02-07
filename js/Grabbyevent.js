@@ -141,9 +141,75 @@ fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key
 // Display events on the HTML page
 function displayEvents(firstEvent, finalEvent) {
     const eventsContainer = document.getElementById('events-container');
+
+    // Format start time
+    const startTime = new Date(firstEvent.start.dateTime);
+    const formattedStartTime = startTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+    // Format end time
+    const endTime = new Date(finalEvent.end.dateTime);
+    const formattedEndTime = endTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+
     eventsContainer.innerHTML = `
         <h2>Today's Events</h2>
-        <p><strong>First Event:</strong> ${firstEvent.summary}, <strong>Start Time:</strong> ${firstEvent.start.dateTime}</p>
-        <p><strong>Final Event:</strong> ${finalEvent.summary}, <strong>End Time:</strong> ${finalEvent.end.dateTime}</p>
+        <p><strong>First Event:</strong> ${firstEvent.summary}, <strong>Start Time:</strong> ${formattedStartTime}</p>
+        <p><strong>Final Event:</strong> ${finalEvent.summary}, <strong>End Time:</strong> ${formattedEndTime}</p>
     `;
+}
+
+fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${today}T00:00:00Z&timeMax=${tomorrowFormatted}T00:00:00Z`)
+    .then(response => response.json())
+    .then(data => {
+        const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
+        const sortedEvents = events.sort((a, b) => {
+            const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
+            const numB = parseInt(b.summary.match(/^\d+/)[0]);
+            return numA - numB; // Sort events based on the numbers in their titles
+        });
+
+        const missingBlocks = findMissingBlocks(sortedEvents);
+        displayMissingBlocks(missingBlocks);
+    })
+    .catch(error => console.error('Error fetching data:', error));
+
+// Function to find missing blocks
+function findMissingBlocks(events) {
+    const missingBlocks = [];
+    let expectedBlock = 1;
+
+    for (const event of events) {
+        const eventBlock = parseInt(event.summary.match(/^\d+/)[0]);
+        while (expectedBlock < eventBlock) {
+            missingBlocks.push(expectedBlock);
+            expectedBlock++;
+        }
+        expectedBlock++;
+    }
+
+    return missingBlocks;
+}
+
+// Function to display missing blocks
+function displayMissingBlocks(missingBlocks) {
+    const eventsContainer = document.getElementById('events-container');
+    eventsContainer.innerHTML = '<h2>Missing Blocks</h2>';
+
+    if (missingBlocks.length === 0) {
+        eventsContainer.innerHTML += '<p>No missing blocks found.</p>';
+    } else {
+        eventsContainer.innerHTML += '<p>Missing Blocks:</p>';
+        missingBlocks.forEach(block => {
+            const startTime = getTimeForBlock(block);
+            const endTime = getTimeForBlock(block + 1);
+            eventsContainer.innerHTML += `<p>Block ${block}: ${startTime} - ${endTime}</p>`;
+        });
+    }
+}
+
+// Helper function to get time for a given block number
+function getTimeForBlock(block) {
+    const baseTime = new Date(today);
+    baseTime.setHours(8, 15, 0); // Start time for the first block
+    const minutesToAdd = 45 * (block - 1);
+    const time = new Date(baseTime.getTime() + minutesToAdd * 60000);
+    return time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
 }
