@@ -117,16 +117,45 @@ function redirectToLink() {
 //here code for start and end event times and now also missingblocks AKA free periods
 
 // Get today's date and tomorrow's date in the format required by the Google Calendar API
-let today = new Date().toISOString().split('T')[0];
-let tomorrow = new Date();
+const today = new Date().toISOString().split('T')[0];
+const tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);
-tomorrow = tomorrow.toISOString().split('T')[0];
+const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
 
-let finalEvent; // Define finalEvent variable
+// Fetch events from Google Calendar API and determine which events to display
+fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${today}T00:00:00Z&timeMax=${tomorrowFormatted}T00:00:00Z`)
+    .then(response => response.json())
+    .then(data => {
+        const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
+        const sortedEvents = events.sort((a, b) => {
+            const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
+            const numB = parseInt(b.summary.match(/^\d+/)[0]);
+            return numA - numB; // Sort events based on the numbers in their titles
+        });
 
-// Function to fetch events from Google Calendar API
-function fetchEvents(date) {
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${date}T00:00:00Z&timeMax=${date}T23:59:59Z`)
+        const currentTime = new Date();
+        const finalEvent = sortedEvents[sortedEvents.length - 1];
+        const finalEventEndTime = new Date(finalEvent.end.dateTime);
+        finalEventEndTime.setMinutes(finalEventEndTime.getMinutes() + 10); // Add 10 minutes to the final event end time
+
+        if (currentTime >= finalEventEndTime) {
+            // Display events for tomorrow
+            displayTomorrowEvents();
+        } else {
+            // Display events for today
+            const firstEvent = sortedEvents[0];
+            const finalEvent = sortedEvents[sortedEvents.length - 1];
+            const freePeriods = findFreePeriods(sortedEvents);
+            displayEvents(firstEvent, finalEvent);
+            displayFreePeriods(freePeriods);
+        }
+    })
+    .catch(error => console.error('Error fetching data:', error));
+
+// Display events for tomorrow
+function displayTomorrowEvents() {
+    // Fetch events for tomorrow
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${tomorrowFormatted}T00:00:00Z&timeMax=${tomorrowFormatted}T23:59:59Z`)
         .then(response => response.json())
         .then(data => {
             const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
@@ -136,38 +165,33 @@ function fetchEvents(date) {
                 return numA - numB; // Sort events based on the numbers in their titles
             });
 
-            const freePeriods = findFreePeriods(sortedEvents);
             const firstEvent = sortedEvents[0];
-            finalEvent = sortedEvents[sortedEvents.length - 1]; // Update finalEvent
+            const finalEvent = sortedEvents[sortedEvents.length - 1];
+            const freePeriods = findFreePeriods(sortedEvents);
             displayEvents(firstEvent, finalEvent);
             displayFreePeriods(freePeriods);
         })
         .catch(error => console.error('Error fetching data:', error));
 }
 
-// Function to check if it's 10 minutes after the end time of the last event for today
-function checkTime() {
-    const currentTime = new Date();
-
-    if (finalEvent) {
-        const lastEventEndTime = new Date(finalEvent.end.dateTime);
-        const tenMinutesAfterLastEventEnd = new Date(lastEventEndTime.getTime() + 10 * 60000); // 10 minutes after the last event ends
-
-        if (currentTime >= tenMinutesAfterLastEventEnd) {
-            // Display events for tomorrow
-            tomorrow.setDate(tomorrow.getDate() + 1); // Update tomorrow to the next day
-            today = tomorrow.toISOString().split('T')[0]; // Update today to tomorrow
-            tomorrow.setDate(tomorrow.getDate() + 1); // Reset tomorrow to the day after tomorrow
-
-            fetchEvents(today);
-            return;
-        }
-    }
+// Function to display events on the HTML page
+function displayEvents(firstEvent, finalEvent) {
+    const eventsContainer = document.getElementById('events-container');
     
-    // Display events for today
-    fetchEvents(today);
-}
+    // Format start time of first event
+    const startTime = new Date(firstEvent.start.dateTime);
+    const formattedStartTime = startTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
 
+    // Format end time of final event
+    const endTime = new Date(finalEvent.end.dateTime);
+    const formattedEndTime = endTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+
+    eventsContainer.innerHTML = `
+        <h2>Today's Events</h2>
+        <p><strong>First Event:</strong> ${firstEvent.summary}, <strong>Start Time:</strong> ${formattedStartTime}</p>
+        <p><strong>Final Event:</strong> ${finalEvent.summary}, <strong>End Time:</strong> ${formattedEndTime}</p>
+    `;
+}
 
 // Function to find free periods
 function findFreePeriods(events) {
@@ -186,25 +210,6 @@ function findFreePeriods(events) {
     }
 
     return freePeriods;
-}
-
-// Function to display events
-function displayEvents(firstEvent, finalEvent) {
-    const eventsContainer = document.getElementById('events-container');
-    
-    // Format start time of first event
-    const startTime = new Date(firstEvent.start.dateTime);
-    const formattedStartTime = startTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
-
-    // Format end time of final event
-    const endTime = new Date(finalEvent.end.dateTime);
-    const formattedEndTime = endTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
-
-    eventsContainer.innerHTML = `
-        <h2>Today's Events</h2>
-        <p><strong>First Event:</strong> ${firstEvent.summary}, <strong>Start Time:</strong> ${formattedStartTime}</p>
-        <p><strong>Final Event:</strong> ${finalEvent.summary}, <strong>End Time:</strong> ${formattedEndTime}</p>
-    `;
 }
 
 // Function to display free periods
@@ -229,9 +234,3 @@ function getTimeForBlock(block) {
     const time = new Date(baseTime.getTime() + minutesToAdd * 60000);
     return time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
 }
-
-// Check the time periodically
-setInterval(checkTime, 60000); // Check every minute
-
-// Initial check
-checkTime();
