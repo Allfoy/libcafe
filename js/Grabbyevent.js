@@ -148,25 +148,26 @@ function fetchEvents(date) {
 // Function to check if it's 10 minutes after the end time of the last event for today
 function checkTime() {
     const currentTime = new Date();
+
     if (finalEvent) {
         const lastEventEndTime = new Date(finalEvent.end.dateTime);
         const tenMinutesAfterLastEventEnd = new Date(lastEventEndTime.getTime() + 10 * 60000); // 10 minutes after the last event ends
 
         if (currentTime >= tenMinutesAfterLastEventEnd) {
             // Display events for tomorrow
-            today = tomorrow;
-            tomorrow = new Date(today);
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            tomorrow = tomorrow.toISOString().split('T')[0];
+            tomorrow.setDate(tomorrow.getDate() + 1); // Update tomorrow to the next day
+            today = tomorrow.toISOString().split('T')[0]; // Update today to tomorrow
+            tomorrow.setDate(tomorrow.getDate() + 1); // Reset tomorrow to the day after tomorrow
 
-            fetchEvents(tomorrow);
+            fetchEvents(today);
             return;
         }
     }
-
+    
     // Display events for today
     fetchEvents(today);
 }
+
 
 // Function to find free periods
 function findFreePeriods(events) {
