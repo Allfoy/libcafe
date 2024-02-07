@@ -115,14 +115,17 @@ function redirectToLink() {
 }
 
 //here code for start and end event times
-/* fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`) */
-fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`)
+// Get today's date in the format required by the Google Calendar API
+const today = new Date().toISOString().split('T')[0];
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
+
+// Fetch events within the date range of today
+fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${today}T00:00:00Z&timeMax=${tomorrowFormatted}T00:00:00Z`)
     .then(response => response.json())
     .then(data => {
-        const events = data.items.filter(event => {
-            // Filter events starting with a number and happening today
-            return /^\d/.test(event.summary) && isEventToday(event.start.dateTime);
-        });
+        const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
         const sortedEvents = events.sort((a, b) => {
             const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
             const numB = parseInt(b.summary.match(/^\d+/)[0]);
@@ -134,15 +137,7 @@ fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key
         displayEvents(firstEvent, finalEvent);
     })
     .catch(error => console.error('Error fetching data:', error));
-
-// Function to check if an event's date is today
-function isEventToday(eventDate) {
-    const eventDateTime = new Date(eventDate);
-    return eventDateTime.getFullYear() === now.getFullYear() &&
-            eventDateTime.getMonth() === now.getMonth() &&
-            eventDateTime.getDate() === now.getDate();
-}
-
+    
 // Display events on the HTML page
 function displayEvents(firstEvent, finalEvent) {
     const eventsContainer = document.getElementById('events-container');
