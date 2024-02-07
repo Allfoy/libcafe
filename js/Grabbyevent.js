@@ -121,14 +121,13 @@ let tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);
 tomorrow = tomorrow.toISOString().split('T')[0];
 
-// Function to check if it's 10 minutes after the end time of the final event for today
+// Function to check if it's 10 minutes after the end time of the last event for today
 function checkTime() {
-    const finalEventEndTime = new Date(finalEvent.end.dateTime);
-    const tenMinutesAfterFinalEventEnd = new Date(finalEventEndTime.getTime() + 10 * 60000); // 10 minutes after final event ends
-
     const currentTime = new Date();
+    const lastEventEndTime = new Date(finalEvent.end.dateTime);
+    const tenMinutesAfterLastEventEnd = new Date(lastEventEndTime.getTime() + 10 * 60000); // 10 minutes after the last event ends
 
-    if (currentTime >= tenMinutesAfterFinalEventEnd) {
+    if (currentTime >= tenMinutesAfterLastEventEnd) {
         // Display events for tomorrow
         today = tomorrow;
         tomorrow = new Date(today);
@@ -156,7 +155,7 @@ function fetchEvents(date) {
 
             const freePeriods = findFreePeriods(sortedEvents);
             const firstEvent = sortedEvents[0];
-            const finalEvent = sortedEvents[sortedEvents.length - 1];
+            finalEvent = sortedEvents[sortedEvents.length - 1]; // Update finalEvent
             displayEvents(firstEvent, finalEvent);
             displayFreePeriods(freePeriods);
         })
@@ -168,3 +167,4 @@ setInterval(checkTime, 60000); // Check every minute
 
 // Initial check
 checkTime();
+
