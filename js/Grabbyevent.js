@@ -238,29 +238,42 @@ function displayFreePeriods(freePeriods) {
     }
 }
 
-// Helper function to get time for a given block number
+// Helper function to get starttime for a given block number
 function getTimeForBlock(block) {
-    const baseTime = new Date(today);
-    baseTime.setHours(8, 15, 0); // Start time for the first block
-
-    // Define break periods
-    const breakPeriods = [
-        { start: 10, end: 30, duration: 20 },
-        { start: 12, end: 20, duration: 25 },
-        { start: 14, end: 15, duration: 15 }
-    ];
-
-    // Adjust time for breaks
-    for (const period of breakPeriods) {
-        if (block > period.start && block < period.end) {
-            baseTime.setHours(period.start, period.duration, 0);
-            baseTime.setMinutes(baseTime.getMinutes() + (block - period.end) * 45);
-            return baseTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+    // let's do manual blocks for now
+    switch (block) {
+        case 0:
+            time.setHours(8, 15, 0);
+        break;
+        case 1:
+            time.setHours(9, 0, 0);
+        break;
+        case 2:
+            time.setHours(9, 45, 0);
+        break;
+        case 3:
+            time.setHours(10, 50, 0);
+        break;
+        case 4:
+            time.setHours(11, 35, 0);
+        break;
+        case 5:
+            time.setHours(12, 45, 0);
+        break;
+        case 6:
+            time.setHours(13, 30, 0);
+        break;
+        case 7:
+            time.setHours(14, 30, 0);
+        break;
+        case 8:
+            time.setHours(15, 15, 0);
+        break;
+        case 9:
+            time.setHours(16, 0, 0);
         }
-    }
-
-    baseTime.setMinutes(baseTime.getMinutes() + (block - 1) * 45);
-    return baseTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+    return time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
 }
+
 
 
