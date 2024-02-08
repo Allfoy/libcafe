@@ -244,40 +244,10 @@ function displayFreePeriods(freePeriods) {
 
 // Helper function to get starttime for a given block number
 function getTimeForBlock(block) {
-    // let's do manual blocks for now
-    const time = new Date(today);
-    switch (block) {
-        case 0:
-            time.setHours(8, 15, 0);
-        break;
-        case 1:
-            time.setHours(9, 0, 0);
-        break;
-        case 2:
-            time.setHours(9, 45, 0);
-        break;
-        case 3:
-            time.setHours(10, 50, 0);
-        break;
-        case 4:
-            time.setHours(11, 35, 0);
-        break;
-        case 5:
-            time.setHours(12, 45, 0);
-        break;
-        case 6:
-            time.setHours(13, 30, 0);
-        break;
-        case 7:
-            time.setHours(14, 30, 0);
-        break;
-        case 8:
-            time.setHours(15, 15, 0);
-        break;
-        case 9:
-            time.setHours(16, 0, 0);
-        }
-    return time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+  const blockStartTimes = ["00:00", "08:15", "09:00", "09:45", "10:50", "11:35", "12:45", "13:30", "14:30", "15:15", "16:00"];
+  const time = new Date();
+  time.setHours(...blockStartTimes[block].split(":"));
+  return time.toLocaleTimeString('en-US', {hour12: false,hour: '2-digit',minute: '2-digit'});
 }
 
 
