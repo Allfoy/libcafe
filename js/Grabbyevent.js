@@ -232,7 +232,7 @@ function displayFreePeriods(freePeriods) {
         eventsContainer.innerHTML += '<p>No free periods found.</p>';
     } else {
         freePeriods.forEach(period => {
-            eventsContainer.innerHTML += `<p>Block ${period.block}: ${period.startTime} to ${period.endTime}</p>`;
+            eventsContainer.innerHTML += `<p><strong>Block ${period.block}:</strong> ${period.startTime} to ${period.endTime}</p>`;
         });
     }
 }
