@@ -1,4 +1,4 @@
-import { addminutes} from "date-fns/fp";
+
 
 const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
 const calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com'; // Replace with your actual calendar ID
@@ -196,8 +196,10 @@ function displayEvents(firstEvent, finalEvent) {
     `;
 }
 
+import { addminutes} from "date-fns/fp";
 // Function to find free periods
 function findFreePeriods(events) {
+    
     const freePeriods = [];
     let lastEventBlock = 0;
 
