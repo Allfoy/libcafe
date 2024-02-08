@@ -206,8 +206,8 @@ function findFreePeriods(events) {
         const eventBlock = parseInt(event.summary.match(/^\d+/)[0]);
         while (lastEventBlock < eventBlock - 1) {
             const block = lastEventBlock + 1;
-            const startTime = getTimeForBlock(block);
-            const endTime = new Date(getTimeForBlock(block).getTime() + 45*60000); // End time is 45 minutes after start time
+            const startTime = getTimeForBlock(block).toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });;
+            const endTime = new Date(getTimeForBlock(block).getTime() + 45*60000).toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });; // End time is 45 minutes after start time
             freePeriods.push({ block, startTime, endTime });
             lastEventBlock++;
         }
@@ -217,8 +217,8 @@ function findFreePeriods(events) {
     // Add the last block if it's a free period
     if (lastEventBlock < 10) {
         const block = lastEventBlock + 1;
-        const startTime = getTimeForBlock(block);
-        const endTime = new Date(getTimeForBlock(block).getTime() + 45*60000); // End time is 45 minutes after start time
+        const startTime = getTimeForBlock(block).toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });;
+        const endTime = new Date(getTimeForBlock(block).getTime() + 45*60000).toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });; // End time is 45 minutes after start time
         freePeriods.push({ block, startTime, endTime });
     }
 
