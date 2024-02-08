@@ -209,6 +209,13 @@ function findFreePeriods(events) {
         expectedBlock++;
     }
 
+    // Add the last block if it's a free period
+    if (expectedBlock <= 10) {
+        const startTime = getTimeForBlock(expectedBlock);
+        const endTime = getTimeForBlock(expectedBlock + 1);
+        freePeriods.push({ block: expectedBlock, startTime, endTime });
+    }
+
     return freePeriods;
 }
 
