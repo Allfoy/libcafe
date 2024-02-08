@@ -243,11 +243,11 @@ function getTimeForBlock(block) {
     baseTime.setHours(8, 15, 0); // Start time for the first block
     
     // Adjust for breaks
-    if (block > 3 && block < 5) {
+    if (block >= 3 && block <= 5) {
         baseTime.setHours(10, 50, 0); // Set time to end of break 3
-    } else if (block > 5 && block < 7) {
+    } else if (block >= 5 && block <= 7) {
         baseTime.setHours(12, 45, 0); // Set time to end of break 5
-    } else if (block > 7 && block < 9) {
+    } else if (block >= 7 && block <= 8) {
         baseTime.setHours(14, 30, 0); // Set time to end of break 7
     }
 
