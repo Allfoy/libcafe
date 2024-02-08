@@ -54,7 +54,7 @@ function fetchEventsAndUpdateTime() {
                 eventContainer.innerHTML = `
                     <h2>${eventTitle}</h2>
                     <p>${eventStart.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} to ${eventEnd.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>
-                    <p>${currentTime}</p>
+                    <p>Time:${currentTime}</p>
                     `;
 
                 // Update the link for the event button based on the current event's title
