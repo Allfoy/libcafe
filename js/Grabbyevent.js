@@ -46,7 +46,7 @@ function fetchEventsAndUpdateTime() {
                 const eventStart = new Date(currentEvent.start.dateTime);
                 const eventEnd = new Date(currentEvent.end.dateTime);
 
-                // Display the current time in military format for Amsterdam timezone
+                // Display the current time in military format
                 const currentTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
 
 
@@ -54,7 +54,8 @@ function fetchEventsAndUpdateTime() {
                 eventContainer.innerHTML = `
                     <h2>${eventTitle}</h2>
                     <p>${eventStart.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} to ${eventEnd.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>
-                `;
+                    <p>${currentTime}</p>
+                    `;
 
                 // Update the link for the event button based on the current event's title
                 const link = getLinkForEvent(eventTitle);
@@ -231,7 +232,7 @@ function displayFreePeriods(freePeriods) {
         eventsContainer.innerHTML += '<p>No free periods found.</p>';
     } else {
         freePeriods.forEach(period => {
-            eventsContainer.innerHTML += `<p>Block ${period.block}: ${period.startTime} - ${period.endTime}</p>`;
+            eventsContainer.innerHTML += `<p>Block ${period.block}: ${period.startTime} to ${period.endTime}</p>`;
         });
     }
 }
