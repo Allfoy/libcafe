@@ -202,9 +202,7 @@ function findFreePeriods(events) {
     const freePeriods = [];
     let lastEventBlock = 0;
 
-    // Start loop from the second event and end before the last event
-    for (let i = 1; i < events.length - 1; i++) {
-        const event = events[i];
+    for (const event of events) {
         const eventBlock = parseInt(event.summary.match(/^\d+/)[0]);
         while (lastEventBlock < eventBlock - 1) {
             const block = lastEventBlock + 1;
@@ -226,6 +224,8 @@ function findFreePeriods(events) {
 
     return freePeriods;
 }
+
+
 
 
 
