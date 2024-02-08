@@ -196,28 +196,31 @@ function displayEvents(firstEvent, finalEvent) {
 // Function to find free periods
 function findFreePeriods(events) {
     const freePeriods = [];
-    let expectedBlock = 1;
+    let lastEventBlock = 0;
 
     for (const event of events) {
         const eventBlock = parseInt(event.summary.match(/^\d+/)[0]);
-        while (expectedBlock < eventBlock) {
-            const startTime = getTimeForBlock(expectedBlock);
-            const endTime = getTimeForBlock(expectedBlock + 1);
-            freePeriods.push({ block: expectedBlock, startTime, endTime });
-            expectedBlock++;
+        while (lastEventBlock < eventBlock - 1) {
+            const block = lastEventBlock + 1;
+            const startTime = getTimeForBlock(block);
+            const endTime = getTimeForBlock(block + 1);
+            freePeriods.push({ block, startTime, endTime });
+            lastEventBlock++;
         }
-        expectedBlock++;
+        lastEventBlock = eventBlock;
     }
 
     // Add the last block if it's a free period
-    if (expectedBlock <= 10) {
-        const startTime = getTimeForBlock(expectedBlock);
-        const endTime = getTimeForBlock(expectedBlock + 1);
-        freePeriods.push({ block: expectedBlock, startTime, endTime });
+    if (lastEventBlock < 10) {
+        const block = lastEventBlock + 1;
+        const startTime = getTimeForBlock(block);
+        const endTime = getTimeForBlock(block + 1);
+        freePeriods.push({ block, startTime, endTime });
     }
 
     return freePeriods;
 }
+
 
 // Function to display free periods
 function displayFreePeriods(freePeriods) {
