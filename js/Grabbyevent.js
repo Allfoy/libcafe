@@ -1,3 +1,5 @@
+import { addminutes} from "date-fns/fp";
+
 const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
 const calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com'; // Replace with your actual calendar ID
 
@@ -204,7 +206,7 @@ function findFreePeriods(events) {
         while (lastEventBlock < eventBlock - 1) {
             const block = lastEventBlock + 1;
             const startTime = getTimeForBlock(block);
-            const endTime = getTimeForBlock(block) + 45; // End time is 45 minutes after start time
+            const endTime = addminutes(getTimeForBlock(block),45); // End time is 45 minutes after start time
             freePeriods.push({ block, startTime, endTime });
             lastEventBlock++;
         }
@@ -215,7 +217,7 @@ function findFreePeriods(events) {
     if (lastEventBlock < 10) {
         const block = lastEventBlock + 1;
         const startTime = getTimeForBlock(block);
-        const endTime = getTimeForBlock(block) + 45; // End time is 45 minutes after start time
+        const endTime = addminutes(getTimeForBlock(block),45); // End time is 45 minutes after start time
         freePeriods.push({ block, startTime, endTime });
     }
 
@@ -241,6 +243,7 @@ function displayFreePeriods(freePeriods) {
 // Helper function to get starttime for a given block number
 function getTimeForBlock(block) {
     // let's do manual blocks for now
+    const time = new Date(today);
     switch (block) {
         case 0:
             time.setHours(8, 15, 0);
