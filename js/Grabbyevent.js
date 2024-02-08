@@ -243,11 +243,9 @@ function displayFreePeriods(freePeriods) {
 
 // Helper function to get starttime for a given block number
 function getTimeForBlock(block) {
-  const blockStartTimes = ["00:00", "08:15", "09:00", "09:45", "10:50", "11:35", "12:45", "13:30", "14:30", "15:15", "16:00"];
-  const time = new Date();
-  time.setHours(...blockStartTimes[block].split(":"));
-  return time.toLocaleTimeString('en-US', {hour12: false,hour: '2-digit',minute: '2-digit'});
+    const blockStartTimes = ["00:00", "08:15", "09:00", "09:45", "10:50", "11:35", "12:45", "13:30", "14:30", "15:15", "16:00"];
+    const [hours, minutes] = blockStartTimes[block].split(":");
+    const currentDate = new Date();
+    currentDate.setHours(parseInt(hours), parseInt(minutes), 0, 0); // Set hours, minutes, seconds, and milliseconds
+    return currentDate;
 }
-
-
-
