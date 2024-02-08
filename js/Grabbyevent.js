@@ -244,14 +244,14 @@ function getTimeForBlock(block) {
     
     // Adjust for breaks
     if (block === 4) {
-        baseTime.setHours(10, 50, 0);
+        baseTime.setHours(10, 50, 0); // End time for break 1, start time for 4
     } else if (block === 6) {
-        baseTime.setHours(12, 45, 0);
+        baseTime.setHours(12, 45, 0); // End time for break 2, start time for 6
     } else if (block === 8) {
-        baseTime.setHours(14, 30, 0);
+        baseTime.setHours(14, 30, 0); // End time for break 3, start time for 8
     }
 
-    const minutesToAdd = 45 * (block - 1);
-    const time = new Date(baseTime.getTime() + minutesToAdd * 60000);
+    const minutesToAdd = 45; // Each block is 45 minutes
+    const time = new Date(baseTime.getTime() + minutesToAdd * (block - 1) * 60000); // Calculate end time
     return time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
 }
