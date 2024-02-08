@@ -196,7 +196,6 @@ function displayEvents(firstEvent, finalEvent) {
     `;
 }
 
-import { addminutes} from "date-fns/fp";
 // Function to find free periods
 function findFreePeriods(events) {
     
@@ -208,7 +207,7 @@ function findFreePeriods(events) {
         while (lastEventBlock < eventBlock - 1) {
             const block = lastEventBlock + 1;
             const startTime = getTimeForBlock(block);
-            const endTime = addminutes(getTimeForBlock(block),45); // End time is 45 minutes after start time
+            const endTime = new Date(getTimeForBlock(block).getTime() + 45*60000); // End time is 45 minutes after start time
             freePeriods.push({ block, startTime, endTime });
             lastEventBlock++;
         }
@@ -219,7 +218,7 @@ function findFreePeriods(events) {
     if (lastEventBlock < 10) {
         const block = lastEventBlock + 1;
         const startTime = getTimeForBlock(block);
-        const endTime = addminutes(getTimeForBlock(block),45); // End time is 45 minutes after start time
+        const endTime = new Date(getTimeForBlock(block).getTime() + 45*60000); // End time is 45 minutes after start time
         freePeriods.push({ block, startTime, endTime });
     }
 
