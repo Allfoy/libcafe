@@ -241,6 +241,16 @@ function displayFreePeriods(freePeriods) {
 function getTimeForBlock(block) {
     const baseTime = new Date(today);
     baseTime.setHours(8, 15, 0); // Start time for the first block
+    
+    // Adjust for breaks
+    if (block > 3 && block < 5) {
+        baseTime.setHours(10, 50, 0); // Set time to end of break 3
+    } else if (block > 5 && block < 7) {
+        baseTime.setHours(12, 45, 0); // Set time to end of break 5
+    } else if (block > 7 && block < 9) {
+        baseTime.setHours(14, 30, 0); // Set time to end of break 7
+    }
+
     const minutesToAdd = 45 * (block - 1);
     const time = new Date(baseTime.getTime() + minutesToAdd * 60000);
     return time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
