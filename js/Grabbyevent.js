@@ -204,7 +204,7 @@ function findFreePeriods(events) {
         while (lastEventBlock < eventBlock - 1) {
             const block = lastEventBlock + 1;
             const startTime = getTimeForBlock(block);
-            const endTime = getTimeForBlock(block + 1);
+            const endTime = getTimeForBlock(block) + 45; // End time is 45 minutes after start time
             freePeriods.push({ block, startTime, endTime });
             lastEventBlock++;
         }
@@ -215,12 +215,13 @@ function findFreePeriods(events) {
     if (lastEventBlock < 10) {
         const block = lastEventBlock + 1;
         const startTime = getTimeForBlock(block);
-        const endTime = getTimeForBlock(block + 1);
+        const endTime = getTimeForBlock(block) + 45; // End time is 45 minutes after start time
         freePeriods.push({ block, startTime, endTime });
     }
 
     return freePeriods;
 }
+
 
 
 // Function to display free periods
@@ -241,17 +242,25 @@ function displayFreePeriods(freePeriods) {
 function getTimeForBlock(block) {
     const baseTime = new Date(today);
     baseTime.setHours(8, 15, 0); // Start time for the first block
-    
-    // Adjust for breaks
-    if (block === 4) {
-        baseTime.setHours(10, 50, 0); // End time for break 1, start time for 4
-    } else if (block === 6) {
-        baseTime.setHours(12, 45, 0); // End time for break 2, start time for 6
-    } else if (block === 8) {
-        baseTime.setHours(14, 30, 0); // End time for break 3, start time for 8
+
+    // Define break periods
+    const breakPeriods = [
+        { start: 10, end: 30, duration: 20 },
+        { start: 12, end: 20, duration: 25 },
+        { start: 14, end: 15, duration: 15 }
+    ];
+
+    // Adjust time for breaks
+    for (const period of breakPeriods) {
+        if (block > period.start && block < period.end) {
+            baseTime.setHours(period.start, period.duration, 0);
+            baseTime.setMinutes(baseTime.getMinutes() + (block - period.end) * 45);
+            return baseTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+        }
     }
 
-    const minutesToAdd = 45; // Each block is 45 minutes
-    const time = new Date(baseTime.getTime() + minutesToAdd * (block - 1) * 60000); // Calculate end time
-    return time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+    baseTime.setMinutes(baseTime.getMinutes() + (block - 1) * 45);
+    return baseTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
 }
+
+
