@@ -63,7 +63,8 @@ function fetchEventsAndUpdateTime() {
                 const link = getLinkForEvent(eventTitle);
                 eventButton.href = link;
             } else {
-                eventContainer.innerHTML = '<p>No ongoing events.</p><p>Time:${currentTime}</p>';
+                const currentTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+                eventContainer.innerHTML = `<p>No ongoing events.</p><p>Time:${currentTime}</p>`;
                 eventButton.href = 'https://allfoy.github.io/libcafe/error1'; // Set a default link or disable the button if no ongoing event
             }
 // here code for upcoming event and time remaining
