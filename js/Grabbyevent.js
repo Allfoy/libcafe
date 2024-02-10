@@ -136,23 +136,26 @@ fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key
             const numB = parseInt(b.summary.match(/^\d+/)[0]);
             return numA - numB; // Sort events based on the numbers in their titles
         });
-
+// logic for changing to tommorow if it's 10 min after finalevent
         const currentTime = new Date();
         const finalEvent = sortedEvents[sortedEvents.length - 1];
-        const finalEventEndTime = new Date(finalEvent.end.dateTime);
-        finalEventEndTime.setMinutes(finalEventEndTime.getMinutes() + 10); // Add 10 minutes to the final event end time
-
-        if (currentTime >= finalEventEndTime) {
-            // Display events for tomorrow
-            displayTomorrowEvents();
+        if (finalEvent && finalEvent.end && finalEvent.end.dateTime) {
+            const finalEventEndTime = new Date(finalEvent.end.dateTime);
+            finalEventEndTime.setMinutes(finalEventEndTime.getMinutes() + 10); // Add 10 minutes to the final event end time
+            if (currentTime >= finalEventEndTime) {
+                // Display events for tomorrow
+                displayTomorrowEvents();
+            } else {
+                // Display events for today
+                const firstEvent = sortedEvents[0];
+                const finalEvent = sortedEvents[sortedEvents.length - 1];
+                const freePeriods = findFreePeriods(sortedEvents);
+                displayEvents(firstEvent, finalEvent);
+                displayFreePeriods(freePeriods);
+            }
         } else {
-            // Display events for today
-            const firstEvent = sortedEvents[0];
-            const finalEvent = sortedEvents[sortedEvents.length - 1];
-            const freePeriods = findFreePeriods(sortedEvents);
-            displayEvents(firstEvent, finalEvent);
-            displayFreePeriods(freePeriods);
-        }
+            document.getElementById('events-container').innerHTML = `no events today fella`;
+        }        
     })
     .catch(error => console.error('Error fetching data:', error));
 
@@ -252,4 +255,23 @@ function getTimeForBlock(block) {
     const startFP = new Date();
     startFP.setHours(parseInt(hours), parseInt(minutes), 0, 0); // Set hours, minutes, seconds, and milliseconds
     return startFP;
+}
+
+// funcion to change icon based on current situation
+/*
+function icony() {
+    var now = Date.now();
+    const minim = Date.parse('00:17:00');
+    const maxim = Date.parse('00:17:04');
+    if (now >= minim && now <= maxim) {
+    document.getElementById('myImg').src='https://picsum.photos/200/100?random=2'
+}} */
+
+function changeImage() {
+    var image = document.getElementById('icony');
+    if (image.src.match("https://fakeimg.pl/200x100/cccccc/ff0d0d")) {
+        image.src = "https://fakeimg.pl/200x100/cccccc/0d39ff";
+    } else {
+        image.src = "https://fakeimg.pl/200x100/cccccc/ff0d0d";
+    }
 }

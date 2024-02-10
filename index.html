@@ -19,6 +19,7 @@
 		<script src="js/Toggler.js"></script>
 		<script src="js/schoolswitch.js"></script>
 		<script src="js/Grabbyevent.js"></script>
+		<script src="js/main.js"></script>
 		
 	</head>
 	<body>
@@ -29,30 +30,33 @@
 				<span class="right"><a class="codrops-icon codrops-icon-drop" onclick="openWinNh()" ><span>To noordhoff login</span></a></span>
 			</div>
 			<!-- sticky tab -->
-			<div class="tabby">
+			<div class="tabby" id="tabby" onclick="hidey('tabby')">
 				<!-- Events will be displayed here -->
 					<div id="event-container"></div>
 				<!-- Upcoming event and countdown will be displayed here -->
 					<div id="upcoming-event-container"></div>
 			</div>
 			<!-- other tab -->
-			<div class="ybbat" id="events-container"></div>
+			<div class="ybbat" id="ybbat" onclick="hidey('ybbat')">
+				<div id="events-container"></div>
+			</div>
 			<!-- Top header -->
 			<header>
 				<div class="title"><h1 href="allfoy.github.io/Libcafe">Libcafe <span>a library for us	</span></h1></div>	
-				<nav class="codrops-demos"></nav>
 				<ul class="radio-switch" >
 					<li class="radio-switch__item">
-					  <input class="radio-switch__input ri5-sr-only" type="radio" name="radio-switch-name" id="radio-1" value="" onclick="radio1()" checked>
-					  <label class="radio-switch__label" for="radio-1">School</label>
+						<input class="radio-switch__input ri5-sr-only" type="radio" name="radio-switch-name" id="radio-1" value="" onclick="radio1()" checked>
+						<label class="radio-switch__label" for="radio-1">School</label>
 					</li>
-				  
+				
 					<li class="radio-switch__item">
-					  <input class="radio-switch__input ri5-sr-only" type="radio" name="radio-switch-name" id="radio-2" value="" onclick="radio2()">
-					  <label class="radio-switch__label" for="radio-2">Schooln't</label>
-					  <div aria-hidden="true" class="radio-switch__marker"></div>
+						<input class="radio-switch__input ri5-sr-only" type="radio" name="radio-switch-name" id="radio-2" value="" onclick="radio2()">
+						<label class="radio-switch__label" for="radio-2">Schooln't</label>
+					<div aria-hidden="true" class="radio-switch__marker"></div>
 					</li>
-				  </ul>
+					</ul>
+				<div class="weekday" id="weekday">errorday</div>
+				<img class="icony" id="icony" onclick="changeImage()" src="https://fakeimg.pl/200x100/cccccc/ff0d0d"></img>
 				<div class="center"><h6>   </h6>  </div> <!--emptyline after switch-->
 				</header>
 			<div class="component">
@@ -259,6 +263,47 @@
 								<h1>Biology</h1>
 								<span>By Noordhoff</span>
 								<p>The officially recognized Biology book for 5VWO</p>
+							</figcaption>
+						</figure>
+					</li>
+					<li>
+						<figure class='book'>
+
+						<!-- Front physics -->
+
+							<ul class='hardcover_front' id="physics">
+								<li>
+									<img src="img/physics.jpg" alt="" width="100%" height="100%">
+								</li>
+								<li></li>
+							</ul>
+
+						<!-- Pages -->
+
+							<ul class='page' id="physics">
+								<li></li>
+								<li>
+									<a class="btn" href="https://e-book.boomdigitaal.nl/boek/9789464420180?layoutmode-double=1/sso">Book</a>
+								</li>
+								<li><a class="btn2" href="">Theory</a></li>
+								<li></li>
+								<li></li>
+							</ul>
+
+						<!-- Back -->
+
+							<ul class='hardcover_back' id="physics">
+								<li></li>
+								<li></li>
+							</ul>
+							<ul class='book_spine' id="physics">
+								<li></li>
+								<li></li>
+							</ul>
+							<figcaption>
+								<h1>Physics</h1>
+								<span>By Boom voortgezet onderwijs</span>
+								<p>The officially recognized Physics book for 5VWO</p>
 							</figcaption>
 						</figure>
 					</li>
