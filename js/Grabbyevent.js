@@ -267,11 +267,21 @@ function icony() {
     document.getElementById('myImg').src='https://picsum.photos/200/100?random=2'
 }} */
 
-function changeImage() {
-    var image = document.getElementById('icony');
-    if (image.src.match("https://fakeimg.pl/200x100/cccccc/ff0d0d")) {
-        image.src = "https://fakeimg.pl/200x100/cccccc/0d39ff";
-    } else {
-        image.src = "https://fakeimg.pl/200x100/cccccc/ff0d0d";
-    }
+document.addEventListener('DOMContentLoaded', function() {adaptiveicon()})
+function adaptiveicon(){
+    const currentTime = new Date();
+    const startTime = new Date().setHours(8, 15, 0);
+    const endTime = new Date().setHours(16, 45, 0);
+    // check if weekend {be dark green}
+    if(new Date().getDay() === 6 || new Date().getDay() === 0) {
+        var image = document.getElementById('icony');
+        image.src = "https://fakeimg.pl/200x100/cccccc/154406";
+    } else{
+    // check if outside generla school times, update later {be bright green}
+    if (currentTime <= startTime && currentTime >= endTime) {
+        image.src = "https://fakeimg.pl/200x100/cccccc/00ff00";
+    } else 
+    // just {be red} if in school time (deduction)
+    {image.src = "https://fakeimg.pl/200x100/cccccc/ff0d0d"}
+}
 }
