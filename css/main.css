@@ -226,7 +226,7 @@ iframe {
 }
 .weekday{
 	position:absolute;
-	right: 265px;
+	right: 17.52%;
 	top: 179px;
 	font-size:x-large;
 	font-weight: bold;
@@ -234,6 +234,6 @@ iframe {
 }
 .icony{
 	position:absolute;
-	right: 200px;
+	right: 13.52%;
 	top: 219px;
 }

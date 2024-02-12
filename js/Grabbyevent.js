@@ -3,18 +3,43 @@
 const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
 const calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com'; // Replace with your actual calendar ID
 
-// Object with keywords and their respective links
+// olm( object literal map) with keywords and their respective links
 const keywordLinks = {
-'entl':'https://apps.noordhoff.nl/se/content/book/4e33ffb8-40c9-45fa-a67c-eae545d7dbea/ebooks/d6cafc0b-fb70-438c-8668-c017ee87ff73',
-'nat': 'https://e-book.boomdigitaal.nl/boek/9789464420180?layoutmode-double=1/sso',
-'schk': 'https://apps.noordhoff.nl/se/content/book/3d237f12-c196-4650-839c-bea7f798792e/ebooks/3847b67a-6f0b-4d10-9f5e-d485d7496fda',
-'biol': 'https://apps.noordhoff.nl/se/content/book/3c9f39f7-6a4b-4403-a898-508d1ddcf68f/ebooks/2afd6210-0fb1-4007-8d2a-b63ef7cad649',
-'netl': 'https://apps.noordhoff.nl/se/content/book/a904673b-f07d-480a-8201-57b56d94112b/ebooks/89f0e06c-3f93-403f-9804-04bad7a197de',
-'sptl': 'https://apps.noordhoff.nl/se/content/book/443fbd5e-bef7-4222-ae56-f41d5e83e468/ebooks/f71f3bc8-a5aa-4aa4-8951-fbab795b35c0',
-'wisb': 'https://apps.noordhoff.nl/se/content/book/0818ce8f-cdb6-468d-b160-6874cfda8372/ebooks/e4405ab2-d6f8-4f64-abf9-d0d327474ab2',
-'wisd': 'https://apps.noordhoff.nl/se/content/book/4acdfa97-1845-4bf6-8320-10181b908e29/ebooks/a476fd26-1eeb-4c59-979c-16b971e37cc1'
+    'entl': {
+        link: 'https://apps.noordhoff.nl/se/content/book/4e33ffb8-40c9-45fa-a67c-eae545d7dbea/ebooks/d6cafc0b-fb70-438c-8668-c017ee87ff73',
+        imageSrc: 'img/ENG.jpeg'
+    },
+    'nat': {
+        link: 'https://e-book.boomdigitaal.nl/boek/9789464420180?layoutmode-double=1/sso',
+        imageSrc: 'img/physics.jpg'
+    },
+    'schk': {
+        link: 'https://apps.noordhoff.nl/se/content/book/3d237f12-c196-4650-839c-bea7f798792e/ebooks/3847b67a-6f0b-4d10-9f5e-d485d7496fda',
+        imageSrc: 'img/CHEM.jpeg'
+    },
+    'biol': {
+        link: 'https://apps.noordhoff.nl/se/content/book/3c9f39f7-6a4b-4403-a898-508d1ddcf68f/ebooks/2afd6210-0fb1-4007-8d2a-b63ef7cad649',
+        imageSrc: 'img/BIO.jpeg'
+    },
+    'netl': {
+        link: 'https://apps.noordhoff.nl/se/content/book/a904673b-f07d-480a-8201-57b56d94112b/ebooks/89f0e06c-3f93-403f-9804-04bad7a197de',
+        imageSrc: 'img/DUTCH.jpeg'
+    },
+    'sptl': {
+        link: 'https://apps.noordhoff.nl/se/content/book/443fbd5e-bef7-4222-ae56-f41d5e83e468/ebooks/f71f3bc8-a5aa-4aa4-8951-fbab795b35c0',
+        imageSrc: 'img/SPAN.jpeg'
+    },
+    'wisb': {
+        link: 'https://apps.noordhoff.nl/se/content/book/0818ce8f-cdb6-468d-b160-6874cfda8372/ebooks/e4405ab2-d6f8-4f64-abf9-d0d327474ab2',
+        imageSrc: 'img/MATHB.jpeg'
+    },
+    'wisd': {
+        link: 'https://apps.noordhoff.nl/se/content/book/4acdfa97-1845-4bf6-8320-10181b908e29/ebooks/a476fd26-1eeb-4c59-979c-16b971e37cc1',
+        imageSrc: 'img/MATHD.jpeg'
+    }
     // Add more keywords and links for silly guy
 };
+
 //  here code for current events and current time (split it later for clean code)
 // Function to fetch events and update time
 function fetchEventsAndUpdateTime() {
@@ -59,9 +84,10 @@ function fetchEventsAndUpdateTime() {
                     <p>Time:${currentTime}</p>
                     `;
 
-                // Update the link for the event button based on the current event's title
-                const link = getLinkForEvent(eventTitle);
-                eventButton.href = link;
+                // Update the link and image for the event button based on the current event's title
+                const linkAndImage = getLinkAndImageForEvent(eventTitle);
+                document.getElementById('adaptivebi').src = linkAndImage.imageSrc;
+                eventButton.href = linkAndImage.link;
             } else {
                 const currentTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
                 eventContainer.innerHTML = `<p>No ongoing events.</p><p>Time:${currentTime}</p>`;
@@ -97,17 +123,24 @@ fetchEventsAndUpdateTime();
 // Set up interval to update time every 1 second (adjust as needed)
 setInterval(fetchEventsAndUpdateTime, 1000);
 // here code for adaptive book
-// Function to get the link for the event based on its title
-function getLinkForEvent(title) {
-    // Check if any keyword in the title matches, and return the corresponding link
+// Function to get the link and image for the event based on its title
+function getLinkAndImageForEvent(title) {
+    // Check if any keyword in the title matches, and return the corresponding link and image source
     for (const keyword in keywordLinks) {
         if (title.toLowerCase().includes(keyword.toLowerCase())) {
-            return keywordLinks[keyword];
+            return {
+                link: keywordLinks[keyword].link,
+                imageSrc: keywordLinks[keyword].imageSrc
+            };
         }
     }
-    // Return a default link if no match is found
-    return 'https://allfoy.github.io/libcafe/error2';
+    // Return a default link and image source if no match is found
+    return {
+        link: 'https://allfoy.github.io/libcafe/error2',
+        imageSrc: 'img/bg.jpg'
+    };
 }
+
 
 // Function to redirect to the link associated with the current event's title
 function redirectToLink() {
@@ -229,11 +262,6 @@ function findFreePeriods(events) {
     return freePeriods;
 }
 
-
-
-
-
-
 // Function to display free periods
 function displayFreePeriods(freePeriods) {
     const eventsContainer = document.getElementById('events-container');
@@ -257,31 +285,54 @@ function getTimeForBlock(block) {
     return startFP;
 }
 
-// funcion to change icon based on current situation
-/*
-function icony() {
-    var now = Date.now();
-    const minim = Date.parse('00:17:00');
-    const maxim = Date.parse('00:17:04');
-    if (now >= minim && now <= maxim) {
-    document.getElementById('myImg').src='https://picsum.photos/200/100?random=2'
-}} */
-
-document.addEventListener('DOMContentLoaded', function() {adaptiveicon()})
-function adaptiveicon(){
+//function for adaptiveicon
+function adaptiveicon(firstEvent,finalEvent){
+    // make src a variable and let default {be black}
+    let imagesrc = "https://fakeimg.pl/200x100/cccccc/fff";
     const currentTime = new Date();
-    const startTime = new Date().setHours(8, 15, 0);
-    const endTime = new Date().setHours(16, 45, 0);
-    // check if weekend {be dark green}
-    if(new Date().getDay() === 6 || new Date().getDay() === 0) {
-        var image = document.getElementById('icony');
-        image.src = "https://fakeimg.pl/200x100/cccccc/154406";
-    } else{
-    // check if outside generla school times, update later {be bright green}
-    if (currentTime <= startTime && currentTime >= endTime) {
-        image.src = "https://fakeimg.pl/200x100/cccccc/00ff00";
-    } else 
-    // just {be red} if in school time (deduction)
-    {image.src = "https://fakeimg.pl/200x100/cccccc/ff0d0d"}
+    // local due to the breaks being in such format
+    const localTime = new Date().toLocaleTimeString('en-US', {hour12: false});
+    //breaks
+    const breaks = {
+        "10:30": "10:50",
+        "12:20": "12:45",
+        "14:15": "14:30"
+    };
+    //put the conditions in a OLM (object literal map) for readability
+    const conditions = {
+        //is it weekend?
+        weekend: new Date().getDay() === 6 || new Date().getDay() === 0,
+        // is there a first and final?
+        noSchoolTimes: !(firstEvent && finalEvent && firstEvent.start.dateTime && finalEvent.end.dateTime),
+        // is it before or after school? (the ? let's it shortcircuit if it's undefined, which it never is when actually used due to previous)
+        outsideSchoolTimes: firstEvent?.start && finalEvent?.end && currentTime <= new Date(firstEvent.start.dateTime) && currentTime >= new Date(finalEvent.end.dateTime),
+        // is it break?
+        isInBreak: Object.entries(breaks).some(([start, end]) => {return localTime >= start && localTime <= end;})
+    };
+
+    if(conditions.weekend) {
+        imagesrc = "weekend";
+    }
+    else{
+        if(conditions.noSchoolTimes){
+        imagesrc = "freeday";
+        }
+        else{
+            if (conditions.outsideSchoolTimes) {
+            imagesrc = "schoolover";
+            }
+            else{ if (isInBreak){
+                    {imagesrc = "break"}
+                    }
+                    else{
+                        {imagesrc = "inschool"}
+                        }
+                }
+            }
+        }
+// actually set the source to the one deducted by last bit of code
+document.getElementById('icony').src = "img/" + imagesrc + ".jpg";
 }
-}
+
+//using the adaptiveicon function after loaded
+document.addEventListener('DOMContentLoaded', function() {adaptiveicon()})
