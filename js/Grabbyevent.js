@@ -3,7 +3,7 @@
 const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
 const calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com'; // Replace with your actual calendar ID
 
-// olm( object literal map) with keywords and their respective links
+// object literal with keywords and their respective links
 const keywordLinks = {
     'entl': {
         link: 'https://apps.noordhoff.nl/se/content/book/4e33ffb8-40c9-45fa-a67c-eae545d7dbea/ebooks/d6cafc0b-fb70-438c-8668-c017ee87ff73',
@@ -298,7 +298,7 @@ function adaptiveicon(firstEvent,finalEvent){
         "12:20": "12:45",
         "14:15": "14:30"
     };
-    //put the conditions in a OLM (object literal map) for readability
+    //put the conditions in an object literal for readability
     const conditions = {
         //is it weekend?
         weekend: new Date().getDay() === 6 || new Date().getDay() === 0,
@@ -321,7 +321,7 @@ function adaptiveicon(firstEvent,finalEvent){
             if (conditions.outsideSchoolTimes) {
             imagesrc = "schoolover";
             }
-            else{ if (isInBreak){
+            else{ if (conditions.isInBreak){
                     {imagesrc = "break"}
                     }
                     else{
