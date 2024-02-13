@@ -234,10 +234,10 @@ function displayEvents(firstEvent, finalEvent) {
 }
 
 // Function to find free periods
-function findFreePeriods(events) {
+function findFreePeriods(events, firstEvent, finalEvent) {
     
     const freePeriods = [];
-    let lastEventBlock = 0;
+    let lastEventBlock = firstEvent;
 
     for (const event of events) {
         const eventBlock = parseInt(event.summary.match(/^\d+/)[0]);
@@ -252,7 +252,7 @@ function findFreePeriods(events) {
     }
 
     // Add the last block if it's a free period
-    if (lastEventBlock < 10) {
+    if (lastEventBlock < finalEvent) {
         const block = lastEventBlock + 1;
         const startTime = getTimeForBlock(block).toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });;
         const endTime = new Date(getTimeForBlock(block).getTime() + 45*60000).toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });; // End time is 45 minutes after start time
@@ -285,8 +285,9 @@ function getTimeForBlock(block) {
     return startFP;
 }
 
-//function for adaptiveicon
-function adaptiveicon(firstEvent,finalEvent){
+//here function for adaptiveicon
+/*
+function adaptiveicon(firstEvent,finalEvent, freePeriods){
     // make src a variable and let default {be black}
     let imagesrc = "https://fakeimg.pl/200x100/cccccc/fff";
     const currentTime = new Date();
@@ -307,24 +308,31 @@ function adaptiveicon(firstEvent,finalEvent){
         // is it before or after school? (the ? let's it shortcircuit if it's undefined, which it never is when actually used due to previous)
         outsideSchoolTimes: firstEvent?.start && finalEvent?.end && currentTime <= new Date(firstEvent.start.dateTime) && currentTime >= new Date(finalEvent.end.dateTime),
         // is it break?
-        isInBreak: Object.entries(breaks).some(([start, end]) => {return localTime >= start && localTime <= end;})
+        isInBreak: Object.entries(breaks).some(([start, end]) => {return localTime >= start && localTime <= end;}),
+
+        //isInFP: freePeriods.forEach(period => {console.log(period.block + period.startTime + period.endTime)})
     };
 
     if(conditions.weekend) {
         imagesrc = "weekend";
     }
-    else{
+    else{console.log('not weekend')
         if(conditions.noSchoolTimes){
         imagesrc = "freeday";
         }
-        else{
+        else{console.log('not a free day')
             if (conditions.outsideSchoolTimes) {
             imagesrc = "schoolover";
             }
-            else{ if (conditions.isInBreak){
-                    {imagesrc = "break"}
+            else{console.log('not outsideschool')
+                if (conditions.isInBreak){
+                {imagesrc = "break"}
+                }
+                else{console.log('not break')
+                    if(conditions.isInFreePeriod){
+                    imagesrc = "FP"
                     }
-                    else{
+                    else{console.log('not FP')
                         {imagesrc = "inschool"}
                         }
                 }
@@ -332,7 +340,6 @@ function adaptiveicon(firstEvent,finalEvent){
         }
 // actually set the source to the one deducted by last bit of code
 document.getElementById('icony').src = "img/" + imagesrc + ".jpg";
-}
-
+}}
 //using the adaptiveicon function after loaded
-document.addEventListener('DOMContentLoaded', function() {adaptiveicon()})
+document.addEventListener('DOMContentLoaded', function() {adaptiveicon()}) */
