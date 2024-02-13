@@ -127,7 +127,7 @@ setInterval(fetchEventsAndUpdateTime, 1000);
 function getLinkAndImageForEvent(title) {
     // Check if any keyword in the title matches, and return the corresponding link and image source
     for (const keyword in keywordLinks) {
-        if (title.toLowerCase().includes(keyword.toLowerCase())) {
+        if (title.includes(keyword)) {
             return {
                 link: keywordLinks[keyword].link,
                 imageSrc: keywordLinks[keyword].imageSrc
@@ -302,8 +302,8 @@ function adaptiveicon(firstEvent,finalEvent){
     const conditions = {
         //is it weekend?
         weekend: new Date().getDay() === 6 || new Date().getDay() === 0,
-        // is there a first and final?
-        noSchoolTimes: !(firstEvent && finalEvent && firstEvent.start.dateTime && finalEvent.end.dateTime),
+        // is there a first and final? (assuming we have school outside weekend lets remove the broken code)
+            //noSchoolTimes: !(firstEvent && finalEvent && firstEvent.start.dateTime && finalEvent.end.dateTime),
         // is it before or after school? (the ? let's it shortcircuit if it's undefined, which it never is when actually used due to previous)
         outsideSchoolTimes: firstEvent?.start && finalEvent?.end && currentTime <= new Date(firstEvent.start.dateTime) && currentTime >= new Date(finalEvent.end.dateTime),
         // is it break?
