@@ -286,7 +286,7 @@ function getTimeForBlock(block) {
 }
 
 //here function for adaptiveicon
-/*
+
 function adaptiveicon(firstEvent,finalEvent, freePeriods){
     // make src a variable and let default {be black}
     let imagesrc = "https://fakeimg.pl/200x100/cccccc/fff";
@@ -316,23 +316,23 @@ function adaptiveicon(firstEvent,finalEvent, freePeriods){
     if(conditions.weekend) {
         imagesrc = "weekend";
     }
-    else{console.log('not weekend')
+    else{//console.log('not weekend')
         if(conditions.noSchoolTimes){
         imagesrc = "freeday";
         }
-        else{console.log('not a free day')
+        else{//console.log('not a free day')
             if (conditions.outsideSchoolTimes) {
             imagesrc = "schoolover";
             }
-            else{console.log('not outsideschool')
+            else{//console.log('not outsideschool')
                 if (conditions.isInBreak){
                 {imagesrc = "break"}
                 }
-                else{console.log('not break')
+                else{//console.log('not break')
                     if(conditions.isInFreePeriod){
                     imagesrc = "FP"
                     }
-                    else{console.log('not FP')
+                    else{//console.log('not FP')
                         {imagesrc = "inschool"}
                         }
                 }
@@ -342,4 +342,4 @@ function adaptiveicon(firstEvent,finalEvent, freePeriods){
 document.getElementById('icony').src = "img/" + imagesrc + ".jpg";
 }}
 //using the adaptiveicon function after loaded
-document.addEventListener('DOMContentLoaded', function() {adaptiveicon()}) */
+document.addEventListener('DOMContentLoaded', function() {setInterval(adaptiveicon, 30*1000);})
