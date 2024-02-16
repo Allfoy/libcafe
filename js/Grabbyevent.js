@@ -1,8 +1,20 @@
 
 
 const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
-const calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com'; // Replace with your actual calendar ID
+function changeCalID(){
+    var CalID = prompt("What is your calendarID?","allfoy");
+    console.log(CalID)
+    switch (CalID) {
+        case 'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr@import.calendar.google.com'; break;
+        case 'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com'; break;
+        case 'myrthe': CalID = '32ddu2ndrbe8jtp1olg6rko3f5cntog3@import.calendar.google.com'; break;
 
+        // we gonna make it remember allat later
+    }
+    return CalID
+}
+const calendarId = changeCalID(); //kev be i32q28ad785oqs2dom81460a186j6uvr@import.calendar.google.com // mine be kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com
+console.log(calendarId);
 // object literal with keywords and their respective links
 const keywordLinks = {
     'entl': {
@@ -81,7 +93,7 @@ function fetchEventsAndUpdateTime() {
                 eventContainer.innerHTML = `
                     <h2>${eventTitle}</h2>
                     <p>${eventStart.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} to ${eventEnd.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>
-                    <p>Time:${currentTime}</p>
+                    <p>Time: ${currentTime}</p>
                     `;
 
                 // Update the link and image for the event button based on the current event's title
@@ -90,7 +102,7 @@ function fetchEventsAndUpdateTime() {
                 eventButton.href = linkAndImage.link;
             } else {
                 const currentTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-                eventContainer.innerHTML = `<p>No ongoing events.</p><p>Time:${currentTime}</p>`;
+                eventContainer.innerHTML = `<p>No ongoing events.</p><p>Time: ${currentTime}</p>`;
                 eventButton.href = 'https://allfoy.github.io/libcafe/error1'; // Set a default link or disable the button if no ongoing event
             }
 // here code for upcoming event and time remaining
@@ -342,4 +354,4 @@ function adaptiveicon(firstEvent,finalEvent, freePeriods){
 document.getElementById('icony').src = "img/" + imagesrc + ".jpg";
 }}
 //using the adaptiveicon function after loaded
-document.addEventListener('DOMContentLoaded', function() {setInterval(adaptiveicon, 30*1000);})
+document.addEventListener('DOMContentLoaded', function() {setInterval(adaptiveicon, 5*1000);})
