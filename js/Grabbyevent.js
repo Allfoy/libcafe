@@ -8,7 +8,7 @@ function changeCalID(){
         case 'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr@import.calendar.google.com'; break;
         case 'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com'; break;
         case 'myrthe': CalID = '32ddu2ndrbe8jtp1olg6rko3f5cntog3@import.calendar.google.com'; break;
-
+        default: CalID = 'kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com'; break;
         // we gonna make it remember allat later
     }
     return CalID
