@@ -299,7 +299,7 @@ function getTimeForBlock(block) {
 
 //here function for adaptiveicon
 
-function adaptiveicon(firstEvent,finalEvent, freePeriods){
+function adaptiveicon(/*firstEvent,finalEvent, freePeriods, */currentEvent){
     // make src a variable and let default {be black}
     let imagesrc = "https://fakeimg.pl/200x100/cccccc/fff";
     const currentTime = new Date();
@@ -318,40 +318,29 @@ function adaptiveicon(firstEvent,finalEvent, freePeriods){
         // is there a first and final? (assuming we have school outside weekend lets remove the broken code)
             //noSchoolTimes: !(firstEvent && finalEvent && firstEvent.start.dateTime && finalEvent.end.dateTime),
         // is it before or after school? (the ? let's it shortcircuit if it's undefined, which it never is when actually used due to previous)
-        outsideSchoolTimes: firstEvent?.start && finalEvent?.end && currentTime <= new Date(firstEvent.start.dateTime) && currentTime >= new Date(finalEvent.end.dateTime),
+        InSchool: currentEvent,
         // is it break?
         isInBreak: Object.entries(breaks).some(([start, end]) => {return localTime >= start && localTime <= end;}),
 
         //isInFP: freePeriods.forEach(period => {console.log(period.block + period.startTime + period.endTime)})
     };
 
-    if(conditions.weekend) {
-        imagesrc = "weekend";
-    }
-    else{//console.log('not weekend')
-        if(conditions.noSchoolTimes){
-        imagesrc = "freeday";
+    // reorderment
+if(conditions.InSchool){
+    imagesrc = "inschool"; // current event exist means in lesson
+}
+else{
+    if(conditions.weekend){
+        imagesrc = "weekend";//is it weekend
+    }else{ if(conditions.isInBreak){
+        imagesrc = "break";//is it break?
+        }else{
+        imagesrc = "schoolover";} // no event, no weekend and no break means no school (maybe add a free period check later)
         }
-        else{//console.log('not a free day')
-            if (conditions.outsideSchoolTimes) {
-            imagesrc = "schoolover";
-            }
-            else{//console.log('not outsideschool')
-                if (conditions.isInBreak){
-                {imagesrc = "break"}
-                }
-                else{//console.log('not break')
-                    if(conditions.isInFreePeriod){
-                    imagesrc = "FP"
-                    }
-                    else{//console.log('not FP')
-                        {imagesrc = "inschool"}
-                        }
-                }
-            }
-        }
+}
+
 // actually set the source to the one deducted by last bit of code
 document.getElementById('icony').src = "img/" + imagesrc + ".jpg";
-}}
+}
 //using the adaptiveicon function after loaded
 document.addEventListener('DOMContentLoaded', function() {setInterval(adaptiveicon, 5*1000);})
