@@ -59,7 +59,7 @@ function fetchEventsAndUpdateTime() {
     fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`)
         .then(response => response.json())
         .then(data => {
-            const events = data.items;
+            const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
             const now = new Date();
             let currentEvent = null;
             let upcomingEvent = null;
