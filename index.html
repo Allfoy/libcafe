@@ -14,7 +14,6 @@
 		<link rel="stylesheet" type="text/css" href="css/book.css" />
 		<link rel="stylesheet" type="text/css" href="css/book2.css" />
 		<link rel="stylesheet" type="text/css" href="css/schoolswitch.css" />
-		<script src="js/modernizr.custom.js"></script>
 		<script src="js/closelogging.js"></script>
 		<script src="js/Toggler.js"></script>
 		<script src="js/schoolswitch.js"></script>
@@ -58,6 +57,7 @@
 				<div class="weekday" id="weekday">errorday</div>
 				<img class="icony" id="icony" src="https://fakeimg.pl/200x100/cccccc/000000"></img>
 				<div class="center"><h6>   </h6>  </div> <!--emptyline after switch-->
+				<button onclick="changeCalID()">switch user</button>
 				<!-- <button onclick="changeCalID()">Change Calendarid</button> -->
 				</header>
 			<div class="component">
@@ -666,8 +666,8 @@
 					</li>
 				</ul>
 
-				<p class="note">note that this is version 2 and is subject to change</p>
-				<a href="https://www.numworks.com/simulator/">numworks</a>
+				<p class="note" id="user">unknown user</p>
+				<a class="centeredbutton" href="https://www.numworks.com/simulator/">numworks</a>
 				<!--<div class="iframer" id="numworksy"><iframe src="https://www.numworks.com/simulator/embed/" width="368px" height="720px"></iframe><script src="https://www.numworks.com/simulator/embed.js"></script></div>
 				<button class="centeredbutton" onclick="toggleIframe('numworksy')">Toggle numworks</button> -->
 				<br></br>

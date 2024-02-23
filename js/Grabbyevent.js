@@ -3,18 +3,19 @@
 const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
 function changeCalID(){
     var CalID = prompt("What is your calendarID?","allfoy");
-    console.log(CalID)
+    var user = 'unknown2'
     switch (CalID) {
-        case 'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr@import.calendar.google.com'; break;
-        case 'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com'; break;
-        case 'myrthe': CalID = '32ddu2ndrbe8jtp1olg6rko3f5cntog3@import.calendar.google.com'; break;
-        default: CalID = 'kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com'; break;
+        case 'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
+        case 'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
+        case 'myrthe': CalID = '32ddu2ndrbe8jtp1olg6rko3f5cntog3'; user = 'Myrthe';break;
+        default      : CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
         // we gonna make it remember allat later
     }
-    return CalID
+    console.log(CalID)
+    document.getElementById('user').innerHTML = `${user}`;
+    return CalID + '@import.calendar.google.com'
 }
-const calendarId = changeCalID(); //kev be i32q28ad785oqs2dom81460a186j6uvr@import.calendar.google.com // mine be kvme0ikmjq4825g8ee860tm058clorcg@import.calendar.google.com
-console.log(calendarId);
+const calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg'+'@import.calendar.google.com';
 // object literal with keywords and their respective links
 const keywordLinks = {
     'entl': {
