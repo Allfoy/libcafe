@@ -83,6 +83,7 @@ function fetchEventsAndUpdateTime() {
 
             if (currentEvent) {
                 const eventTitle = currentEvent.summary;
+                const eventLocation = currentEvent.location;
                 const eventStart = new Date(currentEvent.start.dateTime);
                 const eventEnd = new Date(currentEvent.end.dateTime);
 
@@ -92,7 +93,7 @@ function fetchEventsAndUpdateTime() {
 
                 // Display the current event and time in the container
                 eventContainer.innerHTML = `
-                    <h2>${eventTitle}</h2>
+                    <h2>${eventTitle}</h2><p>(${eventLocation})</p>
                     <p>${eventStart.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} to ${eventEnd.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>
                     <p>Time: ${currentTime}</p>
                     `;
@@ -109,6 +110,7 @@ function fetchEventsAndUpdateTime() {
 // here code for upcoming event and time remaining
             if (upcomingEvent) {
                 const upcomingEventTitle = upcomingEvent.summary;
+                const upcomingEventLocation = upcomingEvent.location;
                 const upcomingEventStart = new Date(upcomingEvent.start.dateTime);
 
                 // Calculate the time until the upcoming event
@@ -118,7 +120,7 @@ function fetchEventsAndUpdateTime() {
 
                 // Display the upcoming event and countdown in the container
                 upcomingEventContainer.innerHTML = `
-                    <h2>${upcomingEventTitle}</h2>
+                    <h2>${upcomingEventTitle}</h2><p>(${upcomingEvent.location})</p>
                     <p>Time Until Event: ${hoursUntilEvent} hours ${minutesUntilEvent} minutes</p>
                 `;
             } else {
