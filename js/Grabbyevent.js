@@ -57,6 +57,26 @@ const keywordLinks = {
         link: 'https://apps.noordhoff.nl/se/content/book/4acdfa97-1845-4bf6-8320-10181b908e29/ebooks/a476fd26-1eeb-4c59-979c-16b971e37cc1',
         imageSrc: 'img/MATHD.jpeg',
         actualName: 'Mathematics D'
+    },
+    'me': {
+        link: 'https://allfoy.github.io/libcafe/error2',
+        imageSrc: 'img/bg.jpg',
+        actualName: 'Mentorles'
+    },
+    'maat': {
+        link: 'https://allfoy.github.io/libcafe/error2',
+        imageSrc: 'img/bg.jpg',
+        actualName: 'Maatschappijleer'
+    },
+    'ckv':{
+        link: 'https://allfoy.github.io/libcafe/error2',
+        imageSrc: 'img/bg.jpg',
+        actualName: 'CKV'
+    },
+    'rt':{
+        link: 'https://allfoy.github.io/libcafe/error2',
+        imageSrc: 'img/bg.jpg',
+        actualName: 'Route-uur'
     }
     // Add more keywords and links for silly guy
 };
