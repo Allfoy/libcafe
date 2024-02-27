@@ -14,7 +14,7 @@ function changeCalID(){
     }
     console.log(CalID)
     document.getElementById('user').innerHTML = `${user}`;
-    return CalID + '@import.calendar.google.com'
+    return CalID
 }
 // object literal with keywords and their respective links
 const keywordLinks = {
