@@ -240,7 +240,7 @@ fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}`+`@import.
 // Display events for tomorrow
 function displayTomorrowEvents() {
     // Fetch events for tomorrow
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${tomorrowFormatted}T00:00:00Z&timeMax=${tomorrowFormatted}T23:59:59Z`)
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}`+`@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${tomorrowFormatted}T00:00:00Z&timeMax=${tomorrowFormatted}T23:59:59Z`)
         .then(response => response.json())
         .then(data => {
             const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
