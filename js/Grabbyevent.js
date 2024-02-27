@@ -1,6 +1,7 @@
 
 
-const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
+//const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
+const calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg';
 function changeCalID(){
     var CalID = prompt("What is your calendarID?","allfoy");
     var user = 'unknown2'
@@ -15,7 +16,6 @@ function changeCalID(){
     document.getElementById('user').innerHTML = `${user}`;
     return CalID + '@import.calendar.google.com'
 }
-const calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg'+'@import.calendar.google.com';
 // object literal with keywords and their respective links
 const keywordLinks = {
     'entl': {
@@ -57,7 +57,7 @@ const keywordLinks = {
 // Function to fetch events and update time
 function fetchEventsAndUpdateTime() {
     // Fetch events from Google Calendar API
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`)
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}`+`@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ`)
         .then(response => response.json())
         .then(data => {
             const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
@@ -175,7 +175,7 @@ tomorrow.setDate(tomorrow.getDate() + 1);
 const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
 
 // Fetch events from Google Calendar API and determine which events to display
-fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${today}T00:00:00Z&timeMax=${tomorrowFormatted}T00:00:00Z`)
+fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}`+`@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${today}T00:00:00Z&timeMax=${tomorrowFormatted}T00:00:00Z`)
     .then(response => response.json())
     .then(data => {
         const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
