@@ -65,7 +65,7 @@ const keywordLinks = {
     },
     'maat': {
         link: 'https://allfoy.github.io/libcafe/error2',
-        imageSrc: 'img/bg.jpg',
+        imageSrc: 'img/MAAT.jpg',
         actualName: 'Maatschappijleer'
     },
     'ckv':{
