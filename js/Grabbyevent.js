@@ -9,6 +9,7 @@ function changeCalID(){
         case 'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
         case 'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
         case 'myrthe': CalID = '32ddu2ndrbe8jtp1olg6rko3f5cntog3'; user = 'Myrthe';break;
+		case 'troy'  : CalID = '3hvsosg4io5fdefbn66meln2un2hu33k'; user = 'Troy'  ;break;
         default      : CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
         // we gonna make it remember allat later
     }
@@ -108,8 +109,45 @@ function fetchEventsAndUpdateTime() {
             const eventContainer = document.getElementById('event-container');
             const upcomingEventContainer = document.getElementById('upcoming-event-container');
             const eventButton = document.getElementById('event-button');
-
+            
+            if(!currentEvent){
+                    // make src a variable and let default {be black}
+                    let imagesrc = "https://fakeimg.pl/200x100/cccccc/fff";
+                    const currentTime = new Date();
+                    // local due to the breaks being in such format
+                    const localTime = new Date().toLocaleTimeString('en-US', {hour12: false});
+                    const breaks = {
+                        "10:30": "10:50",
+                        "12:20": "12:45",
+                        "14:15": "14:30"
+                    };
+                    //put the conditions in an object literal for readability
+                    const conditions = {
+                        //is it weekend?
+                        weekend: new Date().getDay() === 6 || new Date().getDay() === 0,
+                        // is it break?
+                        isInBreak: Object.entries(breaks).some(([start, end]) => {return localTime >= start && localTime <= end;}),
+                        //isInFP: freePeriods.forEach(period => {console.log(period.block + period.startTime + period.endTime)})
+                    };
+                    // reorderment
+                    if(conditions.weekend){
+                        imagesrc = "weekend";//is it weekend
+                    }else{ if(conditions.isInBreak){
+                        imagesrc = "break";//is it break?
+                        }else{
+                        imagesrc = "schoolover";} // no event, no weekend and no break means no school (maybe add a free period check later)
+                        }
+                        // actually set the source to the one deducted by last bit of code
+                        document.getElementById('icony').src = "img/" + imagesrc + ".jpg";
+            }
             if (currentEvent) {
+            //some code that be dem adaptiveicon
+            // there do be a current
+            // make src a variable and let default {be black}
+                let imagesrc = "https://fakeimg.pl/200x100/cccccc/fff";
+                imagesrc = "inschool";
+                document.getElementById('icony').src = "img/" + imagesrc + ".jpg";
+            // the norma code now
                 const eventTitle = currentEvent.summary;
                 const eventStart = new Date(currentEvent.start.dateTime);
                 const eventEnd = new Date(currentEvent.end.dateTime);
@@ -332,7 +370,7 @@ function getTimeForBlock(block) {
 
 //here function for adaptiveicon
 
-function adaptiveicon(/*firstEvent,finalEvent, freePeriods, */currentEvent){
+function adaptiveiconnce(){
     // make src a variable and let default {be black}
     let imagesrc = "https://fakeimg.pl/200x100/cccccc/fff";
     const currentTime = new Date();
@@ -348,21 +386,12 @@ function adaptiveicon(/*firstEvent,finalEvent, freePeriods, */currentEvent){
     const conditions = {
         //is it weekend?
         weekend: new Date().getDay() === 6 || new Date().getDay() === 0,
-        // is there a first and final? (assuming we have school outside weekend lets remove the broken code)
-            //noSchoolTimes: !(firstEvent && finalEvent && firstEvent.start.dateTime && finalEvent.end.dateTime),
-        // is it before or after school? (the ? let's it shortcircuit if it's undefined, which it never is when actually used due to previous)
-        InSchool: currentEvent,
         // is it break?
         isInBreak: Object.entries(breaks).some(([start, end]) => {return localTime >= start && localTime <= end;}),
 
         //isInFP: freePeriods.forEach(period => {console.log(period.block + period.startTime + period.endTime)})
     };
-
     // reorderment
-if(conditions.InSchool){
-    imagesrc = "inschool"; // current event exist means in lesson
-}
-else{
     if(conditions.weekend){
         imagesrc = "weekend";//is it weekend
     }else{ if(conditions.isInBreak){
@@ -370,10 +399,8 @@ else{
         }else{
         imagesrc = "schoolover";} // no event, no weekend and no break means no school (maybe add a free period check later)
         }
-}
+
 
 // actually set the source to the one deducted by last bit of code
 document.getElementById('icony').src = "img/" + imagesrc + ".jpg";
-}
-//using the adaptiveicon function after loaded
-document.addEventListener('DOMContentLoaded', function() {setInterval(adaptiveicon, 5*1000);})
+};
