@@ -252,6 +252,9 @@ fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}@import.cal
             const numB = parseInt(b.summary.match(/^\d+/)[0]);
             return numA - numB; // Sort events based on the numbers in their titles
         });
+        sortedEvents.forEach(event => {
+        console.log(event.summary);
+        });
 // logic for changing to tommorow if it's 10 min after finalevent
         const currentTime = new Date();
         const finalEvent = sortedEvents[sortedEvents.length - 1];
