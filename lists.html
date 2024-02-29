@@ -7,8 +7,10 @@
 </head>
 <body>
 	<div id="events"></div>
-	<button onclick="changeCalID()">SWITCHY</button>
+	<button onclick="changeCalID()">SWITCHY and submit</button>
 	<div id="user"></div>
+    <label for="dateInput">Choose a date:</label>
+    <input type="date" id="dateInput" value="2024-03-04">
 </body>
 <script>
 function changeCalID(){
@@ -31,10 +33,11 @@ function fetchEventsAndUpdateTime(CalID) {
     // Fetch events from Google Calendar API
 	// Get today's date and tomorrow's date in the format required by the Google Calendar API
 	const today = new Date().toISOString().split('T')[0];
-	const tomorrow = new Date();
-	tomorrow.setDate(tomorrow.getDate() + 1);
-	const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${CalID}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${today}T00:00:00Z&timeMax=${tomorrowFormatted}T00:00:00Z`)
+    //get and convert user inputted date
+    var chosenDate = document.getElementById("dateInput").value;
+    console.log(chosenDate)
+    const chosenday = new Date(chosenDate).toISOString().split('T')[0];
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${CalID}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${chosenday}T00:00:00Z&timeMax=${chosenday}T23:59:59Z`)
         .then(response => response.json())
         .then(data => {
 			const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number

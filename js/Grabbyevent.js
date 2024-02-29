@@ -2,21 +2,6 @@
 
 //const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
 let calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg';
-function changeCalID(){
-    var CalID = prompt("What is your calendarID?","allfoy");
-    var user = 'unknown2'
-    switch (CalID) {
-        case 'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
-        case 'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
-        case 'myrthe': CalID = '32ddu2ndrbe8jtp1olg6rko3f5cntog3'; user = 'Myrthe';break;
-		case 'troy'  : CalID = '3hvsosg4io5fdefbn66meln2un2hu33k'; user = 'Troy'  ;break;
-        default      : CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
-        // we gonna make it remember allat later
-    }
-    console.log(CalID)
-    document.getElementById('user').innerHTML = `${user}`;
-    return CalID
-}
 // object literal with keywords and their respective links
 const keywordLinks = {
     'entl': {
@@ -78,15 +63,20 @@ const keywordLinks = {
         link: 'https://allfoy.github.io/libcafe/error2',
         imageSrc: 'img/bg.jpg',
         actualName: 'Route-uur'
+    },
+    'wisa':{
+        link: 'https://allfoy.github.io/libcafe/error2',
+        imageSrc: 'img/bg.jpg',
+        actualName: 'Mathematics A'
     }
     // Add more keywords and links for silly guy
 };
 
 //  here code for current events and current time (split it later for clean code)
 // Function to fetch events and update time
-function fetchEventsAndUpdateTime() {
+function fetchEventsAndUpdateTime(calid) {
     // Fetch events from Google Calendar API
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ`)
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calid}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ`)
         .then(response => response.json())
         .then(data => {
             const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
@@ -184,11 +174,11 @@ function fetchEventsAndUpdateTime() {
                 const timeUntilEvent = upcomingEventStart - now;
                 const hoursUntilEvent = Math.floor(timeUntilEvent / (1000 * 60 * 60));
                 const minutesUntilEvent = Math.floor((timeUntilEvent % (1000 * 60 * 60)) / (1000 * 60));
-
+                const secondsUntilEvent = Math.floor((timeUntilEvent % (1000 * 60)) / 1000);
                 // Display the upcoming event and countdown in the container
                 upcomingEventContainer.innerHTML = `
                     <h2>${upcomingActualTitle}</h2><p>(${upcomingEvent.location})</p>
-                    <p>Time Until Event: ${hoursUntilEvent} hours ${minutesUntilEvent} minutes</p>
+                    <p>Time Until Event: ${hoursUntilEvent} hours ${minutesUntilEvent} minutes ${secondsUntilEvent} seconds</p>
                 `;
             } else {
                 upcomingEventContainer.innerHTML = '<p>No upcoming events.</p>';
@@ -200,10 +190,10 @@ function fetchEventsAndUpdateTime() {
 }
 
 // Initial fetch and time update
-fetchEventsAndUpdateTime();
+fetchEventsAndUpdateTime(calendarId);
 
 // Set up interval to update time every 1 second (adjust as needed)
-setInterval(fetchEventsAndUpdateTime, 1000);
+setInterval(fetchEventsAndUpdateTime(calendarId), 1000);
 // here code for adaptive book
 // Function to get the link and image for the event based on its title
 function getLinkAndImageForEvent(title) {
@@ -235,15 +225,11 @@ function redirectToLink() {
 }
 
 //here code for start and end event times and now also missingblocks AKA free periods
-
+function startendfree(calid1){
 // Get today's date and tomorrow's date in the format required by the Google Calendar API
 const today = new Date().toISOString().split('T')[0];
-const tomorrow = new Date();
-tomorrow.setDate(tomorrow.getDate() + 1);
-const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
-
 // Fetch events from Google Calendar API and determine which events to display
-fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${today}T00:00:00Z&timeMax=${tomorrowFormatted}T00:00:00Z`)
+fetch(`https://www.googleapis.com/calendar/v3/calendars/${calid1}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${today}T00:00:00Z&timeMax=${today}T23:59:59Z`)
     .then(response => response.json())
     .then(data => {
         const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
@@ -263,7 +249,7 @@ fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}@import.cal
             finalEventEndTime.setMinutes(finalEventEndTime.getMinutes() + 10); // Add 10 minutes to the final event end time
             if (currentTime >= finalEventEndTime) {
                 // Display events for tomorrow
-                displayTomorrowEvents();
+                displayTomorrowEvents(calendarId);
             } else {
                 // Display events for today
                 const firstEvent = sortedEvents[0];
@@ -277,11 +263,15 @@ fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}@import.cal
         }        
     })
     .catch(error => console.error('Error fetching data:', error));
-
+}
+startendfree(calendarId)
 // Display events for tomorrow
-function displayTomorrowEvents() {
+function displayTomorrowEvents(calid2) {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
     // Fetch events for tomorrow
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${tomorrowFormatted}T00:00:00Z&timeMax=${tomorrowFormatted}T23:59:59Z`)
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calid2}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${tomorrowFormatted}T00:00:00Z&timeMax=${tomorrowFormatted}T23:59:59Z`)
         .then(response => response.json())
         .then(data => {
             const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
@@ -407,3 +397,21 @@ function adaptiveiconnce(){
 // actually set the source to the one deducted by last bit of code
 document.getElementById('icony').src = "img/" + imagesrc + ".jpg";
 };
+
+function changeCalID(){
+    var CalID = prompt("What is your calendarID?","allfoy");
+    var user = 'unknown2'
+    switch (CalID) {
+        case 'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
+        case 'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
+        case 'myrthe': CalID = '32ddu2ndrbe8jtp1olg6rko3f5cntog3'; user = 'Myrthe';break;
+		case 'troy'  : CalID = '3hvsosg4io5fdefbn66meln2un2hu33k'; user = 'Troy'  ;break;
+        default      : CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
+        // we gonna make it remember allat later
+    }
+    console.log(CalID)
+    document.getElementById('user').innerHTML = `${user}`;
+    fetchEventsAndUpdateTime(CalID);
+    startendfree(CalID);
+    displayTomorrowEvents(CalID)
+}
