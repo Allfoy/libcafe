@@ -12,7 +12,7 @@ const keywordLinks = {
     'nat': {
         link: 'https://e-book.boomdigitaal.nl/boek/9789464420180?layoutmode-double=1/sso',
         imageSrc: 'img/physics.jpg',
-        actualName: 'physics'
+        actualName: 'Physics'
     },
     'schk': {
         link: 'https://apps.noordhoff.nl/se/content/book/3d237f12-c196-4650-839c-bea7f798792e/ebooks/3847b67a-6f0b-4d10-9f5e-d485d7496fda',
@@ -230,43 +230,43 @@ function redirectToLink() {
 
 //here code for start and end event times and now also missingblocks AKA free periods
 function startendfree(calid1){
-// Get today's date and tomorrow's date in the format required by the Google Calendar API
-const today = new Date().toISOString().split('T')[0];
-// Fetch events from Google Calendar API and determine which events to display
-fetch(`https://www.googleapis.com/calendar/v3/calendars/${calid1}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${today}T00:00:00Z&timeMax=${today}T23:59:59Z`)
-    .then(response => response.json())
-    .then(data => {
-        const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
-        const sortedEvents = events.sort((a, b) => {
-            const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
-            const numB = parseInt(b.summary.match(/^\d+/)[0]);
-            return numA - numB; // Sort events based on the numbers in their titles
-        });
-        sortedEvents.forEach(event => {
-        console.log(event.summary);
-        });
-// logic for changing to tommorow if it's 10 min after finalevent
-        const currentTime = new Date();
-        const finalEvent = sortedEvents[sortedEvents.length - 1];
-        if (finalEvent && finalEvent.end && finalEvent.end.dateTime) {
-            const finalEventEndTime = new Date(finalEvent.end.dateTime);
-            finalEventEndTime.setMinutes(finalEventEndTime.getMinutes() + 10); // Add 10 minutes to the final event end time
-            if (currentTime >= finalEventEndTime) {
-                // Display events for tomorrow
-                displayTomorrowEvents(calendarId);
+    // Get today's date and tomorrow's date in the format required by the Google Calendar API
+    const today = new Date().toISOString().split('T')[0];
+    // Fetch events from Google Calendar API and determine which events to display
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calid1}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${today}T00:00:00Z&timeMax=${today}T23:59:59Z`)
+        .then(response => response.json())
+        .then(data => {
+            const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
+            const sortedEvents = events.sort((a, b) => {
+                const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
+                const numB = parseInt(b.summary.match(/^\d+/)[0]);
+                return numA - numB; // Sort events based on the numbers in their titles
+            });
+            sortedEvents.forEach(event => {
+            console.log(event.summary);
+            });
+    // logic for changing to tommorow if it's 10 min after finalevent
+            const currentTime = new Date();
+            const finalEvent = sortedEvents[sortedEvents.length - 1];
+            if (finalEvent && finalEvent.end && finalEvent.end.dateTime) {
+                const finalEventEndTime = new Date(finalEvent.end.dateTime);
+                finalEventEndTime.setMinutes(finalEventEndTime.getMinutes() + 10); // Add 10 minutes to the final event end time
+                if (currentTime >= finalEventEndTime) {
+                    // Display events for tomorrow
+                    displayTomorrowEvents(calendarId);
+                } else {
+                    // Display events for today
+                    const firstEvent = sortedEvents[0];
+                    const finalEvent = sortedEvents[sortedEvents.length - 1];
+                    const freePeriods = findFreePeriods(sortedEvents);
+                    displayEvents(firstEvent, finalEvent);
+                    displayFreePeriods(freePeriods);
+                }
             } else {
-                // Display events for today
-                const firstEvent = sortedEvents[0];
-                const finalEvent = sortedEvents[sortedEvents.length - 1];
-                const freePeriods = findFreePeriods(sortedEvents);
-                displayEvents(firstEvent, finalEvent);
-                displayFreePeriods(freePeriods);
-            }
-        } else {
-            document.getElementById('events-container').innerHTML = `no events today fella`;
-        }        
-    })
-    .catch(error => console.error('Error fetching data:', error));
+                document.getElementById('events-container').innerHTML = `no events today fella`;
+            }        
+        })
+        .catch(error => console.error('Error fetching data:', error));
 }
 startendfree(calendarId)
 // Display events for tomorrow
@@ -417,5 +417,4 @@ function changeCalID(){
     document.getElementById('user').innerHTML = `${user}`;
     fetchEventsAndUpdateTime(CalID);
     startendfree(CalID);
-    displayTomorrowEvents(CalID)
 }
