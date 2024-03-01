@@ -10,9 +10,12 @@
 	<button onclick="changeCalID()">SWITCHY and submit</button>
 	<div id="user"></div>
     <label for="dateInput">Choose a date:</label>
-    <input type="date" id="dateInput" value="2024-03-04">
+    <input type="date" id="dateInput">
 </body>
 <script>
+
+document.getElementById('dateInput').valueAsDate = new Date();
+
 function changeCalID(){
 	let calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg';
     var CalID = prompt("What is your calendarID?","allfoy");
