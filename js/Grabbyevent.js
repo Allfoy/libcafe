@@ -252,8 +252,12 @@ function startendfree(calid1){
                 const finalEventEndTime = new Date(finalEvent.end.dateTime);
                 finalEventEndTime.setMinutes(finalEventEndTime.getMinutes() + 10); // Add 10 minutes to the final event end time
                 if (currentTime >= finalEventEndTime) {
-                    // Display events for tomorrow
-                    displayTomorrowEvents(calendarId);
+                    if(new Date().getDay() + 1 === 6){
+                        document.getElementById('events-container').innerHTML = `<p>no events cuz tommorow be saturday</p>`;
+                    }
+                    else {
+                        // Display events for tomorrow
+                        displayTomorrowEvents(calendarId);}
                 } else {
                     // Display events for today
                     const firstEvent = sortedEvents[0];
