@@ -183,11 +183,11 @@ function fetchEventsAndUpdateTime(calid) {
                 // Calculate the time until this event ends
                 const timeUntilEndEvent = CurrentEventEnd - now;
                 const hoursUntilEndEvent = Math.floor(timeUntilEndEvent / (1000 * 60 * 60));
-                const minutesUntilEndEvent = Math.floor((timeUntilEndEvent % (1000 * 60 * 60)) / (1000 * 60));
+                const minutesUntilEndEvent = Math.ceil((timeUntilEndEvent % (1000 * 60 * 60)) / (1000 * 60));
                 // Calculate the time until the upcoming event
                 const timeUntilNextEvent = upcomingEventStart - now;
                 const hoursUntilNextEvent = Math.floor(timeUntilNextEvent / (1000 * 60 * 60));
-                const minutesUntilNextEvent = Math.floor((timeUntilNextEvent % (1000 * 60 * 60)) / (1000 * 60));
+                const minutesUntilNextEvent = Math.ceil((timeUntilNextEvent % (1000 * 60 * 60)) / (1000 * 60));
                 // Display the upcoming event and countdown in the container
                 upcomingEventContainer.innerHTML = `
                     <h2>${upcomingActualTitle}</h2><p>(${upcomingEvent.location})</p>
