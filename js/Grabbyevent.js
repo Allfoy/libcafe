@@ -73,6 +73,11 @@ const keywordLinks = {
         link: 'https://allfoy.github.io/libcafe/error2',
         imageSrc: 'img/bg.jpg',
         actualName: 'Economics'
+    },
+    'lo':{
+        link: 'https://allfoy.github.io/libcafe/error2',
+        imageSrc: 'img/bg.jpg',
+        actualName: 'PE'
     }
     // Add more keywords and links for silly guy
 };
