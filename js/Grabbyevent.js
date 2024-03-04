@@ -172,17 +172,22 @@ function fetchEventsAndUpdateTime(calid) {
             if (upcomingEvent) {
                 const upcomingEventTitle = upcomingEvent.summary;
                 const upcomingEventStart = new Date(upcomingEvent.start.dateTime);
+                const CurrentEventEnd = new Date(currentEvent.end.dateTime);
                 const linkAndImage = getLinkAndImageForEvent(upcomingEventTitle);
                 const upcomingActualTitle = linkAndImage.actualName;
-
+                // Calculate the time until this event ends
+                const timeUntilEndEvent = CurrentEventEnd - now;
+                const hoursUntilEndEvent = Math.floor(timeUntilEndEvent / (1000 * 60 * 60));
+                const minutesUntilEndEvent = Math.floor((timeUntilEndEvent % (1000 * 60 * 60)) / (1000 * 60));
                 // Calculate the time until the upcoming event
-                const timeUntilEvent = upcomingEventStart - now;
-                const hoursUntilEvent = Math.floor(timeUntilEvent / (1000 * 60 * 60));
-                const minutesUntilEvent = Math.floor((timeUntilEvent % (1000 * 60 * 60)) / (1000 * 60));
+                const timeUntilNextEvent = upcomingEventStart - now;
+                const hoursUntilNextEvent = Math.floor(timeUntilNextEvent / (1000 * 60 * 60));
+                const minutesUntilNextEvent = Math.floor((timeUntilNextEvent % (1000 * 60 * 60)) / (1000 * 60));
                 // Display the upcoming event and countdown in the container
                 upcomingEventContainer.innerHTML = `
                     <h2>${upcomingActualTitle}</h2><p>(${upcomingEvent.location})</p>
-                    <p>Time Until Event: ${hoursUntilEvent} hours ${minutesUntilEvent} minutes</p>
+                    <p>Time until this event ends: ${hoursUntilEndEvent} hours ${minutesUntilEndEvent} minutes</p>
+                    <p>Time Until Next Event: ${hoursUntilNextEvent} hours ${minutesUntilNextEvent} minutes</p>
                 `;
             } else {
                 upcomingEventContainer.innerHTML = '<p>No upcoming events.</p>';
