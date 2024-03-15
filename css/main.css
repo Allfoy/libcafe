@@ -204,7 +204,7 @@ iframe {
 	background-color: #f7c8a6;
 	position: fixed;
 	height: auto;
-	width: auto+20px;
+	width: auto;
 	padding: 20px;
 	top: 200px;
 	left: 0px;
@@ -216,7 +216,7 @@ iframe {
 	background-color: #f7c8a6;
 	position: fixed;
 	height: auto;
-	width: auto+20px;
+	width: auto;
 	padding: 20px;
 	top: 430px;
 	left: 0px;

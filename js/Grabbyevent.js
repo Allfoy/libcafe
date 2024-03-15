@@ -134,9 +134,9 @@ function fetchEventsAndUpdateTime(calid) {
                         imagesrc = "weekend";//is it weekend
                     }else{ if(conditions.isInBreak){
                         imagesrc = "break";//is it break?
-                        }else{
-                        imagesrc = "schoolover";} // no event, no weekend and no break means no school (maybe add a free period check later)
-                        }
+                        }else if(imagesrc = "freeperiod"){
+                        imagesrc = "freeperiod";} // no event, no weekend and no break means no school (maybe add a free period check later)
+                        else{imagesrc = "schoolover";}}
                         // actually set the source to the one deducted by last bit of code
                         document.getElementById('icony').src = "img/" + imagesrc + ".jpg";
             }
@@ -367,6 +367,8 @@ function displayFreePeriods(freePeriods) {
         freePeriods.forEach(period => {
             eventsContainer.innerHTML += `<p><strong>Block ${period.block}:</strong> ${period.startTime} to ${period.endTime}</p>`;
         });
+        imagesrc = "freeperiod";
+        document.getElementById('icony').src = "img/" + imagesrc + ".jpg";
     }
 }
 

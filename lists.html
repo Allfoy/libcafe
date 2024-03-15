@@ -4,13 +4,30 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
+    <style>
+        .events{
+        text-align: center;
+        display: flex;
+        width: fit-content;
+        flex-direction: column;
+        margin: auto;
+        }
+        .event{
+            background-color: #f7c8a6;
+            width: auto;
+            height: auto;
+            border-radius: 25px;
+            margin: 10px;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-	<div id="events"></div>
-	<button onclick="changeCalID()">SWITCHY and submit</button>
-	<div id="user"></div>
+	<div class="events" id="events"></div>
     <label for="dateInput">Choose a date:</label>
     <input type="date" id="dateInput">
+    <button onclick="changeCalID()">SWITCHY and submit</button>
+	<div id="user"></div>
 </body>
 <script>
 
@@ -52,7 +69,7 @@ function fetchEventsAndUpdateTime(CalID) {
             const eventsdiv = document.getElementById('events');
 			eventsdiv.innerHTML = `<p></p>` 
 			sortedEvents.forEach(event => {
-            eventsdiv.innerHTML += `<p>${event.summary}</p>`;
+            eventsdiv.innerHTML += `<p class="event">${event.summary}</p>`;
 			console.log(event.summary)
 			});
 		
