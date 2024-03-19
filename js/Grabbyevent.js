@@ -97,11 +97,11 @@ function fetchEventsAndUpdateTime(calid) {
             const now = new Date();
             let currentEvent = null;
             let upcomingEvent = null;
-            /*events.forEach(event => {
+            events.forEach(event => {
                 console.log(event.summary);
-                console.log(event.start);
-                console.log(event.end);
-                }); */
+                console.log(event.start.dateTime);
+                console.log(event.end.dateTime);
+                });
             // Find the first event that is currently happening
             for (const event of events) {
                 const eventStart = new Date(event.start.dateTime);
@@ -182,9 +182,10 @@ function fetchEventsAndUpdateTime(calid) {
                 eventButton.href = 'https://allfoy.github.io/libcafe/error1'; // Set a default link or disable the button if no ongoing event
             }
 // here code for upcoming event and time remaining
-            if (upcomingEvent) {
+            if (upcomingEvent && currentEvent) {
                 const upcomingEventTitle = upcomingEvent.summary;
                 const upcomingEventStart = new Date(upcomingEvent.start.dateTime);
+                console.log(currentEvent);
                 const CurrentEventEnd = new Date(currentEvent.end.dateTime);
                 const linkAndImage = getLinkAndImageForEvent(upcomingEventTitle);
                 const upcomingActualTitle = linkAndImage.actualName;
@@ -202,6 +203,21 @@ function fetchEventsAndUpdateTime(calid) {
                     <p>Time until this event ends: ${hoursUntilEndEvent} hours ${minutesUntilEndEvent} minutes</p>
                     <p>Time Until Next Event: ${hoursUntilNextEvent} hours ${minutesUntilNextEvent} minutes</p>
                 `;
+            }   else if(upcomingEvent && !currentEvent){
+                const upcomingEventTitle = upcomingEvent.summary;
+                const upcomingEventStart = new Date(upcomingEvent.start.dateTime);
+                const linkAndImage = getLinkAndImageForEvent(upcomingEventTitle);
+                const upcomingActualTitle = linkAndImage.actualName;
+                // Calculate the time until the upcoming event
+                const timeUntilNextEvent = upcomingEventStart - now;
+                const hoursUntilNextEvent = Math.floor(timeUntilNextEvent / (1000 * 60 * 60));
+                const minutesUntilNextEvent = Math.ceil((timeUntilNextEvent % (1000 * 60 * 60)) / (1000 * 60));
+                // Display the upcoming event and countdown in the container
+                upcomingEventContainer.innerHTML = `
+                    <h2>${upcomingActualTitle}</h2><p>(${upcomingEvent.location})</p>
+                    <p>Time Until Next Event: ${hoursUntilNextEvent} hours ${minutesUntilNextEvent} minutes</p>
+                `;
+
             } else {
                 upcomingEventContainer.innerHTML = '<p>No upcoming events.</p>';
             }
