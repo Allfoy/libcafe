@@ -86,14 +86,22 @@ const keywordLinks = {
 // Function to fetch events and update time
 function fetchEventsAndUpdateTime(calid) {
     // Fetch events from Google Calendar API
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calid}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ`)
+    const today = new Date().toISOString().split('T')[0];
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calid}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${today}T00:00:00Z&timeMax=${tomorrowFormatted}T23:59:59Z`)
         .then(response => response.json())
         .then(data => {
             const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
             const now = new Date();
             let currentEvent = null;
             let upcomingEvent = null;
-
+            /*events.forEach(event => {
+                console.log(event.summary);
+                console.log(event.start);
+                console.log(event.end);
+                }); */
             // Find the first event that is currently happening
             for (const event of events) {
                 const eventStart = new Date(event.start.dateTime);
@@ -252,9 +260,11 @@ function startendfree(calid1){
                 const numB = parseInt(b.summary.match(/^\d+/)[0]);
                 return numA - numB; // Sort events based on the numbers in their titles
             });
-            sortedEvents.forEach(event => {
+            /* sortedEvents.forEach(event => {
             console.log(event.summary);
-            });
+            console.log(event.start);
+            console.log(event.end);
+            }); */
     // logic for changing to tommorow if it's 10 min after finalevent
             const currentTime = new Date();
             const finalEvent = sortedEvents[sortedEvents.length - 1];
