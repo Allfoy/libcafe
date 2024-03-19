@@ -97,11 +97,11 @@ function fetchEventsAndUpdateTime(calid) {
             const now = new Date();
             let currentEvent = null;
             let upcomingEvent = null;
-            events.forEach(event => {
+            /*events.forEach(event => {
                 console.log(event.summary);
                 console.log(event.start.dateTime);
                 console.log(event.end.dateTime);
-                });
+                }); */
             // Find the first event that is currently happening
             for (const event of events) {
                 const eventStart = new Date(event.start.dateTime);
@@ -142,7 +142,7 @@ function fetchEventsAndUpdateTime(calid) {
                         imagesrc = "weekend";//is it weekend
                     }else{ if(conditions.isInBreak){
                         imagesrc = "break";//is it break?
-                        }else if(imagesrc = "freeperiod"){
+                        }else if(imagesrc == "freeperiod"){
                         imagesrc = "freeperiod";} // no event, no weekend and no break means no school (maybe add a free period check later)
                         else{imagesrc = "schoolover";}}
                         // actually set the source to the one deducted by last bit of code
@@ -390,9 +390,11 @@ function displayFreePeriods(freePeriods) {
     if (freePeriods.length === 0) {
         eventsContainer.innerHTML += '<p>No free periods found.</p>';
     } else {
+        console.log("why are we saying it's more than 0?")
         freePeriods.forEach(period => {
             eventsContainer.innerHTML += `<p><strong>Block ${period.block}:</strong> ${period.startTime} to ${period.endTime}</p>`;
         });
+        // this is not the issue rn?
         imagesrc = "freeperiod";
         document.getElementById('icony').src = "img/" + imagesrc + ".jpg";
     }
@@ -408,41 +410,8 @@ function getTimeForBlock(block) {
 }
 
 //here function for adaptiveicon
+// for now it's directly in the code
 
-function adaptiveiconnce(){
-    // make src a variable and let default {be black}
-    let imagesrc = "https://fakeimg.pl/200x100/cccccc/fff";
-    const currentTime = new Date();
-    // local due to the breaks being in such format
-    const localTime = new Date().toLocaleTimeString('en-US', {hour12: false});
-    //breaks
-    const breaks = {
-        "10:30": "10:50",
-        "12:20": "12:45",
-        "14:15": "14:30"
-    };
-    //put the conditions in an object literal for readability
-    const conditions = {
-        //is it weekend?
-        weekend: new Date().getDay() === 6 || new Date().getDay() === 0,
-        // is it break?
-        isInBreak: Object.entries(breaks).some(([start, end]) => {return localTime >= start && localTime <= end;}),
-
-        //isInFP: freePeriods.forEach(period => {console.log(period.block + period.startTime + period.endTime)})
-    };
-    // reorderment
-    if(conditions.weekend){
-        imagesrc = "weekend";//is it weekend
-    }else{ if(conditions.isInBreak){
-        imagesrc = "break";//is it break?
-        }else{
-        imagesrc = "schoolover";} // no event, no weekend and no break means no school (maybe add a free period check later)
-        }
-
-
-// actually set the source to the one deducted by last bit of code
-document.getElementById('icony').src = "img/" + imagesrc + ".jpg";
-};
 
 function changeCalID(){
     var CalID = prompt("What is your calendarID?","allfoy");
