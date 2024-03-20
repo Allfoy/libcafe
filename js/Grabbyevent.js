@@ -185,7 +185,7 @@ function fetchEventsAndUpdateTime(calid) {
             if (upcomingEvent && currentEvent) {
                 const upcomingEventTitle = upcomingEvent.summary;
                 const upcomingEventStart = new Date(upcomingEvent.start.dateTime);
-                console.log(currentEvent);
+                //console.log(currentEvent);
                 const CurrentEventEnd = new Date(currentEvent.end.dateTime);
                 const linkAndImage = getLinkAndImageForEvent(upcomingEventTitle);
                 const upcomingActualTitle = linkAndImage.actualName;
@@ -231,7 +231,9 @@ function fetchEventsAndUpdateTime(calid) {
 fetchEventsAndUpdateTime(calendarId);
 
 // Set up interval to update time every 1 second (adjust as needed)
-setInterval(fetchEventsAndUpdateTime(calendarId), 1000);
+document.addEventListener("DOMContentLoaded", (event) => {
+    setInterval(fetchEventsAndUpdateTime(calendarId), 1000);
+});
 // here code for adaptive book
 // Function to get the link and image for the event based on its title
 function getLinkAndImageForEvent(title) {
