@@ -392,15 +392,16 @@ function displayFreePeriods(freePeriods) {
     if (freePeriods.length === 0) {
         eventsContainer.innerHTML += '<p>No free periods found.</p>';
     } else {
-        console.log("why are we saying it's more than 0?")
+        console.log("you have " + freePeriods.length + " free period(s)");
         freePeriods.forEach(period => {
             eventsContainer.innerHTML += `<p><strong>Block ${period.block}:</strong> ${period.startTime} to ${period.endTime}</p>`;
+            if (period.startTime < new Date() < period.endTime){
+                imagesrc = "freeperiod";
+                document.getElementById('icony').src = "img/" + imagesrc + ".jpg";
+            }
         });
-        // this is not the issue rn?
-        imagesrc = "freeperiod";
-        document.getElementById('icony').src = "img/" + imagesrc + ".jpg";
+        }
     }
-}
 
 // Helper function to get starttime for a given block number
 function getTimeForBlock(block) {

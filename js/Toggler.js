@@ -3,7 +3,7 @@ function toggleIframe(iframeId) {
     iframe.style.display = (iframe.style.display === 'none') ? 'flex' : 'none';
 }
 // doesn't work yet
-//document.addEventListener("DOMContentLoaded", function(){locateybbat();});
+document.addEventListener("DOMContentLoaded", function(){locateybbat();});
 
 function locateybbat(){
     var ybbat = document.getElementById('ybbat');
@@ -12,9 +12,7 @@ function locateybbat(){
     var ttop = tabby.offsetTop;
     tabby.style.height = 'auto';
     var tapp = tabby.offsetHeight;
-    console.log(tapp);
-    console.log(theight);
-    console.log(ybbat.style.top);
+    //console.log(tapp,theight,ybbat.style.top);
     ybbat.style.top= ttop + theight + 50 +'px';
 }
 
