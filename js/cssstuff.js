@@ -19,15 +19,23 @@ function locateybbat(){
 }
 
 function mobilemode(){
-if ((window.innerWidth <= 1500) && (window.innerHeight <= 700)){
-    console.log("your screen is smaller " + window.innerWidth +" by "+ window.innerHeight);
+if ((window.innerWidth <= 1500) || (window.innerHeight <= 700)){
+    console.log("your screen is smaller: " + window.innerWidth +" by "+ window.innerHeight);
+    // relocate the tabs
     var ybbat = document.getElementById('ybbat');
     var tabby = document.getElementById('tabby');
     tabby.style.position = 'absolute';
     ybbat.style.position = 'absolute';
     tabby.style.top = 4900 +'px';
     ybbat.style.top = 5100 +'px';
+    // relocat the adaptiveicon 
+    var icony = document.getElementById('icony');
+    icony.style.top = 5300 + 'px';
+    icony.style.right = 500 + 'px'; //a few ig
 } else {console.log("your screen is default");}
+    // relocate the weekday
+    var weekday = document.getElementById('weekday');
+    weekday.style.right = 45 + '%';
 }
 
 // this only does horizontals
