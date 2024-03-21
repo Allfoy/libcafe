@@ -224,16 +224,26 @@ iframe {
 	border-radius: 0px 25px 25px 0px;
 	transition: left 1s;
 }
-.weekday{
-	position:absolute;
-	right: 17.52%;
+.dayimage{
+	position: absolute; 
+	right: 13.47%;
+	top: 0px;
+	display: flex;
+	height: auto;
+	width: auto;
+	position:absolute; /*absolute means take ancestor so dayimage*/
+	text-align: center;
+	justify-content: center;
+	align-items: center;
 	top: 179px;
+	flex-direction: column;
+}
+.weekday{
 	font-size:x-large;
 	font-weight: bold;
 	font-family: 'BlackChancery';
 }
 .icony{
-	position:absolute;
-	right:  13.47%;
-	top: 219px;
+	right:  auto;
+	top: 30px;
 }

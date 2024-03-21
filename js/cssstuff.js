@@ -32,10 +32,11 @@ if ((window.innerWidth <= 1500) || (window.innerHeight <= 700)){
     var icony = document.getElementById('icony');
     icony.style.top = 5300 + 'px';
     icony.style.right = 500 + 'px'; //a few ig
-} else {console.log("your screen is default");}
     // relocate the weekday
-    var weekday = document.getElementById('weekday');
-    weekday.style.right = 45 + '%';
+    var dayimage = document.getElementById('dayimage');
+    dayimage.style.top = 5100 + 'px';
+} else {console.log("your screen is default");}
+
 }
 
 // this only does horizontals
