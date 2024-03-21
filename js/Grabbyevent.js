@@ -78,6 +78,31 @@ const keywordLinks = {
         link: 'https://allfoy.github.io/libcafe/error2',
         imageSrc: 'img/bg.jpg',
         actualName: 'PE'
+    },
+    'kumu':{
+        link: 'https://allfoy.github.io/libcafe/error2',
+        imageSrc: 'img/music.png',
+        actualName: 'Music'
+    },
+    'kua':{
+        link: 'https://allfoy.github.io/libcafe/error2',
+        imageSrc: 'img/KUA.jpg',
+        actualName: 'General Arts'
+    },
+    'ak':{
+        link: 'https://allfoy.github.io/libcafe/error2',
+        imageSrc: 'img/bg.jpg',
+        actualName: 'Geography'
+    },// i think it's ges? idk no casper yet
+    'ges':{
+        link: 'https://allfoy.github.io/libcafe/error2',
+        imageSrc: 'img/bg.jpg',
+        actualName: 'History'
+    },
+    'maw':{
+        link: 'https://allfoy.github.io/libcafe/error2',
+        imageSrc: 'img/bg.jpg',
+        actualName: 'Social sciences'
     }
     // Add more keywords and links for silly guy
 };
