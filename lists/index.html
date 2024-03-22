@@ -94,19 +94,19 @@ function fetchEventsAndUpdateTime(CalID) {
         document.getElementById('user').innerHTML = `${user}`;
         console.log(document.cookie);
         fetchEventsAndUpdateTime(getCookie("calendarsId"));
-        //startendfree(CalID);
+        startendfree(getCookie("calendarsId"));
     }else{
         var user = '';
         console.log("your saved cookie = " + getCookie("calendarsId"));
         document.getElementById('user').innerHTML = `${user}`;
         //console.log(document.cookie)
         fetchEventsAndUpdateTime(getCookie("calendarsId"));
-        //startendfree(CalID);
+        startendfree(getCookie("calendarsId"));
     }
         //'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
         //'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
         //'myrthe': CalID = '32ddu2ndrbe8jtp1olg6rko3f5cntog3'; user = 'Myrthe';break;
-		//'troy'  : CalID = '3hvsosg4io5fdefbn66meln2un2hu33k'; user = 'Troy'  ;break;
+	//'troy'  : CalID = '3hvsosg4io5fdefbn66meln2un2hu33k'; user = 'Troy'  ;break;
 }
 function getCookie(cname) {
     let name = cname + "=";
