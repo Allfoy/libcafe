@@ -23,6 +23,8 @@
     </style>
 </head>
 <body>
+    <div class="centeredbutton">go&nbsp<a href="../home">home</a></div>
+    <div><button onclick="CalIDcookie()"> go to your saved cookie</button></div>
 	<div class="events" id="events"></div>
     <label for="dateInput">Choose a date:</label>
     <input type="date" id="dateInput">
@@ -79,5 +81,47 @@ function fetchEventsAndUpdateTime(CalID) {
 		})
 	};
 	fetchEventsAndUpdateTime('kvme0ikmjq4825g8ee860tm058clorcg')
+
+    function CalIDcookie(){
+    if(document.cookie == ""){
+        var CalID = prompt("What is your calendarID?","");
+        var user = '';
+        //document.cookie = CalID; // set the asked id to our only cookie
+        const d = new Date();
+        d.setTime(d.getTime() + (365*24*60*60*1000));
+        let expires = "expires="+ d.toUTCString();
+        document.cookie = "calendarsId" + "=" + CalID + ";" + expires + ";path=/";
+        document.getElementById('user').innerHTML = `${user}`;
+        console.log(document.cookie);
+        fetchEventsAndUpdateTime(getCookie("calendarsId"));
+        //startendfree(CalID);
+    }else{
+        var user = '';
+        console.log("your saved cookie = " + getCookie("calendarsId"));
+        document.getElementById('user').innerHTML = `${user}`;
+        //console.log(document.cookie)
+        fetchEventsAndUpdateTime(getCookie("calendarsId"));
+        //startendfree(CalID);
+    }
+        //'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
+        //'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
+        //'myrthe': CalID = '32ddu2ndrbe8jtp1olg6rko3f5cntog3'; user = 'Myrthe';break;
+		//'troy'  : CalID = '3hvsosg4io5fdefbn66meln2un2hu33k'; user = 'Troy'  ;break;
+}
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
 </script>
 </html>
