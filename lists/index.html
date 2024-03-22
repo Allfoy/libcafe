@@ -83,7 +83,7 @@ function fetchEventsAndUpdateTime(CalID) {
 	fetchEventsAndUpdateTime('kvme0ikmjq4825g8ee860tm058clorcg')
 
     function CalIDcookie(){
-    if(document.cookie == ""){
+    if(document.cookie == "" || getCookie("calendarsId") == null){
         var CalID = prompt("What is your calendarID?","");
         var user = '';
         //document.cookie = CalID; // set the asked id to our only cookie

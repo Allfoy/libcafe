@@ -462,7 +462,7 @@ function changeCalID(){
     startendfree(CalID);
 }
 function CalIDcookie(){
-    if(document.cookie == ""){
+    if(document.cookie == "" ||getCookie("calendarsId") == null){
         var CalID = prompt("What is your calendarID?","");
         var user = '';
         //document.cookie = CalID; // set the asked id to our only cookie
