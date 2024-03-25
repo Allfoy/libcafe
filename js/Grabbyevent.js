@@ -227,9 +227,15 @@ function fetchEventsAndUpdateTime(calid) {
                 // Display the upcoming event and countdown in the container
                 upcomingEventContainer.innerHTML = `
                     <h2>${upcomingActualTitle}</h2><p>(${upcomingEvent.location})</p>
-                    <p>Time until this event ends: ${hoursUntilEndEvent} h ${minutesUntilEndEvent} min ${secondsUntilEndEvent} s</p>
+                    <p>Time Until This Event Ends: ${hoursUntilEndEvent} h ${minutesUntilEndEvent} min ${secondsUntilEndEvent} s</p>
                     <p>Time Until Next Event: ${hoursUntilNextEvent} h ${minutesUntilNextEvent} min ${secondsUntilNextEvent} s</p>
                 `;
+                if(hoursUntilEndEvent == hoursUntilNextEvent && minutesUntilEndEvent == minutesUntilNextEvent && secondsUntilEndEvent == secondsUntilNextEvent){
+                    upcomingEventContainer.innerHTML = `
+                    <h2>${upcomingActualTitle}</h2><p>(${upcomingEvent.location})</p>
+                    <p>Time Until Next Event (no break): ${hoursUntilNextEvent} h ${minutesUntilNextEvent} min ${secondsUntilNextEvent} s</p>
+                `;
+                }
             }   else if(upcomingEvent && !currentEvent){
                 const upcomingEventTitle = upcomingEvent.summary;
                 const upcomingEventStart = new Date(upcomingEvent.start.dateTime);
@@ -350,6 +356,7 @@ function displayTomorrowEvents(calid2) {
         .then(response => response.json())
         .then(data => {
             const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
+//            const filteredEvents = events.filter(function(event){return (event.includes("rt_"))}); //test later
             const sortedEvents = events.sort((a, b) => {
                 const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
                 const numB = parseInt(b.summary.match(/^\d+/)[0]);
