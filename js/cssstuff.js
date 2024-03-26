@@ -1,6 +1,6 @@
-function toggleIframe(iframeId) {
-    var iframe = document.getElementById(iframeId);
-    iframe.style.display = (iframe.style.display === 'none') ? 'flex' : 'none';
+function toggleElem(elemId) {
+    var elem = document.getElementById(elemId);
+    elem.style.display = (elem.style.display === 'none') ? 'flex' : 'none';
 }
 // doesn't work yet
 document.addEventListener("DOMContentLoaded", function(){locateybbat();mobilemode()});

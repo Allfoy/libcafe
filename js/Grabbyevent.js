@@ -103,6 +103,11 @@ const keywordLinks = {
         link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/bg.jpg',
         actualName: 'Social sciences'
+    },
+    '-wi':{
+        link: 'https://apps.noordhoff.nl/se/content/book/0818ce8f-cdb6-468d-b160-6874cfda8372/ebooks/e4405ab2-d6f8-4f64-abf9-d0d327474ab2',
+        imageSrc: '../img/MATHB.jpeg',
+        actualName: 'Mathematics rt'
     }
     // Add more keywords and links for silly guy
 };
@@ -131,11 +136,16 @@ function CalIDcookie(){
 };
 function switchcookie(){
     var CalID = prompt("What is your calendarID?","kvme0ikmjq4825g8ee860tm058clorcg");
+    if (CalID.length != 32){
+        var CalID = prompt("What is your calendarID?","kvme0ikmjq4825g8ee860tm058clorcg");
+    }
+    else{
     const d = new Date();
         d.setTime(d.getTime() + (365*24*60*60*1000));
         let expires = "expires="+ d.toUTCString();
         document.cookie = "calendarsId" + "=" + CalID + ";" + expires + ";path=/";
         location.reload()
+    }
 };
 // read cookie functie
 function getCookie(cname) {
@@ -165,6 +175,7 @@ function fetchEventsAndUpdateTime(calid) {
         .then(response => response.json())
         .then(data => {
             const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
+            const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
             const now = new Date();
             let currentEvent = null;
             let upcomingEvent = null;
@@ -174,7 +185,7 @@ function fetchEventsAndUpdateTime(calid) {
                 console.log(event.end.dateTime);
                 }); */
             // Find the first event that is currently happening
-            for (const event of events) {
+            for (const event of filteredEvents) {
                 const eventStart = new Date(event.start.dateTime);
                 const eventEnd = new Date(event.end.dateTime);
 
@@ -354,7 +365,8 @@ function startendfree(calid1){
         .then(response => response.json())
         .then(data => {
             const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
-            const sortedEvents = events.sort((a, b) => {
+            const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
+            const sortedEvents = filteredEvents.sort((a, b) => {
                 const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
                 const numB = parseInt(b.summary.match(/^\d+/)[0]);
                 return numA - numB; // Sort events based on the numbers in their titles
@@ -402,8 +414,8 @@ function displayTomorrowEvents(calid2) {
         .then(response => response.json())
         .then(data => {
             const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
-//            const filteredEvents = events.filter(function(event){return (event.includes("rt_"))}); //test later
-            const sortedEvents = events.sort((a, b) => {
+            const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
+            const sortedEvents = filteredEvents.sort((a, b) => {
                 const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
                 const numB = parseInt(b.summary.match(/^\d+/)[0]);
                 return numA - numB; // Sort events based on the numbers in their titles
@@ -478,8 +490,9 @@ function displayFreePeriods(freePeriods) {
         freePeriods.forEach(period => {
             eventsContainer.innerHTML += `<p><strong>Block ${period.block}:</strong> ${period.startTime} to ${period.endTime}</p>`;
             if (period.startTime < new Date() < period.endTime){
-                imagesrc = "freeperiod";
-                document.getElementById('icony').src = "../img/" + imagesrc + ".jpg";
+                document.getElementById('freeIcony').style.display = 'flex';
+            } else {
+                document.getElementById('freeIcony').style.display = 'none'
             }
         });
         }

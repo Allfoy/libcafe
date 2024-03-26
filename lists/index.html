@@ -90,11 +90,14 @@ function CalIDcookie(){
 };
 function switchcookie(){
     var CalID = prompt("What is your calendarID?","kvme0ikmjq4825g8ee860tm058clorcg");
-    const d = new Date();
+    if (CalID.length == 32){
+        const d = new Date();
         d.setTime(d.getTime() + (365*24*60*60*1000));
         let expires = "expires="+ d.toUTCString();
         document.cookie = "calendarsId" + "=" + CalID + ";" + expires + ";path=/";
         location.reload()
+    }
+    else{var CalID = prompt("What is your calendarID?","kvme0ikmjq4825g8ee860tm058clorcg");}
 };
 // read cookie functie
 function getCookie(cname) {
