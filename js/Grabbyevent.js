@@ -1,7 +1,7 @@
 
 
 //const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
-let calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg';
+//let calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg';
 // object literal with keywords and their respective links
 const keywordLinks = {
     'entl': {
@@ -106,7 +106,53 @@ const keywordLinks = {
     }
     // Add more keywords and links for silly guy
 };
-
+CalIDcookie();
+// here some code for the cookie
+// this works by checking if this specific cookie exist, if it don't make one, another bit of code for switching
+function CalIDcookie(){
+    if(!(document.cookie.split(";").some((item) => item.trim().startsWith("calendarsId" + "=")))){
+        var CalID = prompt("What is your calendarID?","kvme0ikmjq4825g8ee860tm058clorcg");
+        const d = new Date();
+        d.setTime(d.getTime() + (365*24*60*60*1000));
+        let expires = "expires="+ d.toUTCString();
+        document.cookie = "calendarsId" + "=" + CalID + ";" + expires + ";path=/";
+        console.log("we have found a cookie: "+document.cookie);
+        fetchEventsAndUpdateTime(getCookie("calendarsId"));
+        startendfree(getCookie("calendarsId"));
+    }else{
+        console.log("we have found the cookie:" + getCookie("calendarsId"));
+        fetchEventsAndUpdateTime(getCookie("calendarsId"));
+        startendfree(getCookie("calendarsId"));
+    }
+        //'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
+        //'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
+        //'myrthe': CalID = '32ddu2ndrbe8jtp1olg6rko3f5cntog3'; user = 'Myrthe';break;
+		//'troy'  : CalID = '3hvsosg4io5fdefbn66meln2un2hu33k'; user = 'Troy'  ;break;
+};
+function switchcookie(){
+    var CalID = prompt("What is your calendarID?","kvme0ikmjq4825g8ee860tm058clorcg");
+    const d = new Date();
+        d.setTime(d.getTime() + (365*24*60*60*1000));
+        let expires = "expires="+ d.toUTCString();
+        document.cookie = "calendarsId" + "=" + CalID + ";" + expires + ";path=/";
+        location.reload()
+};
+// read cookie functie
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
 //  here code for current events and current time (split it later for clean code)
 // Function to fetch events and update time
 function fetchEventsAndUpdateTime(calid) {
@@ -259,11 +305,11 @@ function fetchEventsAndUpdateTime(calid) {
         .catch(error => {
             console.error('Error fetching events:', error);
         });
-        setTimeout(fetchEventsAndUpdateTime,1000,calid)
+        setTimeout(fetchEventsAndUpdateTime,1000,getCookie("calendarsId"))
 }
 
 // Initial fetch and time update
-fetchEventsAndUpdateTime(calendarId);
+fetchEventsAndUpdateTime(getCookie("calendarsId"));
 
 // Set up interval to update time every 1 second (adjust as needed)
 //document.addEventListener("DOMContentLoaded", (event) => {
@@ -330,7 +376,7 @@ function startendfree(calid1){
                     }
                     else {
                         // Display events for tomorrow
-                        displayTomorrowEvents(calendarId);}
+                        displayTomorrowEvents(getCookie("calendarsId"));}
                 } else {
                     // Display events for today
                     const firstEvent = sortedEvents[0];
@@ -345,7 +391,7 @@ function startendfree(calid1){
         })
         .catch(error => console.error('Error fetching data:', error));
 }
-startendfree(calendarId)
+startendfree(getCookie("calendarsId"))
 // Display events for tomorrow
 function displayTomorrowEvents(calid2) {
     const tomorrow = new Date();
@@ -452,7 +498,7 @@ function getTimeForBlock(block) {
 // for now it's directly in the code
 
 
-function changeCalID(){
+/*function changeCalID(){
     var CalID = prompt("What is your calendarID?","allfoy");
     var user = 'unknown2'
     switch (CalID) {
@@ -467,45 +513,5 @@ function changeCalID(){
     document.getElementById('user').innerHTML = `${user}`;
     fetchEventsAndUpdateTime(CalID);
     startendfree(CalID);
-}
-function CalIDcookie(){
-    if(document.cookie == "" ||getCookie("calendarsId") == null){
-        var CalID = prompt("What is your calendarID?","");
-        var user = '';
-        //document.cookie = CalID; // set the asked id to our only cookie
-        const d = new Date();
-        d.setTime(d.getTime() + (365*24*60*60*1000));
-        let expires = "expires="+ d.toUTCString();
-        document.cookie = "calendarsId" + "=" + CalID + ";" + expires + ";path=/";
-        document.getElementById('user').innerHTML = `${user}`;
-        console.log(document.cookie);
-        fetchEventsAndUpdateTime(getCookie("calendarsId"));
-        startendfree(getCookie("calendarsId"));
-    }else{
-        var user = '';
-        console.log("your saved cookie = " + getCookie("calendarsId"));
-        document.getElementById('user').innerHTML = `${user}`;
-        //console.log(document.cookie)
-        fetchEventsAndUpdateTime(getCookie("calendarsId"));
-        startendfree(getCookie("calendarsId"));
-    }
-        //'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
-        //'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
-        //'myrthe': CalID = '32ddu2ndrbe8jtp1olg6rko3f5cntog3'; user = 'Myrthe';break;
-		//'troy'  : CalID = '3hvsosg4io5fdefbn66meln2un2hu33k'; user = 'Troy'  ;break;
-}
-function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
+}*/
+
