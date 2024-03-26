@@ -45,62 +45,62 @@ const keywordLinks = {
         actualName: 'Mathematics D'
     },
     'me': {
-        link: 'https://allfoy.github.io/libcafe/error2',
+        link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/bg.jpg',
         actualName: 'Mentorles'
     },
     'maat': {
-        link: 'https://allfoy.github.io/libcafe/error2',
+        link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/MAAT.jpg',
         actualName: 'Maatschappijleer'
     },
     'ckv':{
-        link: 'https://allfoy.github.io/libcafe/error2',
+        link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/bg.jpg',
         actualName: 'CKV'
     },
     'rt':{
-        link: 'https://allfoy.github.io/libcafe/error2',
+        link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/bg.jpg',
         actualName: 'Route-uur'
     },
     'wisa':{
-        link: 'https://allfoy.github.io/libcafe/error2',
+        link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/bg.jpg',
         actualName: 'Mathematics A'
     },
     'econ':{
-        link: 'https://allfoy.github.io/libcafe/error2',
+        link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/bg.jpg',
         actualName: 'Economics'
     },
     'lo':{
-        link: 'https://allfoy.github.io/libcafe/error2',
+        link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/bg.jpg',
         actualName: 'PE'
     },
     'kumu':{
-        link: 'https://allfoy.github.io/libcafe/error2',
+        link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/music.png',
         actualName: 'Music'
     },
     'kua':{
-        link: 'https://allfoy.github.io/libcafe/error2',
+        link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/KUA.jpg',
         actualName: 'General Arts'
     },
     'ak':{
-        link: 'https://allfoy.github.io/libcafe/error2',
+        link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/bg.jpg',
         actualName: 'Geography'
     },// i think it's ges? idk no casper yet
     'ges':{
-        link: 'https://allfoy.github.io/libcafe/error2',
+        link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/bg.jpg',
         actualName: 'History'
     },
     'maw':{
-        link: 'https://allfoy.github.io/libcafe/error2',
+        link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/bg.jpg',
         actualName: 'Social sciences'
     }
@@ -250,7 +250,7 @@ function fetchEventsAndUpdateTime(calid) {
             } else {
                 const currentTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
                 eventContainer.innerHTML = `<p>No ongoing events.</p><p>Time: ${currentTime}</p>`;
-                eventButton.href = 'https://allfoy.github.io/libcafe/error1'; // Set a default link or disable the button if no ongoing event
+                eventButton.href = 'https://allfoy.github.io/libcafe/home/error1'; // Set a default link or disable the button if no ongoing event
             }
 // here code for upcoming event and time remaining
             if (upcomingEvent && currentEvent) {
