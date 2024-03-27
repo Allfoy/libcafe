@@ -55,7 +55,7 @@ function fetchEventsAndUpdateTime(CalID) {
 			eventsdiv.innerHTML = `<p></p>` 
 			sortedEvents.forEach(event => {
             eventsdiv.innerHTML += `<p class="event">${event.summary}</p>`;
-			console.log(event.summary)
+            console.log(event.summary)
 			});
 		
 		
@@ -81,7 +81,6 @@ function CalIDcookie(){
     }else{
         console.log("we have found the cookie:" + getCookie("calendarsId"));
         fetchEventsAndUpdateTime(getCookie("calendarsId"));
-        startendfree(getCookie("calendarsId"));
     }
         //'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
         //'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;

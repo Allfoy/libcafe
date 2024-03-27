@@ -108,6 +108,11 @@ const keywordLinks = {
         link: 'https://apps.noordhoff.nl/se/content/book/0818ce8f-cdb6-468d-b160-6874cfda8372/ebooks/e4405ab2-d6f8-4f64-abf9-d0d327474ab2',
         imageSrc: '../img/MATHB.jpeg',
         actualName: 'Mathematics rt'
+    },
+    'CKV':{
+        link: 'https://allfoy.github.io/libcafe/home/error2',
+        imageSrc: '../img/bg.jpg',
+        actualName: 'CKV event'
     }
     // Add more keywords and links for silly guy
 };
@@ -487,12 +492,22 @@ function displayFreePeriods(freePeriods) {
         eventsContainer.innerHTML += '<p>No free periods found.</p>';
     } else {
         console.log("you have " + freePeriods.length + " free period(s)");
+        
         freePeriods.forEach(period => {
+            var d = new Date();
+            var timeFormatted = [d.getHours(),d.getMinutes()]
+            var timeStart = period.startTime.split(":");
+            var timeEnd = period.endTime.split(":");
             eventsContainer.innerHTML += `<p><strong>Block ${period.block}:</strong> ${period.startTime} to ${period.endTime}</p>`;
-            if (period.startTime < new Date() < period.endTime){
+            // check if rn in hours between hours and rn in minutes between minutes
+            if (parseInt(timeStart[0]) < timeFormatted[0] && timeFormatted[0] < parseInt(timeEnd[0]) && parseInt(timeStart[1]) < timeFormatted[1] && timeFormatted[1] < parseInt(timeEnd[1])){
                 document.getElementById('freeIcony').style.display = 'flex';
+                console.log("it do be freeperiod");
+                console.log(parseInt(timeStart[0]) , timeFormatted[0] , parseInt(timeEnd[0]))
+                console.log(parseInt(timeStart[1]) , timeFormatted[1] , parseInt(timeEnd[1]))
             } else {
-                document.getElementById('freeIcony').style.display = 'none'
+                document.getElementById('freeIcony').style.display = 'none';
+                console.log("it don't be freeperiod");
             }
         });
         }
