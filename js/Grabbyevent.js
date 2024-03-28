@@ -388,7 +388,6 @@ function startendfree(calid1){
                 const finalEventEndTime = new Date(finalEvent.end.dateTime);
                 finalEventEndTime.setMinutes(finalEventEndTime.getMinutes() + 10); // Add 10 minutes to the final event end time
                 if (currentTime >= finalEventEndTime) {
-                    console.log(sortedEvents[0] == undefined);
                     if(new Date().getDay() + 1 === 6){
                         document.getElementById('events-container').innerHTML = `<p>no events cuz tommorow be free</p>`;
                     }
@@ -516,15 +515,9 @@ function displayFreePeriods(freePeriods) {
                 document.getElementById('freeIcony').style.display = 'flex';
                 console.log("it do be freeperiod");
                 document.getElementById('freeIcony').src = "../img/" + "freeperiod" + ".jpg";
-                console.log(timestarts, timeFormatted, timeEnds)
-                console.log(timestarts < timeFormatted)
-                console.log(timeFormatted < timeEnds)
             } else {
                 document.getElementById('freeIcony').style.display = 'none';
                 console.log("it don't be freeperiod");
-                console.log(timestarts, timeFormatted, timeEnds)
-                console.log(timestarts < timeFormatted)
-                console.log(timeFormatted < timeEnds)
             }
         });
         }

@@ -369,7 +369,7 @@ function startendfree(calid1){
                 finalEventEndTime.setMinutes(finalEventEndTime.getMinutes() + 10); // Add 10 minutes to the final event end time
                 if (currentTime >= finalEventEndTime) {
                     if(new Date().getDay() + 1 === 6){
-                        document.getElementById('events-container').innerHTML = `<p>no events cuz tommorow be saturday</p>`;
+                        document.getElementById('events-container').innerHTML = `<p>no events cuz tommorow be free</p>`;
                     }
                     else {
                         // Display events for tomorrow
@@ -409,8 +409,11 @@ function displayTomorrowEvents(calid2) {
             const firstEvent = sortedEvents[0];
             const finalEvent = sortedEvents[sortedEvents.length - 1];
             const freePeriods = findFreePeriods(sortedEvents);
+            if(firstEvent == undefined){
+                document.getElementById('events-container').innerHTML = `<p>no events cuz tommorow be free</p>`;
+            }else{
             displayEvents(firstEvent, finalEvent);
-            displayFreePeriods(freePeriods);
+            displayFreePeriods(freePeriods);}
         })
         .catch(error => console.error('Error fetching data:', error));
 }
@@ -492,15 +495,9 @@ function displayFreePeriods(freePeriods) {
                 document.getElementById('freeIcony').style.display = 'flex';
                 console.log("it do be freeperiod");
                 document.getElementById('freeIcony').src = "../img/" + "freeperiod" + ".jpg";
-                console.log(timestarts, timeFormatted, timeEnds)
-                console.log(timestarts < timeFormatted)
-                console.log(timeFormatted < timeEnds)
             } else {
                 document.getElementById('freeIcony').style.display = 'none';
                 console.log("it don't be freeperiod");
-                console.log(timestarts, timeFormatted, timeEnds)
-                console.log(timestarts < timeFormatted)
-                console.log(timeFormatted < timeEnds)
             }
         });
         }
