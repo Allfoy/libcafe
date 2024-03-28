@@ -120,37 +120,17 @@ CalIDcookie();
 // here some code for the cookie
 // this works by checking if this specific cookie exist, if it don't make one, another bit of code for switching
 function CalIDcookie(){
-    if(!(document.cookie.split(";").some((item) => item.trim().startsWith("calendarsId" + "=")))){
-        var CalID = prompt("What is your calendarID?","kvme0ikmjq4825g8ee860tm058clorcg");
-        const d = new Date();
-        d.setTime(d.getTime() + (365*24*60*60*1000));
-        let expires = "expires="+ d.toUTCString();
-        document.cookie = "calendarsId" + "=" + CalID + ";" + expires + ";path=/";
-        console.log("we have found a cookie: "+document.cookie);
-        fetchEventsAndUpdateTime(getCookie("calendarsId"));
-        startendfree(getCookie("calendarsId"));
+    if(!(document.cookie.split(";").some((item) => item.trim().startsWith("friendcookie" + "=")))){
+        prompt("you need to select a friend");
     }else{
-        console.log("we have found the cookie:" + getCookie("calendarsId"));
-        fetchEventsAndUpdateTime(getCookie("calendarsId"));
-        startendfree(getCookie("calendarsId"));
+        console.log("we have found the cookie:" + getCookie("friendcookie"));
+        fetchEventsAndUpdateTime(getCookie("friendcookie"));
+        startendfree(getCookie("friendcookie"));
     }
         //'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
         //'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
         //'myrthe': CalID = '32ddu2ndrbe8jtp1olg6rko3f5cntog3'; user = 'Myrthe';break;
 		//'troy'  : CalID = '3hvsosg4io5fdefbn66meln2un2hu33k'; user = 'Troy'  ;break;
-};
-function switchcookie(){
-    var CalID = prompt("What is your calendarID?","kvme0ikmjq4825g8ee860tm058clorcg");
-    if (CalID.length != 32){
-        var CalID = prompt("What is your calendarID?","kvme0ikmjq4825g8ee860tm058clorcg");
-    }
-    else{
-    const d = new Date();
-        d.setTime(d.getTime() + (365*24*60*60*1000));
-        let expires = "expires="+ d.toUTCString();
-        document.cookie = "calendarsId" + "=" + CalID + ";" + expires + ";path=/";
-        location.reload()
-    }
 };
 // read cookie functie
 function getCookie(cname) {
@@ -321,11 +301,11 @@ function fetchEventsAndUpdateTime(calid) {
         .catch(error => {
             console.error('Error fetching events:', error);
         });
-        setTimeout(fetchEventsAndUpdateTime,1000,getCookie("calendarsId"))
+        setTimeout(fetchEventsAndUpdateTime,1000,getCookie("friendcookie"))
 }
 
 // Initial fetch and time update
-fetchEventsAndUpdateTime(getCookie("calendarsId"));
+fetchEventsAndUpdateTime(getCookie("friendcookie"));
 
 // Set up interval to update time every 1 second (adjust as needed)
 //document.addEventListener("DOMContentLoaded", (event) => {
@@ -388,13 +368,12 @@ function startendfree(calid1){
                 const finalEventEndTime = new Date(finalEvent.end.dateTime);
                 finalEventEndTime.setMinutes(finalEventEndTime.getMinutes() + 10); // Add 10 minutes to the final event end time
                 if (currentTime >= finalEventEndTime) {
-                    console.log(sortedEvents[0] == undefined);
                     if(new Date().getDay() + 1 === 6){
-                        document.getElementById('events-container').innerHTML = `<p>no events cuz tommorow be free</p>`;
+                        document.getElementById('events-container').innerHTML = `<p>no events cuz tommorow be saturday</p>`;
                     }
                     else {
                         // Display events for tomorrow
-                        displayTomorrowEvents(getCookie("calendarsId"));}
+                        displayTomorrowEvents(getCookie("friendcookie"));}
                 } else {
                     // Display events for today
                     const firstEvent = sortedEvents[0];
@@ -430,11 +409,8 @@ function displayTomorrowEvents(calid2) {
             const firstEvent = sortedEvents[0];
             const finalEvent = sortedEvents[sortedEvents.length - 1];
             const freePeriods = findFreePeriods(sortedEvents);
-            if(firstEvent == undefined){
-                document.getElementById('events-container').innerHTML = `<p>no events cuz tommorow be free</p>`;
-            }else{
             displayEvents(firstEvent, finalEvent);
-            displayFreePeriods(freePeriods);}
+            displayFreePeriods(freePeriods);
         })
         .catch(error => console.error('Error fetching data:', error));
 }
