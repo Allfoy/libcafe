@@ -115,6 +115,20 @@ function fetchEventsAndUpdateTime(CalID) {
                             break;
                     }
                     document.getElementById('map').src = "../img/locations/" + imagesrc + ".jpg";
+                switch (CalID) {
+                    case "kvme0ikmjq4825g8ee860tm058clorcg":
+                        //move allfoy pfp element
+                        break;
+                    case "0pspeo6e4k6e329k4h56mkam0k9t6gnq":
+                        //move casper pfp element
+                        break;
+                    case "i32q28ad785oqs2dom81460a186j6uvr":
+                        //move kevin pfp element
+                        break;
+                    case "3hvsosg4io5fdefbn66meln2un2hu33k":
+                        //move troy pfp element
+                        break
+                }
                 }else{console.log("uh oh no event for anyone?")}
             }
             
@@ -125,7 +139,7 @@ function fetchEventsAndUpdateTime(CalID) {
 	};
 function initiate(){
 fetchEventsAndUpdateTime('kvme0ikmjq4825g8ee860tm058clorcg'); //allfoy
-//fetchEventsAndUpdateTime(he dont got it yet); //casper
+//fetchEventsAndUpdateTime(0pspeo6e4k6e329k4h56mkam0k9t6gnq); //casper
 //fetchEventsAndUpdateTime('i32q28ad785oqs2dom81460a186j6uvr'); //kevin
 //fetchEventsAndUpdateTime('3hvsosg4io5fdefbn66meln2un2hu33k'); //troy
 };
