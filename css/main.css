@@ -192,8 +192,11 @@ iframe {
 
 .centeredbutton {
 	display: flex;
-	border-style:none;
-	margin: 0 auto;
+	border-style:solid;
+	border-radius: 16px;
+	padding: 5px;
+	margin:auto;
+	margin-top: 10px;
 	align-items: center; 
 	text-align: center;
 	justify-content: center;

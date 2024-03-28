@@ -24,6 +24,10 @@
             margin: 10px;
             padding: 20px;
         }
+        li:active{
+            background-color: #dd2f2f;
+            transition: all 0.1s;
+        }
         .body{
             background-color: #f9f1e3;
         }
@@ -34,11 +38,11 @@
     <div>click on a friend to use them as a friendcookie</div>
 	<input class="search" id="search" type="text" onkeyup="search()" placeholder="Search for names..">
 	<ul id="results">
-		<li id="allfoy"><a onclick="reveal('allfoy')">Allfoy</a></li>
-		<li id="casper"><a onclick="reveal('casper')">Casper</a></li>
-		<li id="kevin"><a onclick="reveal('kevin')">Kevin</a></li>
-		<li id="myrthe"><a onclick="reveal('myrthe')">Myrthe</a></li>
-		<li id="troy"><a onclick="reveal('troy')">Troy</a></li>
+		<li id="allfoy" onclick="reveal('allfoy')"><a>Allfoy</a></li>
+		<li id="casper" onclick="reveal('casper')"><a>Casper</a></li>
+		<li id="kevin" onclick="reveal('kevin')"><a>Kevin</a></li>
+		<li id="myrthe" onclick="reveal('myrthe')"><a>Myrthe</a></li>
+		<li id="troy" onclick="reveal('troy')"><a>Troy</a></li>
 	</ul>
 </body>
 <script>
@@ -60,12 +64,18 @@ function search(){
 }
 function reveal(name){
 	var li = document.getElementById(name);
-	switch (name) {
-        case 'kevin'   : result = 'i32q28ad785oqs2dom81460a186j6uvr';createfriend(result); break;
-        case 'allfoy'  : result = 'kvme0ikmjq4825g8ee860tm058clorcg';createfriend(result); break;
-        case 'myrthe'  : result = '32ddu2ndrbe8jtp1olg6rko3f5cntog3';createfriend(result); break;
-		case 'troy'    : result = '3hvsosg4io5fdefbn66meln2un2hu33k';createfriend(result); break;
-		case 'casper'  : result = 'he don\'t got it yet';break;
+	switch (li.innerText) {
+        case 'Kevin'   : result = 'i32q28ad785oqs2dom81460a186j6uvr';createfriend(result); break;
+        case 'Allfoy'  : result = 'kvme0ikmjq4825g8ee860tm058clorcg';createfriend(result); break;
+        case 'Myrthe'  : result = '32ddu2ndrbe8jtp1olg6rko3f5cntog3';createfriend(result); break;
+		case 'Troy'    : result = '3hvsosg4io5fdefbn66meln2un2hu33k';createfriend(result); break;
+		case 'Casper'  : result = 'he don\'t got it yet';break;
+        case 'i32q28ad785oqs2dom81460a186j6uvr'  : result = 'Kevin'; break;
+        case 'kvme0ikmjq4825g8ee860tm058clorcg'  : result = 'Allfoy'; break;
+        case '32ddu2ndrbe8jtp1olg6rko3f5cntog3'  : result = 'Myrthe'; break;
+		case '3hvsosg4io5fdefbn66meln2un2hu33k'   : result = 'Troy'; break;
+		case 'he don\'t got it yet'  : result = 'Casper';break;
+
 }
 	li.innerHTML = result;
 }

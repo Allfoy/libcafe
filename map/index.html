@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+    <style>
+        .events{
+        text-align: center;
+        display: flex;
+        width: fit-content;
+        flex-direction: column;
+        margin: auto;
+        }
+        .event{
+            background-color: #f7c8a6;
+            width: auto;
+            height: auto;
+            border-radius: 25px;
+            margin: 10px;
+            padding: 20px;
+        }
+        .body{
+            background-color: #f9f1e3;
+        }
+    </style>
+</head>
+<body class="body">
+    <div class="centeredbutton">go&nbsp<a href="../home">home</a></div>
+	<div class="events" id="events"></div>
+    <button onclick="initiate()">initiate friendmap</button>
+    <img id="map" src="https://www.svol.nl/wp-content/uploads/2018/10/Eerste-verdieping.jpg" width="1414" height="1000">
+	<div id="user"></div>
+</body>
+<script>
+function fetchEventsAndUpdateTime(CalID) {
+    // Fetch events from Google Calendar API
+	// Get today's date in the format required by the Google Calendar API
+    var todayBeforeUnformatted = new Date();
+    todayBeforeUnformatted.setMinutes(todayBeforeUnformatted.getMinutes() - 20*60);
+    const todayBefore = todayBeforeUnformatted.toISOString();
+    var todayAfterUnformatted = new Date();
+    todayAfterUnformatted.setMinutes(todayAfterUnformatted.getMinutes() + 1*60);
+    const todayAfter = todayAfterUnformatted.toISOString();
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${CalID}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${todayBefore}&timeMax=${todayAfter}`)
+        .then(response => response.json())
+        .then(data => {
+			const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
+            const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
+            const now = new Date("March 28, 2024 13:13:00");
+            let currentEvent = null;
+            let upcomingEvent = null;
+			for (const event of filteredEvents) {
+                const eventStart = new Date(event.start.dateTime);
+                const eventEnd = new Date(event.end.dateTime);
+
+                if (eventStart <= now && eventEnd >= now) {
+                    currentEvent = event;
+                    console.log(currentEvent.location)
+                    console.log(currentEvent.summary)
+                    let location = currentEvent.location // for example p316
+                    //let building = location.substr(0,1); //p
+                    //let floor = location.substr(1,1); //3
+                    let buildinFloor = location.substr(0,2);
+                    let preciseLocation = location.substr(2,2); //16
+                    // floor decides the image and the we'll crop it to building?, or have 9 images for all the buildings and floors and extra's
+                    switch (buildinFloor) {
+                        case 'p1':
+                                imagesrc = "p1";
+                            
+                            break;
+                        case 'p2':
+                                imagesrc = "p2";
+                            
+                            break;
+                        case 'p3':
+                                imagesrc = "p3";
+                            
+                            break;
+                        case 'k1':
+                                imagesrc = "k1";
+                            
+                            break;
+                        case 'k2':
+                                imagesrc = "k2";
+                            
+                            break;
+                        case 'k3':
+                                imagesrc = "k3";
+                            
+                            break;
+                        case 'e1':
+                                imagesrc = "e1";
+                            
+                            break;
+                        case 'e2':
+                                imagesrc = "e2";
+                            
+                            break;
+                        case 'e3':
+                                imagesrc = "e3";
+                            
+                            break;
+                        case 'lo':
+                                imagesrc = "lo";
+
+                            break;
+                        case 'c1':
+                                imagesrc = "c1";
+
+                            break;
+                    
+                        default:
+                                imagesrc = "nowhere";
+                            break;
+                    }
+                    document.getElementById('map').src = "../img/locations/" + imagesrc + ".jpg";
+                }else{console.log("uh oh no event for anyone?")}
+            }
+            
+        
+        }).catch(error => {
+            console.error('Error fetching events:', error);
+        });
+	};
+function initiate(){
+fetchEventsAndUpdateTime('kvme0ikmjq4825g8ee860tm058clorcg'); //allfoy
+//fetchEventsAndUpdateTime(he dont got it yet); //casper
+//fetchEventsAndUpdateTime('i32q28ad785oqs2dom81460a186j6uvr'); //kevin
+//fetchEventsAndUpdateTime('3hvsosg4io5fdefbn66meln2un2hu33k'); //troy
+};
+
+</script>
+</html>

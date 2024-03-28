@@ -7,3 +7,7 @@ const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","S
 let weekday = weekdays[new Date().getDay()];
 document.getElementById('weekday').innerHTML = weekday;
 }
+
+function site(web){
+    window.location.href = web;
+}
