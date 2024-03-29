@@ -47,7 +47,7 @@ function fetchEventsAndUpdateTime(CalID) {
         .then(data => {
 			const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
             const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
-            const now = new Date("March 28, 2024 13:13:00");
+            const now = new Date();
             let currentEvent = null;
             let upcomingEvent = null;
 			for (const event of filteredEvents) {
@@ -61,7 +61,7 @@ function fetchEventsAndUpdateTime(CalID) {
                     let location = currentEvent.location // for example p316
                     //let building = location.substr(0,1); //p
                     //let floor = location.substr(1,1); //3
-                    let buildinFloor = location.substr(0,2);
+                    let buildinFloor = location.substr(0,2); //p3
                     let preciseLocation = location.substr(2,2); //16
                     // floor decides the image and the we'll crop it to building?, or have 9 images for all the buildings and floors and extra's
                     switch (buildinFloor) {
@@ -114,19 +114,27 @@ function fetchEventsAndUpdateTime(CalID) {
                                 imagesrc = "nowhere";
                             break;
                     }
-                    document.getElementById('map').src = "../img/locations/" + imagesrc + ".jpg";
+                    document.getElementById('map').src = "../img/locations/" + imagesrc + ".png";
                 switch (CalID) {
                     case "kvme0ikmjq4825g8ee860tm058clorcg":
                         //move allfoy pfp element
+                        var id = "a";
+                        move(id);
                         break;
                     case "0pspeo6e4k6e329k4h56mkam0k9t6gnq":
                         //move casper pfp element
+                        var id = "c";
+                        move(id);
                         break;
                     case "i32q28ad785oqs2dom81460a186j6uvr":
                         //move kevin pfp element
+                        var id = "k";
+                        move(id);
                         break;
                     case "3hvsosg4io5fdefbn66meln2un2hu33k":
                         //move troy pfp element
+                        var id = "t";
+                        move(id);
                         break
                 }
                 }else{console.log("uh oh no event for anyone?")}
@@ -143,6 +151,18 @@ fetchEventsAndUpdateTime('kvme0ikmjq4825g8ee860tm058clorcg'); //allfoy
 //fetchEventsAndUpdateTime('i32q28ad785oqs2dom81460a186j6uvr'); //kevin
 //fetchEventsAndUpdateTime('3hvsosg4io5fdefbn66meln2un2hu33k'); //troy
 };
-
+function move(){
+    var elem = document.getElementById(id);
+    // i guess we do sum styling here to move to position lmao
+    switch (location) {
+        case p104:
+            
+            break;
+    
+        default:
+            break;
+    }
+    // there has got to be a better way
+}
 </script>
 </html>

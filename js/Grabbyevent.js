@@ -6,42 +6,42 @@
 const keywordLinks = {
     'entl': {
         link: 'https://apps.noordhoff.nl/se/content/book/4e33ffb8-40c9-45fa-a67c-eae545d7dbea/ebooks/d6cafc0b-fb70-438c-8668-c017ee87ff73',
-        imageSrc: '../img/ENG.jpeg',
+        imageSrc: '../img/covers/ENG.jpeg',
         actualName: 'English'
     },
     'nat': {
         link: 'https://e-book.boomdigitaal.nl/boek/9789464420180?layoutmode-double=1/sso',
-        imageSrc: '../img/physics.jpg',
+        imageSrc: '../img/covers/physics.jpg',
         actualName: 'Physics'
     },
     'schk': {
         link: 'https://apps.noordhoff.nl/se/content/book/3d237f12-c196-4650-839c-bea7f798792e/ebooks/3847b67a-6f0b-4d10-9f5e-d485d7496fda',
-        imageSrc: '../img/CHEM.jpeg',
+        imageSrc: '../img/covers/CHEM.jpeg',
         actualName: 'Chemistry'
     },
     'biol': {
         link: 'https://apps.noordhoff.nl/se/content/book/3c9f39f7-6a4b-4403-a898-508d1ddcf68f/ebooks/2afd6210-0fb1-4007-8d2a-b63ef7cad649',
-        imageSrc: '../img/BIO.jpeg',
+        imageSrc: '../img/covers/BIO.jpeg',
         actualName: 'Biology'
     },
     'netl': {
         link: 'https://apps.noordhoff.nl/se/content/book/a904673b-f07d-480a-8201-57b56d94112b/ebooks/89f0e06c-3f93-403f-9804-04bad7a197de',
-        imageSrc: '../img/DUTCH.jpeg',
+        imageSrc: '../img/covers/DUTCH.jpeg',
         actualName: 'Dutch'
     },
     'sptl': {
         link: 'https://apps.noordhoff.nl/se/content/book/443fbd5e-bef7-4222-ae56-f41d5e83e468/ebooks/f71f3bc8-a5aa-4aa4-8951-fbab795b35c0',
-        imageSrc: '../img/SPAN.jpeg',
+        imageSrc: '../img/covers/SPAN.jpeg',
         actualName: 'Spanish'
     },
     'wisb': {
         link: 'https://apps.noordhoff.nl/se/content/book/0818ce8f-cdb6-468d-b160-6874cfda8372/ebooks/e4405ab2-d6f8-4f64-abf9-d0d327474ab2',
-        imageSrc: '../img/MATHB.jpeg',
+        imageSrc: '../img/covers/MATHB.jpeg',
         actualName: 'Mathematics B'
     },
     'wisd': {
         link: 'https://apps.noordhoff.nl/se/content/book/4acdfa97-1845-4bf6-8320-10181b908e29/ebooks/a476fd26-1eeb-4c59-979c-16b971e37cc1',
-        imageSrc: '../img/MATHD.jpeg',
+        imageSrc: '../img/covers/MATHD.jpeg',
         actualName: 'Mathematics D'
     },
     'me': {
@@ -81,12 +81,12 @@ const keywordLinks = {
     },
     'kumu':{
         link: 'https://allfoy.github.io/libcafe/home/error2',
-        imageSrc: '../img/music.png',
+        imageSrc: '../img/covers/music.png',
         actualName: 'Music'
     },
     'kua':{
         link: 'https://allfoy.github.io/libcafe/home/error2',
-        imageSrc: '../img/KUA.jpg',
+        imageSrc: '../img/covers/KUA.jpg',
         actualName: 'General Arts'
     },
     'ak':{
@@ -106,7 +106,7 @@ const keywordLinks = {
     },
     '-wi':{
         link: 'https://apps.noordhoff.nl/se/content/book/0818ce8f-cdb6-468d-b160-6874cfda8372/ebooks/e4405ab2-d6f8-4f64-abf9-d0d327474ab2',
-        imageSrc: '../img/MATHB.jpeg',
+        imageSrc: '../img/covers/MATHB.jpeg',
         actualName: 'Mathematics rt'
     },
     'CKV':{
@@ -233,7 +233,7 @@ function fetchEventsAndUpdateTime(calid) {
                         imagesrc = "freeperiod";} // no event, no weekend and no break means no school (maybe add a free period check later)
                         else{imagesrc = "schoolover";}}
                         // actually set the source to the one deducted by last bit of code
-                        document.getElementById('icony').src = "../img/" + imagesrc + ".jpg";
+                        document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
             }
             if (currentEvent) {
             //some code that be dem adaptiveicon
@@ -241,7 +241,7 @@ function fetchEventsAndUpdateTime(calid) {
             // make src a variable and let default {be black}
                 let imagesrc = "https://fakeimg.pl/200x100/cccccc/fff";
                 imagesrc = "inschool";
-                document.getElementById('icony').src = "../img/" + imagesrc + ".jpg";
+                document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
             // the norma code now
                 const eventTitle = currentEvent.summary;
                 const eventStart = new Date(currentEvent.start.dateTime);
@@ -514,7 +514,7 @@ function displayFreePeriods(freePeriods) {
             if (timestarts < timeFormatted && timeFormatted < timeEnds){
                 document.getElementById('freeIcony').style.display = 'flex';
                 console.log("it do be freeperiod");
-                document.getElementById('freeIcony').src = "../img/" + "freeperiod" + ".jpg";
+                document.getElementById('freeIcony').src = "../img/icony/" + "freeperiod" + ".jpg";
             } else {
                 document.getElementById('freeIcony').style.display = 'none';
                 console.log("it don't be freeperiod");
