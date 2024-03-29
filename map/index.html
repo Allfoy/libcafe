@@ -58,111 +58,114 @@ function fetchEventsAndUpdateTime(CalID) {
                     currentEvent = event;
                     console.log(currentEvent.location)
                     console.log(currentEvent.summary)
-                    let location = currentEvent.location // for example p316
-                    //let building = location.substr(0,1); //p
-                    //let floor = location.substr(1,1); //3
-                    let buildinFloor = location.substr(0,2); //p3
-                    let preciseLocation = location.substr(2,2); //16
-                    // floor decides the image and the we'll crop it to building?, or have 9 images for all the buildings and floors and extra's
-                    switch (buildinFloor) {
+                    let location = currentEvent.location
+                    setfloor(location);
+                    move(getid(CalID),getlocation(location));
+                }else{console.log("uh oh no event for anyone?")}
+            }
+        }).catch(error => {
+            console.error('Error fetching events:', error);
+        });
+        setTimeout(fetchEventsAndUpdateTime,1000,CalID);
+	};
+function initiate(){
+    fetchEventsAndUpdateTime('kvme0ikmjq4825g8ee860tm058clorcg'); //allfoy
+    //fetchEventsAndUpdateTime(0pspeo6e4k6e329k4h56mkam0k9t6gnq); //casper
+    //fetchEventsAndUpdateTime('i32q28ad785oqs2dom81460a186j6uvr'); //kevin
+    //fetchEventsAndUpdateTime('3hvsosg4io5fdefbn66meln2un2hu33k'); //troy
+};
+function move(id,location){
+    const elem = document.getElementById(id);
+    const elemy = {
+        "width": 5/2,
+        "heigth": 5/2
+    }
+    elem.style.left = location.x + elemy.width +'px';
+    elem.style.top = location.y + elemy.height +'px';
+};
+function getid(CalID){
+    switch (CalID) {
+                    case "kvme0ikmjq4825g8ee860tm058clorcg":
+                        //move allfoy pfp element
+                        var id = "a";
+                        break;
+                    case "0pspeo6e4k6e329k4h56mkam0k9t6gnq":
+                        //move casper pfp element
+                        var id = "c";
+                        break;
+                    case "i32q28ad785oqs2dom81460a186j6uvr":
+                        //move kevin pfp element
+                        var id = "k";
+                        break;
+                    case "3hvsosg4io5fdefbn66meln2un2hu33k":
+                        //move troy pfp element
+                        var id = "t";
+                        break
+                }
+    return id
+};
+function getlocation(location){
+    // got like p316
+    const pcoords = {
+        "102": {x:100, y:200},
+    };
+    const kcoords = {
+        "102":{x:200, y:100},
+    };
+    const ecoords ={
+        "102":{x:200, y:100},
+    };
+    // determine which object to use aka which buildingscoords
+    //const building = document.getElementById('map').src.substr(17,1) + "coords";
+    const building = location.substr(0,1); //p
+    // Check if the room code exists in the object literal
+    if (room in building) {
+        return building[room]; // Return the coordinates 
+    } else {
+        return {x:0,y:0}; // Return null if the room is not found
+    }
+}
+function setfloor(location){
+    let buildinFloor = location.substr(0,2); //p3
+    switch (buildinFloor) {
                         case 'p1':
                                 imagesrc = "p1";
-                            
                             break;
                         case 'p2':
                                 imagesrc = "p2";
-                            
                             break;
                         case 'p3':
                                 imagesrc = "p3";
-                            
                             break;
                         case 'k1':
                                 imagesrc = "k1";
-                            
                             break;
                         case 'k2':
                                 imagesrc = "k2";
-                            
                             break;
                         case 'k3':
                                 imagesrc = "k3";
-                            
                             break;
                         case 'e1':
                                 imagesrc = "e1";
-                            
                             break;
                         case 'e2':
                                 imagesrc = "e2";
-                            
                             break;
                         case 'e3':
                                 imagesrc = "e3";
-                            
                             break;
                         case 'lo':
                                 imagesrc = "lo";
-
                             break;
                         case 'c1':
                                 imagesrc = "c1";
-
                             break;
-                    
                         default:
                                 imagesrc = "nowhere";
                             break;
                     }
                     document.getElementById('map').src = "../img/locations/" + imagesrc + ".png";
-                switch (CalID) {
-                    case "kvme0ikmjq4825g8ee860tm058clorcg":
-                        //move allfoy pfp element
-                        var id = "a";
-                        move(id);
-                        break;
-                    case "0pspeo6e4k6e329k4h56mkam0k9t6gnq":
-                        //move casper pfp element
-                        var id = "c";
-                        move(id);
-                        break;
-                    case "i32q28ad785oqs2dom81460a186j6uvr":
-                        //move kevin pfp element
-                        var id = "k";
-                        move(id);
-                        break;
-                    case "3hvsosg4io5fdefbn66meln2un2hu33k":
-                        //move troy pfp element
-                        var id = "t";
-                        move(id);
-                        break
-                }
-                }else{console.log("uh oh no event for anyone?")}
-            }
-            
-        
-        }).catch(error => {
-            console.error('Error fetching events:', error);
-        });
-	};
-function initiate(){
-fetchEventsAndUpdateTime('kvme0ikmjq4825g8ee860tm058clorcg'); //allfoy
-//fetchEventsAndUpdateTime(0pspeo6e4k6e329k4h56mkam0k9t6gnq); //casper
-//fetchEventsAndUpdateTime('i32q28ad785oqs2dom81460a186j6uvr'); //kevin
-//fetchEventsAndUpdateTime('3hvsosg4io5fdefbn66meln2un2hu33k'); //troy
-};
-function move(){
-    var elem = document.getElementById(id);
-    // i guess we do sum styling here to move to position lmao
-    switch (location) {
-        case p104:
-            
-            break;
-    
-        default:
-            break;
-    }
-    // there has got to be a better way
 }
 </script>
 </html>
