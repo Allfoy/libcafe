@@ -121,7 +121,7 @@ CalIDcookie();
 // this works by checking if this specific cookie exist, if it don't make one, another bit of code for switching
 function CalIDcookie(){
     if(!(document.cookie.split(";").some((item) => item.trim().startsWith("friendcookie" + "=")))){
-        prompt("you need to select a friend");
+        alert("you need to select a friend in the finder");
     }else{
         console.log("we have found the cookie:" + getCookie("friendcookie"));
         fetchEventsAndUpdateTime(getCookie("friendcookie"));
