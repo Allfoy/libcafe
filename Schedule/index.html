@@ -57,8 +57,7 @@ function fetchEventsAndUpdateTime(CalID) {
             const eventsdiv = document.getElementById('events');
 			eventsdiv.innerHTML = `<p></p>` 
 			sortedEvents.forEach(event => {
-            eventsdiv.innerHTML += `<p class="event">${event.summary}</p>`;
-            console.log(event.summary)
+            eventsdiv.innerHTML += `<p class="event">${event.summary} (${event.location})</p>`;
 			});
 		
 		
