@@ -76,7 +76,7 @@
     <!--<div class="centeredbutton">go&nbsp<a href="../home">home</a></div>-->
     <!--<button onclick="initiate()">initiate friendmap</button>-->
         <div id="pix" class="pix"></div>
-        <div class="users" title="press space to initiate, click to copy coords to clipboard">
+        <div class="users" title="press M to initiate, click to copy coords to clipboard">
             <img id="map" class="map" src="../img/locations/floors.jpg"/>
             <img id="a" class="allfoy" src="../img/pfp/allfoy.jpg"/>
             <img id="c" class="casper" src="../img/pfp/casper.jpg"/>
@@ -227,13 +227,19 @@ function getlocation(location){
     // got like p316
     const f = (2278.5/3);
     const pcoords = {
-        "102": {x:100, y:200},
+        "000":{x:723, y:617},
+        "104":{x:1032, y:171},
+        "106":{x:999, y:245},
         "208":{x:1233, y:2+(2-1)*f},
+        "214":{x:960, y:237+(2-1)*f},
+        "224":{x:848, y:427+(2-1)*f},
         "316":{x:1005, y:210+(3-1)*f},
-        "000":{x:723, y:617}
     };
     const kcoords = {
         "102":{x:200, y:100},
+        "212":{x:436, y:100+(2-1)*f},
+        "214":{x:495, y:75+(2-1)*f},
+        "224":{x:476, y:456+(2-1)*f},
     };
     const ecoords = {
         "102":{x:200, y:100},
@@ -243,10 +249,11 @@ function getlocation(location){
         "114":{x:624, y:246}
     }
     const ocoords = {
-        "104":{x:1100, y:-472},
+        "104":{x:995, y:422},
         "114":{x:1100,y:-472}
     }
     const ccoords = {
+        "108":{x:171, y:503},
         "311":{x:181, y:579+(3-1)*f}
     }
     // determine which object to use aka which buildingscoords
