@@ -3,36 +3,153 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>map</title>
     <style>
-        .events{
-        text-align: center;
-        display: flex;
-        width: fit-content;
-        flex-direction: column;
-        margin: auto;
-        }
-        .event{
-            background-color: #f7c8a6;
-            width: auto;
-            height: auto;
-            border-radius: 25px;
-            margin: 10px;
-            padding: 20px;
-        }
         .body{
             background-color: #f9f1e3;
+            margin: 0px;
+        }
+        .contain{
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+        .map{
+            width:1519px;position: relative;left:0px;top:0px;
+            z-index: 1;
+        }
+        .users{
+            position: relative;
+            display: flex;
+            flex-wrap: wrap; /* Allows items to wrap onto multiple lines */ /* Aligns items to the start of the flex container */
+            z-index: 3;
+        }
+        .allfoy{
+            position: absolute;
+            display: none;
+            border-radius: 50%;
+            width: 24px;
+            z-index: 3;
+            transition: 3s;
+            left: 732px; 
+            top: 546px;
+        }
+        .casper{
+            position: absolute;
+            display: none;
+            border-radius: 50%;
+            width: 24px;
+            z-index: 3;
+            transition: 3s;
+        }
+        .kevin{
+            position:absolute;
+            display: none;
+            border-radius: 50%;
+            width: 24px;
+            z-index: 3;
+            transition: 3s;
+        }
+        .troy{
+            position: absolute;
+            display: none;
+            border-radius: 50%;
+            width: 24px;
+            z-index: 3;
+            transition: 3s;
+        }
+        .pix{
+            position: fixed;
+            top: 0;
+            right: 0;
+            background-color: #676767;
+            opacity: 70%;
+            width: fit-content;
+            height: auto;
+            z-index: 12;
+            font-size:x-large;
+            color: aliceblue;
         }
     </style>
 </head>
 <body class="body">
-    <div class="centeredbutton">go&nbsp<a href="../home">home</a></div>
-	<div class="events" id="events"></div>
-    <button onclick="initiate()">initiate friendmap</button>
-    <img id="map" src="https://www.svol.nl/wp-content/uploads/2018/10/Eerste-verdieping.jpg" width="1414" height="1000">
-	<div id="user"></div>
+    <!--<div class="centeredbutton">go&nbsp<a href="../home">home</a></div>-->
+    <!--<button onclick="initiate()">initiate friendmap</button>-->
+        <div id="pix" class="pix"></div>
+        <div class="users" title="press space to initiate, click to copy coords to clipboard">
+            <img id="map" class="map" src="../img/locations/floors.jpg"/>
+            <img id="a" class="allfoy" src="../img/pfp/allfoy.jpg"/>
+            <img id="c" class="casper" src="../img/pfp/casper.jpg"/>
+            <img id="k" class="kevin" src="../img/pfp/kevin.jpg"/>
+            <img id="t" class="troy" src="../img/pfp/troy.jpg"/>
+        </div>
 </body>
 <script>
+    // when m is pressed
+    document.addEventListener('keydown', function(event) {
+    if (event.keyCode === 77) {
+        initiate();
+        overlap();
+    }});
+
+    map.onclick = function(e) {
+        //console.log(e.x, e.y);
+        const pix = document.getElementById("pix");
+        pix.innerHTML = `{x:${e.x}, y:${e.y}}`;
+        navigator.clipboard.writeText(pix.innerHTML);
+    };
+
+    function checkCollisions() {
+    var images = ['a', 'c', 'k', 't'];
+    var offset = 110; // Adjust this value as needed
+
+    for (var i = 0; i < images.length; i++) {
+        var currentImg = document.getElementById(images[i]);
+        var currentRect = currentImg.getBoundingClientRect();
+
+        for (var j = 0; j < images.length; j++) {
+            if (i !== j) {
+                var otherImg = document.getElementById(images[j]);
+                var otherRect = otherImg.getBoundingClientRect();
+
+                if (currentRect.left < otherRect.right &&
+                    currentRect.right > otherRect.left &&
+                    currentRect.top < otherRect.bottom &&
+                    currentRect.bottom > otherRect.top) {
+                    // Collision detected, adjust position
+                    var newX, newY;
+                    var randomDirection = Math.floor(Math.random() * 4); // 0: up, 1: down, 2: left, 3: right
+
+                    switch (randomDirection) {
+                        case 0:
+                            newY = otherRect.top - currentRect.height - offset; // Move above the other image
+                            newX = currentRect.left + (Math.random() * (2 * offset)) - offset; // Random horizontal adjustment
+                            break;
+                        case 1:
+                            newY = otherRect.bottom + offset; // Move below the other image
+                            newX = currentRect.left + (Math.random() * (2 * offset)) - offset; // Random horizontal adjustment
+                            break;
+                        case 2:
+                            newX = otherRect.left - currentRect.width - offset; // Move to the left of the other image
+                            newY = currentRect.top + (Math.random() * (2 * offset)) - offset; // Random vertical adjustment
+                            break;
+                        case 3:
+                            newX = otherRect.right + offset; // Move to the right of the other image
+                            newY = currentRect.top + (Math.random() * (2 * offset)) - offset; // Random vertical adjustment
+                            break;
+                    }
+
+                    currentImg.style.left = newX + 'px';
+                    currentImg.style.top = newY + 'px';
+                }
+            }
+        }
+    }
+}
+
+// Call the function to check for collisions periodically (e.g., every 100 milliseconds)
+setInterval(checkCollisions, 100);
+
 function fetchEventsAndUpdateTime(CalID) {
     // Fetch events from Google Calendar API
 	// Get today's date in the format required by the Google Calendar API
@@ -59,29 +176,31 @@ function fetchEventsAndUpdateTime(CalID) {
                     console.log(currentEvent.location)
                     console.log(currentEvent.summary)
                     let location = currentEvent.location
-                    setfloor(location);
                     move(getid(CalID),getlocation(location));
-                }else{console.log("uh oh no event for anyone?")}
+                }
             }
+            if (!currentEvent){console.log('no current lesson');move(getid(CalID),getlocation("p000"))}
         }).catch(error => {
             console.error('Error fetching events:', error);
         });
-        setTimeout(fetchEventsAndUpdateTime,1000,CalID);
-	};
+        //setTimeout(fetchEventsAndUpdateTime,1000,CalID);
+};
 function initiate(){
     fetchEventsAndUpdateTime('kvme0ikmjq4825g8ee860tm058clorcg'); //allfoy
-    //fetchEventsAndUpdateTime(0pspeo6e4k6e329k4h56mkam0k9t6gnq); //casper
-    //fetchEventsAndUpdateTime('i32q28ad785oqs2dom81460a186j6uvr'); //kevin
-    //fetchEventsAndUpdateTime('3hvsosg4io5fdefbn66meln2un2hu33k'); //troy
+    fetchEventsAndUpdateTime('0pspeo6e4k6e329k4h56mkam0k9t6gnq'); //casper
+    fetchEventsAndUpdateTime('i32q28ad785oqs2dom81460a186j6uvr'); //kevin
+    fetchEventsAndUpdateTime('3hvsosg4io5fdefbn66meln2un2hu33k'); //troy
 };
 function move(id,location){
     const elem = document.getElementById(id);
     const elemy = {
-        "width": 5/2,
-        "heigth": 5/2
+        "width": 24/2,
+        "height": 24/2
     }
-    elem.style.left = location.x + elemy.width +'px';
-    elem.style.top = location.y + elemy.height +'px';
+    elem.style.display = "block";   
+    elem.style.left = location.x - elemy.width +'px';
+    elem.style.top = location.y - elemy.height +'px';
+    console.log("moved")
 };
 function getid(CalID){
     switch (CalID) {
@@ -106,66 +225,39 @@ function getid(CalID){
 };
 function getlocation(location){
     // got like p316
+    const f = (2278.5/3);
     const pcoords = {
         "102": {x:100, y:200},
+        "208":{x:1233, y:2+(2-1)*f},
+        "316":{x:1005, y:210+(3-1)*f},
+        "000":{x:723, y:617}
     };
     const kcoords = {
         "102":{x:200, y:100},
     };
-    const ecoords ={
+    const ecoords = {
         "102":{x:200, y:100},
     };
+    const ncoords = {
+        "106":{x:621, y:327},
+        "114":{x:624, y:246}
+    }
+    const ocoords = {
+        "104":{x:1100, y:-472},
+        "114":{x:1100,y:-472}
+    }
+    const ccoords = {
+        "311":{x:181, y:579+(3-1)*f}
+    }
     // determine which object to use aka which buildingscoords
     //const building = document.getElementById('map').src.substr(17,1) + "coords";
-    const building = location.substr(0,1); //p
+    const buildingName = location.substr(0,1) + "coords"; //pcoords
+    const building = eval(buildingName); // turns the pcoords string into the object
+    const room = location.substr(1,3) // 316
     // Check if the room code exists in the object literal
-    if (room in building) {
-        return building[room]; // Return the coordinates 
-    } else {
-        return {x:0,y:0}; // Return null if the room is not found
-    }
-}
-function setfloor(location){
-    let buildinFloor = location.substr(0,2); //p3
-    switch (buildinFloor) {
-                        case 'p1':
-                                imagesrc = "p1";
-                            break;
-                        case 'p2':
-                                imagesrc = "p2";
-                            break;
-                        case 'p3':
-                                imagesrc = "p3";
-                            break;
-                        case 'k1':
-                                imagesrc = "k1";
-                            break;
-                        case 'k2':
-                                imagesrc = "k2";
-                            break;
-                        case 'k3':
-                                imagesrc = "k3";
-                            break;
-                        case 'e1':
-                                imagesrc = "e1";
-                            break;
-                        case 'e2':
-                                imagesrc = "e2";
-                            break;
-                        case 'e3':
-                                imagesrc = "e3";
-                            break;
-                        case 'lo':
-                                imagesrc = "lo";
-                            break;
-                        case 'c1':
-                                imagesrc = "c1";
-                            break;
-                        default:
-                                imagesrc = "nowhere";
-                            break;
-                    }
-                    document.getElementById('map').src = "../img/locations/" + imagesrc + ".png";
+    // using a ternary operator: condition?true:false;
+    const coords = room in building ? building[room] : {x:732, y:546};
+    return coords
 }
 </script>
 </html>
