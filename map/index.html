@@ -30,9 +30,6 @@
             border-radius: 50%;
             width: 24px;
             z-index: 3;
-            transition: 3s;
-            left: 732px; 
-            top: 546px;
         }
         .casper{
             position: absolute;
@@ -40,7 +37,6 @@
             border-radius: 50%;
             width: 24px;
             z-index: 3;
-            transition: 3s;
         }
         .kevin{
             position:absolute;
@@ -48,7 +44,6 @@
             border-radius: 50%;
             width: 24px;
             z-index: 3;
-            transition: 3s;
         }
         .troy{
             position: absolute;
@@ -56,7 +51,7 @@
             border-radius: 50%;
             width: 24px;
             z-index: 3;
-            transition: 3s;
+            
         }
         .pix{
             position: fixed;
@@ -89,7 +84,6 @@
     document.addEventListener('keydown', function(event) {
     if (event.keyCode === 77) {
         initiate();
-        overlap();
     }});
 
     map.onclick = function(e) {
@@ -99,10 +93,10 @@
         navigator.clipboard.writeText(pix.innerHTML);
     };
 
-    function checkCollisions() {
+    function checkCollisions(location) {
     var images = ['a', 'c', 'k', 't'];
-    var offset = 110; // Adjust this value as needed
-
+    var offset = 0.1; // Adjust this value as needed
+    const f = (2278.5/3);
     for (var i = 0; i < images.length; i++) {
         var currentImg = document.getElementById(images[i]);
         var currentRect = currentImg.getBoundingClientRect();
@@ -138,17 +132,18 @@
                             newY = currentRect.top + (Math.random() * (2 * offset)) - offset; // Random vertical adjustment
                             break;
                     }
-
+                    if (location.substr(2,1) == 2){newY = newY + (2-1)*f + 80}
+                    else if(location.substr(2,1) == 3){newY = newY +(3-1)*f + 80}
                     currentImg.style.left = newX + 'px';
                     currentImg.style.top = newY + 'px';
                 }
             }
         }
     }
+    setTimeout(checkCollisions, 200);
 }
 
-// Call the function to check for collisions periodically (e.g., every 100 milliseconds)
-setInterval(checkCollisions, 100);
+
 
 function fetchEventsAndUpdateTime(CalID) {
     // Fetch events from Google Calendar API
@@ -177,6 +172,7 @@ function fetchEventsAndUpdateTime(CalID) {
                     console.log(currentEvent.summary)
                     let location = currentEvent.location
                     move(getid(CalID),getlocation(location));
+                    checkCollisions(location)
                 }
             }
             if (!currentEvent){console.log('no current lesson');move(getid(CalID),getlocation("p000"))}
