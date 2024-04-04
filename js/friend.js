@@ -113,6 +113,11 @@ const keywordLinks = {
         link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/bg.jpg',
         actualName: 'CKV event'
+    },
+    'fatl':{
+        link: 'https://allfoy.github.io/libcafe/home/error2',
+        imageSrc: '../img/bg.jpg',
+        actualName: 'French'
     }
     // Add more keywords and links for silly guy
 };
