@@ -30,6 +30,7 @@
             border-radius: 50%;
             width: 24px;
             z-index: 3;
+            transition: 2.5s;
         }
         .casper{
             position: absolute;
@@ -37,6 +38,7 @@
             border-radius: 50%;
             width: 24px;
             z-index: 3;
+            transition: 2.5s;
         }
         .kevin{
             position:absolute;
@@ -44,6 +46,7 @@
             border-radius: 50%;
             width: 24px;
             z-index: 3;
+            transition: 2.5s;
         }
         .troy{
             position: absolute;
@@ -51,7 +54,7 @@
             border-radius: 50%;
             width: 24px;
             z-index: 3;
-            
+            transition: 2.5s;
         }
         .pix{
             position: fixed;
@@ -70,8 +73,9 @@
 <body class="body">
     <!--<div class="centeredbutton">go&nbsp<a href="../home">home</a></div>-->
     <!--<button onclick="initiate()">initiate friendmap</button>-->
+    <input type="date" style="display: none;" id="datePicker" name="birthday">
         <div id="pix" class="pix"></div>
-        <div class="users" title="press M to initiate, click to copy coords to clipboard">
+        <div class="users" title="press N to stop, click to copy coords to clipboard">
             <img id="map" class="map" src="../img/locations/floors.jpg"/>
             <img id="a" class="allfoy" src="../img/pfp/allfoy.jpg"/>
             <img id="c" class="casper" src="../img/pfp/casper.jpg"/>
@@ -80,12 +84,7 @@
         </div>
 </body>
 <script>
-    // when m is pressed
-    document.addEventListener('keydown', function(event) {
-    if (event.keyCode === 77) {
         initiate();
-    }});
-
     map.onclick = function(e) {
         //console.log(e.x, e.y);
         const pix = document.getElementById("pix");
@@ -148,10 +147,21 @@
 function fetchEventsAndUpdateTime(CalID) {
     // Fetch events from Google Calendar API
 	// Get today's date in the format required by the Google Calendar API
-    var todayBeforeUnformatted = new Date();
+    var slider = new Date();
+    document.addEventListener('keydown', function(event) {
+    if (event.keyCode === 78) {
+        //document.getElementById("datePicker").style.display = "block";
+        document.getElementById("datePicker").focus()
+    }});
+    document.getElementById("datePicker").addEventListener("blur", function() {
+    this.style.display = "none";
+});
+//    currentEvent="dead";
+//    currentEvent.location="p000"
+    var todayBeforeUnformatted = new Date(slider);
     todayBeforeUnformatted.setMinutes(todayBeforeUnformatted.getMinutes() - 20*60);
     const todayBefore = todayBeforeUnformatted.toISOString();
-    var todayAfterUnformatted = new Date();
+    var todayAfterUnformatted = new Date(slider);
     todayAfterUnformatted.setMinutes(todayAfterUnformatted.getMinutes() + 1*60);
     const todayAfter = todayAfterUnformatted.toISOString();
     fetch(`https://www.googleapis.com/calendar/v3/calendars/${CalID}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${todayBefore}&timeMax=${todayAfter}`)
@@ -159,7 +169,7 @@ function fetchEventsAndUpdateTime(CalID) {
         .then(data => {
 			const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
             const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
-            const now = new Date();
+            const now = new Date(document.getElementById("datePicker").value);
             let currentEvent = null;
             let upcomingEvent = null;
 			for (const event of filteredEvents) {
@@ -186,6 +196,13 @@ function initiate(){
     fetchEventsAndUpdateTime('0pspeo6e4k6e329k4h56mkam0k9t6gnq'); //casper
     fetchEventsAndUpdateTime('i32q28ad785oqs2dom81460a186j6uvr'); //kevin
     fetchEventsAndUpdateTime('3hvsosg4io5fdefbn66meln2un2hu33k'); //troy
+    const theLoop = setTimeout(initiate,2000);
+    document.addEventListener('keydown', function(event) {
+        // when n is pressed
+        if (event.keyCode === 77) {
+            clearTimeout(theLoop)
+        }
+    });
 };
 function move(id,location){
     const elem = document.getElementById(id);
@@ -193,10 +210,12 @@ function move(id,location){
         "width": 24/2,
         "height": 24/2
     }
+    elem.style.transition = '2.5s';
     elem.style.display = "block";   
     elem.style.left = location.x - elemy.width +'px';
     elem.style.top = location.y - elemy.height +'px';
     console.log("moved")
+    elem.style.transition = '0s';
 };
 function getid(CalID){
     switch (CalID) {
@@ -224,6 +243,7 @@ function getlocation(location){
     const f = (2278.5/3);
     const pcoords = {
         "000":{x:723, y:617},
+        "102":{x:804, y:164},
         "104":{x:1032, y:171},
         "106":{x:999, y:245},
         "208":{x:1233, y:2+(2-1)*f},
@@ -233,6 +253,7 @@ function getlocation(location){
     };
     const kcoords = {
         "102":{x:200, y:100},
+        "110":{x:514, y:153},
         "212":{x:436, y:100+(2-1)*f},
         "214":{x:495, y:75+(2-1)*f},
         "224":{x:476, y:406+(2-1)*f},
