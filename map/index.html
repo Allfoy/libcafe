@@ -73,7 +73,7 @@
 <body class="body">
     <!--<div class="centeredbutton">go&nbsp<a href="../home">home</a></div>-->
     <!--<button onclick="initiate()">initiate friendmap</button>-->
-    <input type="date" style="display: none;" id="datePicker" name="birthday">
+    <input type="time" style="display: none;" id="timePicker" name="war">
         <div id="pix" class="pix"></div>
         <div class="users" title="press N to stop, click to copy coords to clipboard">
             <img id="map" class="map" src="../img/locations/floors.jpg"/>
@@ -88,7 +88,7 @@
     map.onclick = function(e) {
         //console.log(e.x, e.y);
         const pix = document.getElementById("pix");
-        pix.innerHTML = `{x:${e.x}, y:${e.y}}`;
+        pix.innerHTML = `{x:${e.offsetX}, y:${e.offsetY}}`;
         navigator.clipboard.writeText(pix.innerHTML);
     };
 
@@ -147,13 +147,20 @@
 function fetchEventsAndUpdateTime(CalID) {
     // Fetch events from Google Calendar API
 	// Get today's date in the format required by the Google Calendar API
+    var timeInput = document.getElementById('timePicker').value;
+    var timeParts = timeInput.split(':');
+    var hours = parseInt(timeParts[0], 10);
+    var minutes = parseInt(timeParts[1], 10);
+
     var slider = new Date();
+    slider.setHours(hours);
+    slider.setMinutes(minutes);
     document.addEventListener('keydown', function(event) {
-    if (event.keyCode === 78) {
-        //document.getElementById("datePicker").style.display = "block";
-        document.getElementById("datePicker").focus()
+    if (event.key === 'n') {
+        document.getElementById("timePicker").style.display = "block";
+        document.getElementById("timePicker").focus()
     }});
-    document.getElementById("datePicker").addEventListener("blur", function() {
+    document.getElementById("timePicker").addEventListener("blur", function() {
     this.style.display = "none";
 });
 //    currentEvent="dead";
@@ -169,7 +176,7 @@ function fetchEventsAndUpdateTime(CalID) {
         .then(data => {
 			const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
             const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
-            const now = new Date(document.getElementById("datePicker").value);
+            const now = new Date(document.getElementById("timePicker").value);
             let currentEvent = null;
             let upcomingEvent = null;
 			for (const event of filteredEvents) {
@@ -196,10 +203,10 @@ function initiate(){
     fetchEventsAndUpdateTime('0pspeo6e4k6e329k4h56mkam0k9t6gnq'); //casper
     fetchEventsAndUpdateTime('i32q28ad785oqs2dom81460a186j6uvr'); //kevin
     fetchEventsAndUpdateTime('3hvsosg4io5fdefbn66meln2un2hu33k'); //troy
-    const theLoop = setTimeout(initiate,2000);
+    const theLoop = setTimeout(initiate,3000);
     document.addEventListener('keydown', function(event) {
         // when n is pressed
-        if (event.keyCode === 77) {
+        if (event.key === 'm') {
             clearTimeout(theLoop)
         }
     });
@@ -246,17 +253,17 @@ function getlocation(location){
         "102":{x:804, y:164},
         "104":{x:1032, y:171},
         "106":{x:999, y:245},
-        "208":{x:1233, y:2+(2-1)*f},
-        "214":{x:960, y:237+(2-1)*f},
-        "224":{x:848, y:427+(2-1)*f},
-        "316":{x:1005, y:210+(3-1)*f},
+        "208":{x:1233, y:762},
+        "214":{x:960, y:997},
+        "224":{x:848, y:1187},
+        "316":{x:1005, y:1729},
     };
     const kcoords = {
         "102":{x:200, y:100},
         "110":{x:514, y:153},
-        "212":{x:436, y:100+(2-1)*f},
-        "214":{x:495, y:75+(2-1)*f},
-        "224":{x:476, y:406+(2-1)*f},
+        "212":{x:436, y:859.5},
+        "214":{x:495, y:835},
+        "224":{x:476, y:1166},
     };
     const ecoords = {
         "102":{x:200, y:100},
@@ -267,11 +274,11 @@ function getlocation(location){
     }
     const ocoords = {
         "104":{x:995, y:422},
-        "114":{x:1100,y:-472}
+        "114":{x:1100,y:472}
     }
     const ccoords = {
         "108":{x:171, y:503},
-        "311":{x:181, y:579+(3-1)*f}
+        "311":{x:181, y:2098}
     }
     // determine which object to use aka which buildingscoords
     //const building = document.getElementById('map').src.substr(17,1) + "coords";
