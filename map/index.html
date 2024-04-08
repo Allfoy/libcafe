@@ -73,9 +73,9 @@
 <body class="body">
     <!--<div class="centeredbutton">go&nbsp<a href="../home">home</a></div>-->
     <!--<button onclick="initiate()">initiate friendmap</button>-->
-    <input type="time" style="display: none;" id="timePicker" name="war">
+    <input type="time" style="display: none;" id="timePicker">
         <div id="pix" class="pix"></div>
-        <div class="users" title="press N to stop, click to copy coords to clipboard">
+        <div class="users" title="press M to stop, C to uncollide, N to settime and, click to copy coords to clipboard">
             <img id="map" class="map" src="../img/locations/floors.jpg"/>
             <img id="a" class="allfoy" src="../img/pfp/allfoy.jpg"/>
             <img id="c" class="casper" src="../img/pfp/casper.jpg"/>
@@ -92,10 +92,9 @@
         navigator.clipboard.writeText(pix.innerHTML);
     };
 
-    function checkCollisions(location) {
+function checkCollisions(location) {
     var images = ['a', 'c', 'k', 't'];
     var offset = 0.1; // Adjust this value as needed
-    const f = (2278.5/3);
     for (var i = 0; i < images.length; i++) {
         var currentImg = document.getElementById(images[i]);
         var currentRect = currentImg.getBoundingClientRect();
@@ -131,15 +130,12 @@
                             newY = currentRect.top + (Math.random() * (2 * offset)) - offset; // Random vertical adjustment
                             break;
                     }
-                    if (location.substr(2,1) == 2){newY = newY + (2-1)*f + 80}
-                    else if(location.substr(2,1) == 3){newY = newY +(3-1)*f + 80}
                     currentImg.style.left = newX + 'px';
                     currentImg.style.top = newY + 'px';
                 }
             }
         }
     }
-    setTimeout(checkCollisions, 200);
 }
 
 
@@ -148,10 +144,11 @@ function fetchEventsAndUpdateTime(CalID) {
     // Fetch events from Google Calendar API
 	// Get today's date in the format required by the Google Calendar API
     var timeInput = document.getElementById('timePicker').value;
-    var timeParts = timeInput.split(':');
-    var hours = parseInt(timeParts[0], 10);
-    var minutes = parseInt(timeParts[1], 10);
-
+    var localeTime = new Date().toLocaleString();
+    if(!timeInput){
+        var hours = localeTime.substr(12,2);
+        var minutes = localeTime.substr(15,2);
+    }
     var slider = new Date();
     slider.setHours(hours);
     slider.setMinutes(minutes);
@@ -165,18 +162,16 @@ function fetchEventsAndUpdateTime(CalID) {
 });
 //    currentEvent="dead";
 //    currentEvent.location="p000"
-    var todayBeforeUnformatted = new Date(slider);
-    todayBeforeUnformatted.setMinutes(todayBeforeUnformatted.getMinutes() - 20*60);
-    const todayBefore = todayBeforeUnformatted.toISOString();
-    var todayAfterUnformatted = new Date(slider);
-    todayAfterUnformatted.setMinutes(todayAfterUnformatted.getMinutes() + 1*60);
-    const todayAfter = todayAfterUnformatted.toISOString();
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${CalID}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${todayBefore}&timeMax=${todayAfter}`)
+    const today = new Date().toISOString().split('T')[0];
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() +1); // change 7 to 3 or 4 if you notice inconsistencies again
+    const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${CalID}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${today}T00:00:00Z&timeMax=${tomorrowFormatted}T23:59:59Z`)
         .then(response => response.json())
         .then(data => {
 			const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
             const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
-            const now = new Date(document.getElementById("timePicker").value);
+            const now = new Date(slider);
             let currentEvent = null;
             let upcomingEvent = null;
 			for (const event of filteredEvents) {
@@ -185,11 +180,14 @@ function fetchEventsAndUpdateTime(CalID) {
 
                 if (eventStart <= now && eventEnd >= now) {
                     currentEvent = event;
-                    console.log(currentEvent.location)
-                    console.log(currentEvent.summary)
+                    console.log(currentEvent.summary,`(${currentEvent.location})`)
                     let location = currentEvent.location
                     move(getid(CalID),getlocation(location));
-                    checkCollisions(location)
+                    document.addEventListener('keydown', function(event) {
+                    if (event.key === 'c') {
+                            checkCollisions(location)
+                    }});
+                    
                 }
             }
             if (!currentEvent){console.log('no current lesson');move(getid(CalID),getlocation("p000"))}
@@ -261,7 +259,7 @@ function getlocation(location){
     const kcoords = {
         "102":{x:200, y:100},
         "110":{x:514, y:153},
-        "212":{x:436, y:859.5},
+        "212":{x:440, y:860},
         "214":{x:495, y:835},
         "224":{x:476, y:1166},
     };
@@ -270,15 +268,28 @@ function getlocation(location){
     };
     const ncoords = {
         "106":{x:621, y:327},
-        "114":{x:624, y:246}
+        "114":{x:624, y:246},
+        "116":{x:694, y:245}
     }
     const ocoords = {
         "104":{x:995, y:422},
+        "110":{x:1126, y:417},
         "114":{x:1100,y:472}
     }
     const ccoords = {
         "108":{x:171, y:503},
         "311":{x:181, y:2098}
+    }
+    const lcoords = {
+        "o1":{x:196, y:2122},
+        "o2":{x:196, y:2122},
+        "o3":{x:196, y:2122},
+        "o4":{x:196, y:2122},
+        "o5":{x:196, y:2122},
+        "o6":{x:196, y:2122},
+        "o7":{x:196, y:2122},
+        "o8":{x:196, y:2122},
+        "o9":{x:196, y:2122}
     }
     // determine which object to use aka which buildingscoords
     //const building = document.getElementById('map').src.substr(17,1) + "coords";
