@@ -218,12 +218,9 @@ function move(id,location){
         "width": 24/2,
         "height": 24/2
     }
-    elem.style.transition = '2.5s';
     elem.style.display = "block";   
     elem.style.left = location.x - elemy.width +'px';
     elem.style.top = location.y - elemy.height +'px';
-    console.log("moved")
-    elem.style.transition = '0s';
 };
 function getid(CalID){
     switch (CalID) {
