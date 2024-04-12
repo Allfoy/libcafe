@@ -127,6 +127,8 @@ CalIDcookie();
 function CalIDcookie(){
     if(!(document.cookie.split(";").some((item) => item.trim().startsWith("friendcookie" + "=")))){
         alert("you need to select a friend in the finder");
+        sleep(2000);
+        window.location.replace("https://allfoy.github.io/libcafe/home/");
     }else{
         console.log("we have found the cookie:" + getCookie("friendcookie"));
         fetchEventsAndUpdateTime(getCookie("friendcookie"));
@@ -517,6 +519,9 @@ function getTimeForBlock(block) {
     return startFP;
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 //here function for adaptiveicon
 // for now it's directly in the code
 
