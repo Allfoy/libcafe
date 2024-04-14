@@ -68,6 +68,17 @@
             font-size:x-large;
             color: aliceblue;
         }
+        .map-pin{
+            display: block;
+            width: 10px;
+            height: 10px;
+            display: inline-block;
+            background-color : red;
+            color: red;
+            border-radius: 50%;
+            opacity: 4%;
+            z-index: 3;
+        }
     </style>
 </head>
 <body class="body">
@@ -75,7 +86,7 @@
     <!--<button onclick="initiate()">initiate friendmap</button>-->
     <input type="time" style="display: none;" id="timePicker">
         <div id="pix" class="pix"></div>
-        <div class="users" title="press M to stop, C to uncollide, N to settime and, click to copy coords to clipboard">
+        <div class="users">
             <img id="map" class="map" src="../img/locations/floors.jpg"/>
             <img id="a" class="allfoy" src="../img/pfp/allfoy.jpg"/>
             <img id="c" class="casper" src="../img/pfp/casper.jpg"/>
@@ -188,7 +199,8 @@ function fetchEventsAndUpdateTime(CalID) {
                     move(getid(CalID),getlocation(location));
                     document.addEventListener('keydown', function(event) {
                     if (event.key === 'c') {
-                            checkCollisions(location)
+                            checkCollisions(location);
+                            blinkclass();
                     }});
                     
                 }
@@ -243,64 +255,73 @@ function getid(CalID){
                 }
     return id
 };
+
+//locations 
+const pcoords = {
+    "000":{x:723, y:617},
+    "102":{x:804, y:164},
+    "104":{x:1032, y:171},
+    "106":{x:999, y:245},
+    "208":{x:897, y:882},
+    "212":{x:964, y:896},
+    "214":{x:1037, y:925},
+    "216":{x:1014, y:985},
+    "226":{x:791, y:1040},
+    "220":{x:948, y:1097},
+    "224":{x:844, y:1153},
+    "314":{x:1036, y:1688},
+    "316":{x:1005, y:1729},
+    "326":{x:786, y:1877},
+    "328":{x:786, y:1811},
+};
+const kcoords = {
+    "110":{x:514, y:153},
+    "212":{x:440, y:860},
+    "214":{x:495, y:835},
+    "220":{x:434, y:998},
+    "224":{x:476, y:1166},
+    "308":{x:352, y:1657},
+};
+const ecoords = {
+    
+};
+const ncoords = {
+    "106":{x:621, y:327},
+    "114":{x:624, y:246},
+    "116":{x:694, y:245},
+}
+const ocoords = {
+    "104":{x:995, y:422},
+    "110":{x:1126, y:417},
+    "114":{x:1100,y:472},
+}
+const ccoords = {
+    "108":{x:171, y:503},
+}
+const lcoords = {
+    "o1":{x:196, y:2122},
+    "o2":{x:196, y:2122},
+    "o3":{x:196, y:2122},
+    "o4":{x:196, y:2122},
+    "o5":{x:196, y:2122},
+    "o6":{x:196, y:2122},
+    "o7":{x:196, y:2122},
+    "o8":{x:196, y:2122},
+    "o9":{x:196, y:2122},
+    "oa":{x:196, y:2122},
+    "ob":{x:196, y:2122},
+    "oc":{x:196, y:2122}
+}
+// make em
+createElem(pcoords);
+createElem(kcoords);
+createElem(ecoords);
+createElem(ncoords);
+createElem(ocoords);
+createElem(ccoords);
+createElem(lcoords);
+
 function getlocation(location){
-    // got like p316
-    const f = (2278.5/3);
-    const pcoords = {
-        "000":{x:723, y:617},
-        "102":{x:804, y:164},
-        "104":{x:1032, y:171},
-        "106":{x:999, y:245},
-        "208":{x:1233, y:762},
-        "212":{x:964, y:896},
-        "214":{x:960, y:997},
-        "226":{x:1011, y:986},
-        "220":{x:948, y:1097},
-        "224":{x:844, y:1153},
-        "314":{x:1017, y:968},
-        "316":{x:1005, y:1729},
-        "326":{x:786, y:1877},
-        "328":{x:786, y:1811},
-    };
-    const kcoords = {
-        "110":{x:514, y:153},
-        "212":{x:440, y:860},
-        "214":{x:495, y:835},
-        "220":{x:894, y:999},
-        "224":{x:476, y:1166},
-        "308":{x:352, y:1657},
-    };
-    const ecoords = {
-        
-    };
-    const ncoords = {
-        "106":{x:621, y:327},
-        "114":{x:624, y:246},
-        "116":{x:694, y:245},
-    }
-    const ocoords = {
-        "104":{x:995, y:422},
-        "110":{x:1126, y:417},
-        "114":{x:1100,y:472},
-    }
-    const ccoords = {
-        "108":{x:171, y:503},
-        "311":{x:181, y:2098}
-    }
-    const lcoords = {
-        "o1":{x:196, y:2122},
-        "o2":{x:196, y:2122},
-        "o3":{x:196, y:2122},
-        "o4":{x:196, y:2122},
-        "o5":{x:196, y:2122},
-        "o6":{x:196, y:2122},
-        "o7":{x:196, y:2122},
-        "o8":{x:196, y:2122},
-        "o9":{x:196, y:2122},
-        "oa":{x:196, y:2122},
-        "ob":{x:196, y:2122},
-        "oc":{x:196, y:2122}
-    }
     // determine which object to use aka which buildingscoords
     //const building = document.getElementById('map').src.substr(17,1) + "coords";
     const buildingName = location.substr(0,1) + "coords"; //pcoords
@@ -311,5 +332,32 @@ function getlocation(location){
     const coords = room in building ? building[room] : {x:732, y:546};
     return coords
 }
+function createElem(coords) {
+    // Iterate over the upperproperties of the coords object
+    Object.keys(coords).forEach(key => {
+        const coord = coords[key];
+        // make element
+        const elem = document.createElement('div');
+        elem.style.position = 'absolute';
+        elem.style.left = coord.x + 'px';
+        elem.style.top = coord.y + 'px';
+        elem.classList.add('map-pin');
+        elem.setAttribute("title", key);
+        // make it fr
+        document.body.appendChild(elem);
+    });
+}
+function blinkclass() {
+    const classyList = document.querySelectorAll('.map-pin');
+    classyList.forEach(classy => {
+        classy.style.opacity = '80%';
+        setTimeout(() => {classy.style.opacity = '4%';}, 2500);}
+    )
+};
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'c') {
+            blinkclass();
+    }});
 </script>
 </html>
