@@ -1,5 +1,3 @@
-
-
 //const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
 //let calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg';
 // object literal with keywords and their respective links

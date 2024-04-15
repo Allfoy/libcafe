@@ -1,8 +1,7 @@
-
-
 //const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
 //let calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg';
 // object literal with keywords and their respective links
+const noBook = {link: 'https://allfoy.github.io/libcafe/home/error2', imageSrc: '../img/bg.jpg'};
 const keywordLinks = {
     'entl': {
         link: 'https://apps.noordhoff.nl/se/content/book/4e33ffb8-40c9-45fa-a67c-eae545d7dbea/ebooks/d6cafc0b-fb70-438c-8668-c017ee87ff73',
@@ -45,8 +44,7 @@ const keywordLinks = {
         actualName: 'Mathematics D'
     },
     'me': {
-        link: 'https://allfoy.github.io/libcafe/home/error2',
-        imageSrc: '../img/bg.jpg',
+        ...noBook,
         actualName: 'Mentorles'
     },
     'maat': {
@@ -55,28 +53,23 @@ const keywordLinks = {
         actualName: 'Maatschappijleer'
     },
     'ckv':{
-        link: 'https://allfoy.github.io/libcafe/home/error2',
-        imageSrc: '../img/bg.jpg',
+        ...noBook,
         actualName: 'CKV'
     },
     'rt':{
-        link: 'https://allfoy.github.io/libcafe/home/error2',
-        imageSrc: '../img/bg.jpg',
+        ...noBook,
         actualName: 'Route-uur'
     },
     'wisa':{
-        link: 'https://allfoy.github.io/libcafe/home/error2',
-        imageSrc: '../img/bg.jpg',
+        ...noBook,
         actualName: 'Mathematics A'
     },
     'econ':{
-        link: 'https://allfoy.github.io/libcafe/home/error2',
-        imageSrc: '../img/bg.jpg',
+        ...noBook,
         actualName: 'Economics'
     },
     'lo':{
-        link: 'https://allfoy.github.io/libcafe/home/error2',
-        imageSrc: '../img/bg.jpg',
+        ...noBook,
         actualName: 'PE'
     },
     'kumu':{
@@ -90,18 +83,15 @@ const keywordLinks = {
         actualName: 'General Arts'
     },
     'ak':{
-        link: 'https://allfoy.github.io/libcafe/home/error2',
-        imageSrc: '../img/bg.jpg',
+        ...noBook,
         actualName: 'Geography'
     },// i think it's ges? idk no casper yet
     'ges':{
-        link: 'https://allfoy.github.io/libcafe/home/error2',
-        imageSrc: '../img/bg.jpg',
+        ...noBook,
         actualName: 'History'
     },
     'maw':{
-        link: 'https://allfoy.github.io/libcafe/home/error2',
-        imageSrc: '../img/bg.jpg',
+        ...noBook,
         actualName: 'Social sciences'
     },
     '-wi':{
@@ -110,18 +100,17 @@ const keywordLinks = {
         actualName: 'Mathematics rt'
     },
     'CKV':{
-        link: 'https://allfoy.github.io/libcafe/home/error2',
-        imageSrc: '../img/bg.jpg',
+        ...noBook,
         actualName: 'CKV event'
     },
-    'fatl':{
-        link: 'https://allfoy.github.io/libcafe/home/error2',
-        imageSrc: '../img/bg.jpg',
-        actualName: 'French'
+    'Zelfstudie':{
+        ...noBook,
+        actualName: 'Zelfstudie'
     }
     // Add more keywords and links for silly guy
 };
 CalIDcookie();
+
 // here some code for the cookie
 // this works by checking if this specific cookie exist, if it don't make one, another bit of code for switching
 function CalIDcookie(){
@@ -333,8 +322,8 @@ function getLinkAndImageForEvent(title) {
     }
     // Return a default link and image source if no match is found
     return {
-        link: 'https://allfoy.github.io/libcafe/error2',
-        imageSrc: '../img/bg.jpg'
+        ...noBook,
+        actualName: title
     };
 }
 

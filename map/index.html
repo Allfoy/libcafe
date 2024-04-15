@@ -200,7 +200,6 @@ function fetchEventsAndUpdateTime(CalID) {
                     document.addEventListener('keydown', function(event) {
                     if (event.key === 'c') {
                             checkCollisions(location);
-                            blinkclass();
                     }});
                     
                 }
@@ -276,24 +275,41 @@ const pcoords = {
 };
 const kcoords = {
     "110":{x:514, y:153},
+    "126":{x:360, y:335},
     "212":{x:440, y:860},
     "214":{x:495, y:835},
     "220":{x:434, y:998},
     "224":{x:476, y:1166},
+    "304":{x:311, y:1741},
+    "306":{x:283, y:1672},
     "308":{x:352, y:1657},
+    "312":{x:424, y:1636},
+    "314":{x:497, y:1615},
+    "316":{x:507, y:1673},
+    "320":{x:526, y:1807},
+    "338":{x:361, y:1865},
 };
 const ecoords = {
-    
+    "102":{x:1230, y:413},
+    "104":{x:1289, y:359},
+    "106":{x:1426, y:541},
+    "108":{x:1371, y:567},
+    "110":{x:1345, y:602},
+    "112":{x:1328, y:578},
+    "114":{x:1263, y:630},
 };
 const ncoords = {
+    "104":{x:700, y:332},
     "106":{x:621, y:327},
-    "114":{x:624, y:246},
-    "116":{x:694, y:245},
+    "110":{x:589, y:248},
+    "114":{x:659, y:245},
+    "116":{x:734, y:249},
 }
 const ocoords = {
+    "102":{x:1070, y:477},
     "104":{x:995, y:422},
+    "106":{x:1034, y:351},
     "110":{x:1126, y:417},
-    "114":{x:1100,y:472},
 }
 const ccoords = {
     "108":{x:171, y:503},
@@ -310,7 +326,7 @@ const lcoords = {
     "o9":{x:196, y:2122},
     "oa":{x:196, y:2122},
     "ob":{x:196, y:2122},
-    "oc":{x:196, y:2122}
+    "oc":{x:196, y:2122},
 }
 // make em
 createElem(pcoords);
@@ -329,7 +345,7 @@ function getlocation(location){
     const room = location.substr(1,3) // 316
     // Check if the room code exists in the object literal
     // using a ternary operator: condition?true:false;
-    const coords = room in building ? building[room] : {x:732, y:546};
+    const coords = room in building ? building[room] : {x:723, y:617};
     return coords
 }
 function createElem(coords) {
