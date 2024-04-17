@@ -92,22 +92,30 @@
         navigator.clipboard.writeText(pix.innerHTML);
     };
 
-function checkCollisions(location) {
+function checkOverlaps() {
     var images = ['a', 'c', 'k', 't', 'm'];
     for (var i = 0; i < images.length; i++) {
         var currentImg = document.getElementById(images[i]);
-        for (var j = 1; j < images.length - 1; j++) {
+        for (var j = i+1; j < images.length; j++) {
             if (i !== j) {
                 var otherImg = document.getElementById(images[j]);
                 if (currentImg.top == otherImg.top && currentImg.left == otherImg.left) {
-                    // Collision detected, adjust position
+                    // Overlap detected, adjust position
                     var newX, newY;
-                    newX = parseInt(currentImg.style.left.replace('px','')) + 0.2;
+                    newX = parseInt(currentImg.style.left.replace('px','')) + 24 + 5;
                     otherImg.style.left = newX + 'px';
+                    
                 }
             }
         }
     }
+}
+
+function toggleOpacity(){
+    var elems = document.querySelectorAll('.pfp');
+    elems.forEach(function(elem) {
+    elem.style.transition = (elem.style.transition === '2.5s') ? '0s' : '2.5s';
+    });
 }
 
 
@@ -158,10 +166,6 @@ function fetchEventsAndUpdateTime(CalID) {
                     console.log(currentEvent.summary,`(${currentEvent.location}) at ${hours}:${minutes}`)
                     let location = currentEvent.location
                     move(getid(CalID),getlocation(location));
-                    document.addEventListener('keydown', function(event) {
-                    if (event.key === 'c') {
-                            checkCollisions(location);
-                    }});
                     
                 }
             }
@@ -358,7 +362,9 @@ function blinkclass() {
 document.addEventListener('keydown', function(event) {
     if (event.key === 'c') {
             blinkclass();
-            checkCollisions("p000");
+            toggleOpacity();
+            checkOverlaps();
+            toggleOpacity();
     }});
 
     document.addEventListener('keydown', function(event) {
