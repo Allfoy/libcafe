@@ -155,14 +155,13 @@ function fetchEventsAndUpdateTime(CalID) {
     // Fetch events from Google Calendar API
 	// Get today's date in the format required by the Google Calendar API
     var timeInput = document.getElementById('timePicker').value;
-    var localeTime = new Date().toLocaleString();
+    var isoTime = new Date().toISOString();
     if(!timeInput){
-        console.log(localeTime);
-        var hours = localeTime.substr(12,2);
-        var minutes = localeTime.substr(15,2);
+        var hours = parseInt(isoTime.substr(11,2)) + 2;
+        var minutes = parseInt(isoTime.substr(14,2));
     }   else{var times = timeInput.split(":")
-            var hours = times[0];
-            var minutes = times[1];
+            var hours = parseInt(times[0]);
+            var minutes = parseInt(times[1]);
         }
     var slider = new Date();
     slider.setHours(hours);
