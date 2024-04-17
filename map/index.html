@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/favicon.ico">
 	<title>map</title>
     <style>
         .body{
@@ -15,7 +16,10 @@
             top: 0px;
         }
         .map{
-            width:1519px;position: relative;left:0px;top:0px;
+            width:1519px;
+            position: relative;
+            left:0px;
+            top:0px;
             z-index: 1;
         }
         .users{
@@ -27,28 +31,12 @@
         .allfoy{
             position: absolute;
             display: none;
-            border-radius: 50%;
+            border-radius: 90%;
             width: 24px;
             z-index: 3;
             transition: 2.5s;
         }
-        .casper{
-            position: absolute;
-            display: none;
-            border-radius: 50%;
-            width: 24px;
-            z-index: 3;
-            transition: 2.5s;
-        }
-        .kevin{
-            position:absolute;
-            display: none;
-            border-radius: 50%;
-            width: 24px;
-            z-index: 3;
-            transition: 2.5s;
-        }
-        .troy{
+        .pfp{
             position: absolute;
             display: none;
             border-radius: 50%;
@@ -77,7 +65,7 @@
             color: red;
             border-radius: 50%;
             opacity: 4%;
-            z-index: 3;
+            z-index: 4;
         }
     </style>
 </head>
@@ -89,9 +77,10 @@
         <div class="users">
             <img id="map" class="map" src="../img/locations/floors.jpg"/>
             <img id="a" class="allfoy" src="../img/pfp/allfoy.jpg"/>
-            <img id="c" class="casper" src="../img/pfp/casper.jpg"/>
-            <img id="k" class="kevin" src="../img/pfp/kevin.jpg"/>
-            <img id="t" class="troy" src="../img/pfp/troy.jpg"/>
+            <img id="c" class="pfp" src="../img/pfp/casper.jpg"/>
+            <img id="k" class="pfp" src="../img/pfp/kevin.jpg"/>
+            <img id="t" class="pfp" src="../img/pfp/troy.jpg"/>
+            <img id="m" class="pfp" src="../img/pfp/myrthe.jpg"/>
         </div>
 </body>
 <script>
@@ -104,45 +93,17 @@
     };
 
 function checkCollisions(location) {
-    var images = ['a', 'c', 'k', 't'];
-    var offset = 0.1; // Adjust this value as needed
+    var images = ['a', 'c', 'k', 't', 'm'];
     for (var i = 0; i < images.length; i++) {
         var currentImg = document.getElementById(images[i]);
-        var currentRect = currentImg.getBoundingClientRect();
-
-        for (var j = 0; j < images.length; j++) {
+        for (var j = 1; j < images.length - 1; j++) {
             if (i !== j) {
                 var otherImg = document.getElementById(images[j]);
-                var otherRect = otherImg.getBoundingClientRect();
-
-                if (currentRect.left < otherRect.right &&
-                    currentRect.right > otherRect.left &&
-                    currentRect.top < otherRect.bottom &&
-                    currentRect.bottom > otherRect.top) {
+                if (currentImg.top == otherImg.top && currentImg.left == otherImg.left) {
                     // Collision detected, adjust position
                     var newX, newY;
-                    var randomDirection = Math.floor(Math.random() * 4); // 0: up, 1: down, 2: left, 3: right
-
-                    switch (randomDirection) {
-                        case 0:
-                            newY = otherRect.top - currentRect.height - offset; // Move above the other image
-                            newX = currentRect.left + (Math.random() * (2 * offset)) - offset; // Random horizontal adjustment
-                            break;
-                        case 1:
-                            newY = otherRect.bottom + offset; // Move below the other image
-                            newX = currentRect.left + (Math.random() * (2 * offset)) - offset; // Random horizontal adjustment
-                            break;
-                        case 2:
-                            newX = otherRect.left - currentRect.width - offset; // Move to the left of the other image
-                            newY = currentRect.top + (Math.random() * (2 * offset)) - offset; // Random vertical adjustment
-                            break;
-                        case 3:
-                            newX = otherRect.right + offset; // Move to the right of the other image
-                            newY = currentRect.top + (Math.random() * (2 * offset)) - offset; // Random vertical adjustment
-                            break;
-                    }
-                    currentImg.style.left = newX + 'px';
-                    currentImg.style.top = newY + 'px';
+                    newX = parseInt(currentImg.style.left.replace('px','')) + 0.2;
+                    otherImg.style.left = newX + 'px';
                 }
             }
         }
@@ -215,6 +176,7 @@ function initiate(){
     fetchEventsAndUpdateTime('0pspeo6e4k6e329k4h56mkam0k9t6gnq'); //casper
     fetchEventsAndUpdateTime('i32q28ad785oqs2dom81460a186j6uvr'); //kevin
     fetchEventsAndUpdateTime('3hvsosg4io5fdefbn66meln2un2hu33k'); //troy
+    fetchEventsAndUpdateTime('32ddu2ndrbe8jtp1olg6rko3f5cntog3'); //myrthe
     const theLoop = setTimeout(initiate,3000);
     document.addEventListener('keydown', function(event) {
         // when n is pressed
@@ -250,6 +212,10 @@ function getid(CalID){
                     case "3hvsosg4io5fdefbn66meln2un2hu33k":
                         //move troy pfp element
                         var id = "t";
+                        break;
+                    case "32ddu2ndrbe8jtp1olg6rko3f5cntog3":
+                        //move myrthe pfp element
+                        var id = "m";
                         break
                 }
     return id
@@ -392,6 +358,12 @@ function blinkclass() {
 document.addEventListener('keydown', function(event) {
     if (event.key === 'c') {
             blinkclass();
+            checkCollisions("p000");
+    }});
+
+    document.addEventListener('keydown', function(event) {
+    if (event.key === 'h') {
+        window.location.href = "../home";
     }});
 </script>
 </html>
