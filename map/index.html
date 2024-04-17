@@ -157,6 +157,7 @@ function fetchEventsAndUpdateTime(CalID) {
     var timeInput = document.getElementById('timePicker').value;
     var localeTime = new Date().toLocaleString();
     if(!timeInput){
+        console.log(localeTime);
         var hours = localeTime.substr(12,2);
         var minutes = localeTime.substr(15,2);
     }   else{var times = timeInput.split(":")
@@ -270,11 +271,14 @@ const pcoords = {
     "226":{x:791, y:1040},
     "220":{x:948, y:1097},
     "224":{x:844, y:1153},
+    "304":{x:803, y:1687},
     "306":{x:818, y:1622},
     "308":{x:897, y:1643},
     "312":{x:956, y:1661},
     "314":{x:1036, y:1688},
     "316":{x:1005, y:1729},
+    "320":{x:943, y:1857},
+    "322":{x:903, y:1917},
     "326":{x:786, y:1877},
     "328":{x:786, y:1811},
 };
@@ -311,6 +315,7 @@ const ecoords = {
     "110":{x:1345, y:602},
     "112":{x:1328, y:578},
     "114":{x:1263, y:630},
+    "206":{x:1287, y:1123},
 };
 const ncoords = {
     "104":{x:700, y:332},
