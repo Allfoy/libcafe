@@ -77,9 +77,9 @@
         <div class="users">
             <img id="map" class="map" src="../img/locations/floors.jpg"/>
             <img id="a" class="allfoy" src="../img/pfp/allfoy.jpg"/>
-            <img id="c" class="pfp" src="../img/pfp/casper.jpg"/>
-            <img id="k" class="pfp" src="../img/pfp/kevin.jpg"/>
             <img id="t" class="pfp" src="../img/pfp/troy.jpg"/>
+            <img id="k" class="pfp" src="../img/pfp/kevin.jpg"/>
+            <img id="c" class="pfp" src="../img/pfp/casper.jpg"/>
             <img id="m" class="pfp" src="../img/pfp/myrthe.jpg"/>
         </div>
 </body>
@@ -93,16 +93,16 @@
     };
 
 function checkOverlaps() {
-    var images = ['a', 'c', 'k', 't', 'm'];
+    var images = ['a', 't', 'k', 'c', 'm'];
     for (var i = 0; i < images.length; i++) {
         var currentImg = document.getElementById(images[i]);
         for (var j = i+1; j < images.length; j++) {
             if (i !== j) {
                 var otherImg = document.getElementById(images[j]);
-                if (currentImg.top == otherImg.top && currentImg.left == otherImg.left) {
+                if (currentImg.style.top == otherImg.style.top && currentImg.style.left == otherImg.style.left) {
                     // Overlap detected, adjust position
-                    var newX, newY;
-                    newX = parseInt(currentImg.style.left.replace('px','')) + 24 + 5;
+                    var newX = parseInt(currentImg.style.left.replace('px','')) + 24 + 5;
+                    console.log(`overlap detected between ${currentImg.id} and ${otherImg.id}, changing ${otherImg.style.left} to ${newX}`)
                     otherImg.style.left = newX + 'px';
                     
                 }
@@ -110,15 +110,6 @@ function checkOverlaps() {
         }
     }
 }
-
-function toggleOpacity(){
-    var elems = document.querySelectorAll('.pfp');
-    elems.forEach(function(elem) {
-    elem.style.transition = (elem.style.transition === '2.5s') ? '0s' : '2.5s';
-    });
-}
-
-
 
 function fetchEventsAndUpdateTime(CalID) {
     // Fetch events from Google Calendar API
@@ -182,6 +173,7 @@ function initiate(){
     fetchEventsAndUpdateTime('3hvsosg4io5fdefbn66meln2un2hu33k'); //troy
     fetchEventsAndUpdateTime('32ddu2ndrbe8jtp1olg6rko3f5cntog3'); //myrthe
     const theLoop = setTimeout(initiate,3000);
+    setTimeout(checkOverlaps,4500)
     document.addEventListener('keydown', function(event) {
         // when n is pressed
         if (event.key === 'm') {
@@ -362,9 +354,7 @@ function blinkclass() {
 document.addEventListener('keydown', function(event) {
     if (event.key === 'c') {
             blinkclass();
-            toggleOpacity();
             checkOverlaps();
-            toggleOpacity();
     }});
 
     document.addEventListener('keydown', function(event) {
