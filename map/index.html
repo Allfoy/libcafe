@@ -153,13 +153,14 @@ function fetchEventsAndUpdateTime(CalID) {
 
                 if (eventStart <= now && eventEnd >= now) {
                     currentEvent = event;
-                    console.log(currentEvent.summary,`(${currentEvent.location}) at ${hours}:${minutes}`)
+                    id = getid(CalID);
+                    console.info(`${hours}:${minutes} (${id.name}) : ${currentEvent.summary} (${currentEvent.location})`)
                     let location = currentEvent.location
-                    move(getid(CalID),getlocation(location));
+                    move(id.id,getlocation(location));
                     
                 }
             }
-            if (!currentEvent){console.log(`no current lesson at ${hours}:${minutes}`);move(getid(CalID),getlocation("p000"))}
+            if (!currentEvent){id = getid(CalID);console.info(`${hours}:${minutes} (${id.name}) : no current lesson`);move(id.id,getlocation("p000"))}
         }).catch(error => {
             console.error('Error fetching events:', error);
         });
@@ -191,30 +192,36 @@ function move(id,location){
     elem.style.top = location.y - elemy.height +'px';
 };
 function getid(CalID){
-    var id
+    var id;
+    var name;
     switch (CalID) {
                     case "kvme0ikmjq4825g8ee860tm058clorcg":
                         //move allfoy pfp element
                         id = "a";
+                        name = "Allfoy";
                         break;
                     case "0pspeo6e4k6e329k4h56mkam0k9t6gnq":
                         //move casper pfp element
                         id = "c";
+                        name = "Casper";
                         break;
                     case "i32q28ad785oqs2dom81460a186j6uvr":
                         //move kevin pfp element
                         id = "k";
+                        name = "Kevin";
                         break;
                     case "3hvsosg4io5fdefbn66meln2un2hu33k":
                         //move troy pfp element
                         id = "t";
+                        name = "Troy";
                         break;
                     case "32ddu2ndrbe8jtp1olg6rko3f5cntog3":
                         //move myrthe pfp element
                         id = "m";
+                        name = "Myrthe";
                         break
                 }
-    return id
+    return {id, name}
 };
 
 //locations 
