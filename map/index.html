@@ -102,7 +102,6 @@ function checkOverlaps() {
                 if (currentImg.style.top == otherImg.style.top && currentImg.style.left == otherImg.style.left) {
                     // Overlap detected, adjust position
                     var newX = parseInt(currentImg.style.left.replace('px','')) + 24 + 5;
-                    console.log(`overlap detected between ${currentImg.id} and ${otherImg.id}, changing ${otherImg.style.left} to ${newX}`)
                     otherImg.style.left = newX + 'px';
                     
                 }
@@ -192,26 +191,27 @@ function move(id,location){
     elem.style.top = location.y - elemy.height +'px';
 };
 function getid(CalID){
+    var id
     switch (CalID) {
                     case "kvme0ikmjq4825g8ee860tm058clorcg":
                         //move allfoy pfp element
-                        var id = "a";
+                        id = "a";
                         break;
                     case "0pspeo6e4k6e329k4h56mkam0k9t6gnq":
                         //move casper pfp element
-                        var id = "c";
+                        id = "c";
                         break;
                     case "i32q28ad785oqs2dom81460a186j6uvr":
                         //move kevin pfp element
-                        var id = "k";
+                        id = "k";
                         break;
                     case "3hvsosg4io5fdefbn66meln2un2hu33k":
                         //move troy pfp element
-                        var id = "t";
+                        id = "t";
                         break;
                     case "32ddu2ndrbe8jtp1olg6rko3f5cntog3":
                         //move myrthe pfp element
-                        var id = "m";
+                        id = "m";
                         break
                 }
     return id
