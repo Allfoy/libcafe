@@ -6,106 +6,134 @@ const keywordLinks = {
     'entl': {
         link: 'https://apps.noordhoff.nl/se/content/book/4e33ffb8-40c9-45fa-a67c-eae545d7dbea/ebooks/d6cafc0b-fb70-438c-8668-c017ee87ff73',
         imageSrc: '../img/covers/ENG.jpeg',
-        actualName: 'English'
+        actualName: 'English',
+        picto : '🍵'
     },
     'nat': {
         link: 'https://e-book.boomdigitaal.nl/boek/9789464420180?layoutmode-double=1/sso',
         imageSrc: '../img/covers/physics.jpg',
-        actualName: 'Physics'
+        actualName: 'Physics',
+        picto : '🍎'
     },
     'schk': {
         link: 'https://apps.noordhoff.nl/se/content/book/3d237f12-c196-4650-839c-bea7f798792e/ebooks/3847b67a-6f0b-4d10-9f5e-d485d7496fda',
         imageSrc: '../img/covers/CHEM.jpeg',
-        actualName: 'Chemistry'
+        actualName: 'Chemistry',
+        picto : '🧪'
     },
     'biol': {
         link: 'https://apps.noordhoff.nl/se/content/book/3c9f39f7-6a4b-4403-a898-508d1ddcf68f/ebooks/2afd6210-0fb1-4007-8d2a-b63ef7cad649',
         imageSrc: '../img/covers/BIO.jpeg',
-        actualName: 'Biology'
+        actualName: 'Biology',
+        picto : '🫀'
     },
     'netl': {
         link: 'https://apps.noordhoff.nl/se/content/book/a904673b-f07d-480a-8201-57b56d94112b/ebooks/89f0e06c-3f93-403f-9804-04bad7a197de',
         imageSrc: '../img/covers/DUTCH.jpeg',
-        actualName: 'Dutch'
+        actualName: 'Dutch',
+        picto : '🌷'
     },
     'sptl': {
-        link: 'https://apps.noordhoff.nl/se/content/book/443fbd5e-bef7-4222-ae56-f41d5e83e468/ebooks/f71f3bc8-a5aa-4aa4-8951-fbab795b35c0',
+        link: 'https://apps.noordhoff.nl/se/content/book/443fbd5e-bef7-4222-ae56-f41d5e83e468/ebooks/5569eff5-1057-4de0-8129-e3e703fbf89e',
         imageSrc: '../img/covers/SPAN.jpeg',
-        actualName: 'Spanish'
+        actualName: 'Spanish',
+        picto : '🐂'
     },
     'wisb': {
         link: 'https://apps.noordhoff.nl/se/content/book/0818ce8f-cdb6-468d-b160-6874cfda8372/ebooks/e4405ab2-d6f8-4f64-abf9-d0d327474ab2',
         imageSrc: '../img/covers/MATHB.jpeg',
-        actualName: 'Mathematics B'
+        actualName: 'Mathematics B',
+        picto : '🧮'
     },
     'wisd': {
         link: 'https://apps.noordhoff.nl/se/content/book/4acdfa97-1845-4bf6-8320-10181b908e29/ebooks/a476fd26-1eeb-4c59-979c-16b971e37cc1',
         imageSrc: '../img/covers/MATHD.jpeg',
-        actualName: 'Mathematics D'
+        actualName: 'Mathematics D',
+        picto : '🧮'
     },
     'me': {
         ...noBook,
-        actualName: 'Mentorles'
+        actualName: 'Mentorles',
+        picto : ''
     },
     'maat': {
         link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/covers/MAAT.jpg',
-        actualName: 'Maatschappijleer'
+        actualName: 'Maatschappijleer',
+        picto : '🤓'
     },
     'ckv':{
         ...noBook,
-        actualName: 'CKV'
+        actualName: 'CKV',
+        picto : '🎥'
     },
     'rt':{
         ...noBook,
-        actualName: 'Route-uur'
+        actualName: 'Route-uur',
+        picto : '🥱'
     },
     'wisa':{
         ...noBook,
-        actualName: 'Mathematics A'
+        actualName: 'Mathematics A',
+        picto : '🧮'
     },
     'econ':{
         ...noBook,
-        actualName: 'Economics'
+        actualName: 'Economics',
+        picto : '💸'
     },
     'lo':{
         ...noBook,
-        actualName: 'PE'
+        actualName: 'PE',
+        picto : '🏀'
     },
     'kumu':{
         link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/covers/music.png',
-        actualName: 'Music'
+        actualName: 'Music',
+        picto : '🎼'
     },
     'kua':{
         link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/covers/KUA.jpg',
-        actualName: 'General Arts'
+        actualName: 'General Arts',
+        picto : '🎨'
     },
     'ak':{
         ...noBook,
-        actualName: 'Geography'
-    },// i think it's ges? idk no casper yet
+        actualName: 'Geography',
+        picto : '🪨'
+    },
     'ges':{
         ...noBook,
-        actualName: 'History'
+        actualName: 'History',
+        picto : '🕰️'
     },
     'maw':{
         ...noBook,
-        actualName: 'Social sciences'
+        actualName: 'Social sciences',
+        picto : '🤓'
     },
     '-wi':{
         link: 'https://apps.noordhoff.nl/se/content/book/0818ce8f-cdb6-468d-b160-6874cfda8372/ebooks/e4405ab2-d6f8-4f64-abf9-d0d327474ab2',
         imageSrc: '../img/covers/MATHB.jpeg',
-        actualName: 'Mathematics rt'
+        actualName: 'Mathematics rt',
+        picto : '🧮'
     },
     'CKV':{
         ...noBook,
-        actualName: 'CKV event'
+        actualName: 'CKV event',
+        picto : '🎥'
     },
     'Zelfstudie':{
         ...noBook,
-        actualName: 'Zelfstudie'
+        actualName: 'Zelfstudie',
+        picto : '📖'
+    },
+    'exact':{
+        ...noBook,
+        actualName: 'Exact',
+        picto : '🎯'
     }
     // Add more keywords and links for silly guy
 };
@@ -127,10 +155,6 @@ function CalIDcookie(){
         fetchEventsAndUpdateTime(getCookie("calendarsId"));
         startendfree(getCookie("calendarsId"));
     }
-        //'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
-        //'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
-        //'myrthe': CalID = '32ddu2ndrbe8jtp1olg6rko3f5cntog3'; user = 'Myrthe';break;
-		//'troy'  : CalID = '3hvsosg4io5fdefbn66meln2un2hu33k'; user = 'Troy'  ;break;
 };
 function switchcookie(){
     var CalID = prompt("What is your calendarID?","kvme0ikmjq4825g8ee860tm058clorcg");
@@ -201,7 +225,6 @@ function fetchEventsAndUpdateTime(calid) {
             if(!currentEvent){
                     // make src a variable and let default {be black}
                     let imagesrc = "https://fakeimg.pl/200x100/cccccc/fff";
-                    const currentTime = new Date();
                     // local due to the breaks being in such format
                     const localTime = new Date().toLocaleTimeString('en-US', {hour12: false});
                     const breaks = {
@@ -242,14 +265,13 @@ function fetchEventsAndUpdateTime(calid) {
                 const linkAndImage = getLinkAndImageForEvent(eventTitle);
                 document.getElementById('adaptivebi').src = linkAndImage.imageSrc;
                 eventButton.href = linkAndImage.link;
-                const actualTitle = linkAndImage.actualName;
                 // Display the current time in military format
                 const currentTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
 
 
                 // Display the current event and time in the container
                 eventContainer.innerHTML = `
-                    <h2>${actualTitle}</h2><p>(${currentEvent.location})</p>
+                    <h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${currentEvent.location})</p>
                     <p>${eventStart.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} to ${eventEnd.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>
                     <p>Time: ${currentTime}</p>
                     `;
@@ -268,7 +290,6 @@ function fetchEventsAndUpdateTime(calid) {
                 //console.log(currentEvent);
                 const CurrentEventEnd = new Date(currentEvent.end.dateTime);
                 const linkAndImage = getLinkAndImageForEvent(upcomingEventTitle);
-                const upcomingActualTitle = linkAndImage.actualName;
                 // Calculate the time until this event ends
                 const timeUntilEndEvent = CurrentEventEnd - now;
                 const hoursUntilEndEvent = Math.floor(timeUntilEndEvent / (1000 * 60 * 60));
@@ -281,13 +302,13 @@ function fetchEventsAndUpdateTime(calid) {
                 const secondsUntilNextEvent = Math.ceil((timeUntilNextEvent % (1000 * 60)) / (1000));
                 // Display the upcoming event and countdown in the container
                 upcomingEventContainer.innerHTML = `
-                    <h2>${upcomingActualTitle}</h2><p>(${upcomingEvent.location})</p>
+                    <h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>
                     <p>Time Until This Event Ends: ${hoursUntilEndEvent} h ${minutesUntilEndEvent} min ${secondsUntilEndEvent} s</p>
                     <p>Time Until Next Event: ${hoursUntilNextEvent} h ${minutesUntilNextEvent} min ${secondsUntilNextEvent} s</p>
                 `;
                 if(hoursUntilEndEvent == hoursUntilNextEvent && minutesUntilEndEvent == minutesUntilNextEvent && secondsUntilEndEvent == secondsUntilNextEvent){
                     upcomingEventContainer.innerHTML = `
-                    <h2>${upcomingActualTitle}</h2><p>(${upcomingEvent.location})</p>
+                    <h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>
                     <p>Time Until Next Event (no break): ${hoursUntilNextEvent} h ${minutesUntilNextEvent} min ${secondsUntilNextEvent} s</p>
                 `;
                 }
@@ -295,7 +316,6 @@ function fetchEventsAndUpdateTime(calid) {
                 const upcomingEventTitle = upcomingEvent.summary;
                 const upcomingEventStart = new Date(upcomingEvent.start.dateTime);
                 const linkAndImage = getLinkAndImageForEvent(upcomingEventTitle);
-                const upcomingActualTitle = linkAndImage.actualName;
                 // Calculate the time until the upcoming event
                 const timeUntilNextEvent = upcomingEventStart - now;
                 const hoursUntilNextEvent = Math.floor(timeUntilNextEvent / (1000 * 60 * 60));
@@ -303,7 +323,7 @@ function fetchEventsAndUpdateTime(calid) {
                 const secondsUntilNextEvent = Math.ceil((timeUntilNextEvent % (1000 * 60))/(1000));
                 // Display the upcoming event and countdown in the container
                 upcomingEventContainer.innerHTML = `
-                    <h2>${upcomingActualTitle}</h2><p>(${upcomingEvent.location})</p>
+                    <h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>
                     <p>Time Until Next Event: ${hoursUntilNextEvent} h ${minutesUntilNextEvent} min ${secondsUntilNextEvent} s</p>
                 `;
 
@@ -333,7 +353,8 @@ function getLinkAndImageForEvent(title) {
             return {
                 link: keywordLinks[keyword].link,
                 imageSrc: keywordLinks[keyword].imageSrc,
-                actualName: keywordLinks[keyword].actualName
+                actualName: keywordLinks[keyword].actualName,
+                picto: keywordLinks[keyword].picto
             };
         }
     }
@@ -442,11 +463,13 @@ function displayEvents(firstEvent, finalEvent) {
     // Format end time of final event
     const endTime = new Date(finalEvent.end.dateTime);
     const formattedEndTime = endTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+    const firstInfo = getLinkAndImageForEvent(firstEvent.summary);
+    const finalInfo = getLinkAndImageForEvent(finalEvent.summary);
 
     eventsContainer.innerHTML = `
         <h2>Today's Events</h2>
-        <p><strong>First Event:</strong> ${firstEvent.summary}, <strong>Start Time:</strong> ${formattedStartTime}</p>
-        <p><strong>Final Event:</strong> ${finalEvent.summary}, <strong>End Time:</strong> ${formattedEndTime}</p>
+        <p><strong>First Event:</strong> ${firstInfo.actualName}${firstInfo.picto}, <strong>Start Time:</strong> ${formattedStartTime}</p>
+        <p><strong>Final Event:</strong> ${finalInfo.actualName}${finalInfo.picto}, <strong>End Time:</strong> ${formattedEndTime}</p>
     `;
 }
 
