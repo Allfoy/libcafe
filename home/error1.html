@@ -9,4 +9,13 @@
 <body>
     <div class="centeredbutton">No class/event going on</div> 
 </body>
+<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+<script>
+const jsConfetti = new JSConfetti();
+addEventListener("DOMContentLoaded", () => {
+    jsConfetti.addConfetti({
+        confettiColors: ['#ff0000'],
+    }).then(() => jsConfetti.addConfetti({emojis: ['error'],})).then(() => jsConfetti.addConfetti({confettiColors: ['#ff0000'],}))
+})
+</script>
 </html>

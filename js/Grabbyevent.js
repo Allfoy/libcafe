@@ -60,7 +60,7 @@ const keywordLinks = {
         link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/covers/MAAT.jpg',
         actualName: 'Maatschappijleer',
-        picto : '🤓'
+        picto : '🌎'
     },
     'ckv':{
         ...noBook,
@@ -265,6 +265,8 @@ function fetchEventsAndUpdateTime(calid) {
                 const linkAndImage = getLinkAndImageForEvent(eventTitle);
                 document.getElementById('adaptivebi').src = linkAndImage.imageSrc;
                 eventButton.href = linkAndImage.link;
+                const classIcon = document.getElementById('classIcon')
+                classIcon.innerHTML = linkAndImage.picto;
                 // Display the current time in military format
                 const currentTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
 
