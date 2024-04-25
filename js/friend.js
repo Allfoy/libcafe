@@ -60,7 +60,7 @@ const keywordLinks = {
         link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/covers/MAAT.jpg',
         actualName: 'Maatschappijleer',
-        picto : '🤓'
+        picto : '🌎'
     },
     'ckv':{
         ...noBook,
@@ -134,11 +134,14 @@ const keywordLinks = {
         ...noBook,
         actualName: 'Exact',
         picto : '🎯'
-    },
-    'beco':{
+    },'fatl':{
         ...noBook,
-        actualName: 'Bedrijfseconomie',
-        picto : '🏭'
+        actualName:'French',
+        picto : '🥐'
+    },'delf':{
+        ...noBook,
+        actualName:'French crazy mode',
+        picto : '🥐'
     }
     // Add more keywords and links for silly guy
 };
@@ -260,7 +263,8 @@ function fetchEventsAndUpdateTime(calid) {
                 eventButton.href = linkAndImage.link;
                 // Display the current time in military format
                 const currentTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-
+                const classIcon = document.getElementById('classIcon')
+                classIcon.innerHTML = linkAndImage.picto;
 
                 // Display the current event and time in the container
                 eventContainer.innerHTML = `

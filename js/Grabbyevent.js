@@ -134,6 +134,14 @@ const keywordLinks = {
         ...noBook,
         actualName: 'Exact',
         picto : '🎯'
+    },'fatl':{
+        ...noBook,
+        actualName:'French',
+        picto : '🥐'
+    },'delf':{
+        ...noBook,
+        actualName:'French crazy mode',
+        picto : '🥐'
     }
     // Add more keywords and links for silly guy
 };
