@@ -237,7 +237,7 @@ function getid(CalID){
 
 //locations 
 const pcoords = {
-    "000":{x:1246, y:215},
+    "000":{x:1246, y:189},
     "102":{x:804, y:923},
     "104":{x:1032, y:930},
     "106":{x:999, y:1004},
@@ -310,7 +310,7 @@ const ocoords = {
     "110":{x:1126, y:1176},
 }
 const ccoords = {
-    "010":{x:102, y:550},
+    "010":{x:99, y:520},
     "108":{x:157, y:1257},
 }
 const lcoords = {
@@ -328,13 +328,13 @@ const lcoords = {
     "oc":{x:196, y:2881},
 }
 // make em
-createElem(pcoords);
-createElem(kcoords);
-createElem(ecoords);
-createElem(ncoords);
-createElem(ocoords);
-createElem(ccoords);
-createElem(lcoords);
+createElem(pcoords,'p');
+createElem(ecoords,'e');
+createElem(ncoords,'n');
+createElem(lcoords,'l');
+createElem(ocoords,'o');
+createElem(ccoords,'c');
+createElem(kcoords,'k');
 
 function getlocation(location){
     // determine which object to use aka which buildingscoords
@@ -347,7 +347,7 @@ function getlocation(location){
     const coords = room in building ? building[room] : {x:723, y:617};
     return coords
 }
-function createElem(coords) {
+function createElem(coords,letter) {
     // Iterate over the upperproperties of the coords object
     Object.keys(coords).forEach(key => {
         const coord = coords[key];
@@ -357,7 +357,8 @@ function createElem(coords) {
         elem.style.left = coord.x + 'px';
         elem.style.top = coord.y + 'px';
         elem.classList.add('map-pin');
-        elem.setAttribute("title", key);
+        const name = letter + key;
+        elem.setAttribute("title", name);
         // make it fr
         document.body.appendChild(elem);
     });
