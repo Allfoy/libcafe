@@ -54,7 +54,7 @@
 					<img class="freeIcony" id="freeIcony" src="https://fakeimg.pl/200x100/cccccc/ff0000"></img>
 				</div>
 				<button class="classIcon" id="classIcon" onclick="confetti()">☕</button>
-				<div><a href="../schedules/">full schedule</a></div>
+				<div><a href="../schedule/">full schedule</a></div>
 				<div class="center"><h6>   </h6>  </div> <!--emptyline after switch-->
 				<a href="../friend/">friend</a>
 				
@@ -696,14 +696,14 @@
 		<script src="../js/main.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
 		<script> 
+			const jsConfetti = new JSConfetti();
 			function confetti(){
 				const classIcon = document.getElementById('classIcon'); 
 				var text = classIcon.textContent;
-				const jsConfetti = new JSConfetti();
 				if(text != '☕'){
-					jsConfetti.addConfetti({emojis:[text]});
+					jsConfetti.addConfetti({emojis:[text]})//.then(() => jsConfetti.clearCanvas());
 				}else{
-					jsConfetti.addConfetti({confettiRadius: 5,confettiNumber: 150*2,});
+					jsConfetti.addConfetti({confettiRadius: 5,confettiNumber: 150*2,})//.then(() => jsConfetti.clearCanvas());
 				}
 			}
 			

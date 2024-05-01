@@ -76,21 +76,46 @@
         <div id="pix" class="pix"></div>
         <div class="users">
             <img id="map" class="map" src="../img/locations/floors.jpg"/>
-            <img id="a" class="allfoy" src="../img/pfp/allfoy.jpg"/>
-            <img id="t" class="pfp" src="../img/pfp/troy.jpg"/>
-            <img id="k" class="pfp" src="../img/pfp/kevin.jpg"/>
-            <img id="c" class="pfp" src="../img/pfp/casper.jpg"/>
-            <img id="m" class="pfp" src="../img/pfp/myrthe.jpg"/>
+            <img id="a" class="allfoy" title="Allfoy" src="../img/pfp/allfoy.jpg"/>
+            <img id="t" class="pfp" title="Troy" src="../img/pfp/troy.jpg"/>
+            <img id="k" class="pfp" title="Kevin" src="../img/pfp/kevin.jpg"/>
+            <img id="c" class="pfp" title="Casper" src="../img/pfp/casper.jpg"/>
+            <img id="m" class="pfp" title="Myrthe" src="../img/pfp/myrthe.jpg"/>
+            <!-- <img id="?" class="pfp" title="???" src="../img/pfp/???.jpg"/> -->
         </div>
 </body>
 <script>
-        initiate();
-    map.onclick = function(e) {
-        //console.log(e.x, e.y);
-        const pix = document.getElementById("pix");
-        pix.innerHTML = `{x:${e.offsetX}, y:${e.offsetY}}`;
-        navigator.clipboard.writeText(pix.innerHTML);
-    };
+    initiate();
+function initiate(){
+    const ids = [
+        'kvme0ikmjq4825g8ee860tm058clorcg', // allfoy
+        '0pspeo6e4k6e329k4h56mkam0k9t6gnq', // casper
+        'i32q28ad785oqs2dom81460a186j6uvr', // kevin
+        '3hvsosg4io5fdefbn66meln2un2hu33k', // troy
+        '32ddu2ndrbe8jtp1olg6rko3f5cntog3', // myrthe
+        //'????',  // ???
+    ];
+    ids.forEach(id => {
+        fetchEventsAndUpdateTime(id);
+    });
+
+    const theLoop = setTimeout(initiate,3000);
+    setTimeout(checkOverlaps,4500)
+    document.addEventListener('keydown', function(event) {
+        // when n is pressed
+        if (event.key === 'm') {
+            clearTimeout(theLoop)
+        }
+    });
+};
+map.onclick = function(e) {
+    //console.log(e.x, e.y);
+    const pix = document.getElementById("pix");
+    // minus five to accomidate for the width of pix    
+    pix.innerHTML = `{x:${e.offsetX-5}, y:${e.offsetY-5}}`;
+    navigator.clipboard.writeText(pix.innerHTML);
+};
+window.onload = function(){window.scrollTo(0,795)};
 
 function checkOverlaps() {
     var images = ['a', 't', 'k', 'c', 'm'];
@@ -125,11 +150,6 @@ function fetchEventsAndUpdateTime(CalID) {
     var slider = new Date();
     slider.setHours(hours);
     slider.setMinutes(minutes);
-    document.addEventListener('keydown', function(event) {
-    if (event.key === 'n') {
-        document.getElementById("timePicker").style.display = "block";
-        document.getElementById("timePicker").focus()
-    }});
     document.getElementById("timePicker").addEventListener("blur", function() {
     this.style.display = "none";
 });
@@ -166,21 +186,6 @@ function fetchEventsAndUpdateTime(CalID) {
         });
         //setTimeout(fetchEventsAndUpdateTime,1000,CalID);
 };
-function initiate(){
-    fetchEventsAndUpdateTime('kvme0ikmjq4825g8ee860tm058clorcg'); //allfoy
-    fetchEventsAndUpdateTime('0pspeo6e4k6e329k4h56mkam0k9t6gnq'); //casper
-    fetchEventsAndUpdateTime('i32q28ad785oqs2dom81460a186j6uvr'); //kevin
-    fetchEventsAndUpdateTime('3hvsosg4io5fdefbn66meln2un2hu33k'); //troy
-    fetchEventsAndUpdateTime('32ddu2ndrbe8jtp1olg6rko3f5cntog3'); //myrthe
-    const theLoop = setTimeout(initiate,3000);
-    setTimeout(checkOverlaps,4500)
-    document.addEventListener('keydown', function(event) {
-        // when n is pressed
-        if (event.key === 'm') {
-            clearTimeout(theLoop)
-        }
-    });
-};
 function move(id,location){
     const elem = document.getElementById(id);
     const elemy = {
@@ -188,8 +193,9 @@ function move(id,location){
         "height": 24/2
     }
     elem.style.display = "block";   
-    elem.style.left = location.x - elemy.width +'px';
-    elem.style.top = location.y - elemy.height +'px';
+    // takes width of elemy and width of pix into consideration
+    elem.style.left = location.x - elemy.width + 5 + 'px';
+    elem.style.top = location.y - elemy.height + 5 +'px';
 };
 function getid(CalID){
     var id;
@@ -199,121 +205,127 @@ function getid(CalID){
                         //move allfoy pfp element
                         id = "a";
                         name = "Allfoy";
-                        break;
+                    break;
                     case "0pspeo6e4k6e329k4h56mkam0k9t6gnq":
                         //move casper pfp element
                         id = "c";
                         name = "Casper";
-                        break;
+                    break;
                     case "i32q28ad785oqs2dom81460a186j6uvr":
                         //move kevin pfp element
                         id = "k";
                         name = "Kevin";
-                        break;
+                    break;
                     case "3hvsosg4io5fdefbn66meln2un2hu33k":
                         //move troy pfp element
                         id = "t";
                         name = "Troy";
-                        break;
+                    break;
                     case "32ddu2ndrbe8jtp1olg6rko3f5cntog3":
                         //move myrthe pfp element
                         id = "m";
                         name = "Myrthe";
-                        break
+                    break;
+                    // case "?????":
+                    //     //move myrthe pfp element
+                    //     id = "?";
+                    //     name = "???";
+                    // break;
                 }
     return {id, name}
 };
 
 //locations 
 const pcoords = {
-    "000":{x:723, y:617},
-    "102":{x:804, y:164},
-    "104":{x:1032, y:171},
-    "106":{x:999, y:245},
-    "204":{x:807, y:925},
-    "206":{x:823, y:857},
-    "208":{x:897, y:882},
-    "212":{x:964, y:896},
-    "214":{x:1037, y:925},
-    "216":{x:1014, y:985},
-    "226":{x:791, y:1040},
-    "220":{x:948, y:1097},
-    "224":{x:844, y:1153},
-    "304":{x:803, y:1687},
-    "306":{x:818, y:1622},
-    "308":{x:897, y:1643},
-    "312":{x:956, y:1661},
-    "314":{x:1036, y:1688},
-    "316":{x:1008, y:1753},
-    "320":{x:943, y:1857},
-    "322":{x:903, y:1917},
-    "326":{x:786, y:1877},
-    "328":{x:786, y:1811},
+    "000":{x:1246, y:215},
+    "102":{x:804, y:923},
+    "104":{x:1032, y:930},
+    "106":{x:999, y:1004},
+    "204":{x:807, y:1684},
+    "206":{x:823, y:1616},
+    "208":{x:897, y:1641},
+    "212":{x:964, y:1655},
+    "214":{x:1037, y:1684},
+    "216":{x:1014, y:1744},
+    "220":{x:948, y:1856},
+    "224":{x:844, y:1912},
+    "226":{x:791, y:1799},
+    "304":{x:803, y:2446},
+    "306":{x:818, y:2381},
+    "308":{x:897, y:2402},
+    "312":{x:956, y:2420},
+    "314":{x:1036, y:2447},
+    "316":{x:1008, y:2512},
+    "320":{x:943, y:2616},
+    "322":{x:903, y:2676},
+    "326":{x:786, y:2636},
+    "328":{x:786, y:2570},
 };
 const kcoords = {
-    "104":{x:308, y:225},
-    "106":{x:282, y:151},
-    "108":{x:505, y:97},
-    "110":{x:514, y:153},
-    "112":{x:522, y:201},
-    "126":{x:360, y:335},
-    "204":{x:314, y:981},
-    "206":{x:290, y:917},
-    "208":{x:359, y:893},
-    "212":{x:422, y:878},
-    "214":{x:502, y:850},
-    "216":{x:526, y:921},
-    "220":{x:530, y:1057},
-    "224":{x:488, y:1157},
-    "226":{x:377, y:1105},
-    "304":{x:311, y:1741},
-    "306":{x:283, y:1672},
-    "308":{x:352, y:1657},
-    "312":{x:424, y:1636},
-    "314":{x:497, y:1615},
-    "316":{x:507, y:1673},
-    "320":{x:526, y:1807},
-    "338":{x:361, y:1865},
+    "104":{x:308, y:984},
+    "106":{x:282, y:910},
+    "108":{x:505, y:856},
+    "110":{x:506, y:908},
+    "112":{x:513, y:956},
+    "126":{x:360, y:1094},
+    "204":{x:314, y:1740},
+    "206":{x:290, y:1676},
+    "208":{x:359, y:1652},
+    "212":{x:422, y:1637},
+    "214":{x:502, y:1609},
+    "216":{x:526, y:1680},
+    "220":{x:530, y:1816},
+    "224":{x:488, y:1916},
+    "226":{x:377, y:1864},
+    "304":{x:311, y:2500},
+    "306":{x:283, y:2431},
+    "308":{x:352, y:2416},
+    "312":{x:424, y:2395},
+    "314":{x:497, y:2374},
+    "316":{x:507, y:2432},
+    "320":{x:526, y:2566},
+    "338":{x:361, y:2624},
 };
 const ecoords = {
-    "102":{x:1230, y:413},
-    "104":{x:1289, y:359},
-    "106":{x:1426, y:541},
-    "108":{x:1371, y:567},
-    "110":{x:1345, y:602},
-    "112":{x:1328, y:578},
-    "114":{x:1263, y:630},
-    "206":{x:1287, y:1123},
+    "102":{x:1230, y:1172},
+    "104":{x:1289, y:1118},
+    "106":{x:1426, y:1300},
+    "108":{x:1371, y:1326},
+    "110":{x:1338, y:1355},
+    "112":{x:1323, y:1332},
+    "114":{x:1263, y:1389},
+    "206":{x:1287, y:1882},
 };
 const ncoords = {
-    "104":{x:700, y:332},
-    "106":{x:621, y:327},
-    "110":{x:589, y:248},
-    "114":{x:659, y:245},
-    "116":{x:734, y:249},
+    "104":{x:689, y:1084},
+    "106":{x:619, y:1082},
+    "110":{x:581, y:1000},
+    "114":{x:650, y:1000},
+    "116":{x:725, y:1001},
 }
 const ocoords = {
-    "102":{x:1070, y:477},
-    "104":{x:995, y:422},
-    "106":{x:1034, y:351},
-    "110":{x:1126, y:417},
+    "102":{x:1070, y:1236},
+    "104":{x:995, y:1181},
+    "106":{x:1034, y:1110},
+    "110":{x:1126, y:1176},
 }
 const ccoords = {
-    "108":{x:171, y:503},
+    "010":{x:102, y:550},
+    "108":{x:157, y:1257},
 }
 const lcoords = {
-    "o1":{x:196, y:2122},
-    "o2":{x:196, y:2122},
-    "o3":{x:196, y:2122},
-    "o4":{x:196, y:2122},
-    "o5":{x:196, y:2122},
-    "o6":{x:196, y:2122},
-    "o7":{x:196, y:2122},
-    "o8":{x:196, y:2122},
-    "o9":{x:196, y:2122},
-    "oa":{x:196, y:2122},
-    "ob":{x:196, y:2122},
-    "oc":{x:196, y:2122},
+    "o1":{x:196, y:2881},
+    "o2":{x:196, y:2881},
+    "o3":{x:196, y:2881},
+    "o4":{x:196, y:2881},
+    "o5":{x:196, y:2881},
+    "o6":{x:196, y:2881},
+    "o7":{x:196, y:2881},
+    "o8":{x:196, y:2881},
+    "o9":{x:196, y:2881},
+    "oa":{x:196, y:2881},
+    "ob":{x:196, y:2881},
+    "oc":{x:196, y:2881},
 }
 // make em
 createElem(pcoords);
@@ -359,14 +371,38 @@ function blinkclass() {
 };
 
 document.addEventListener('keydown', function(event) {
-    if (event.key === 'c') {
+    const f = 3038/4;
+    switch (event.key) {
+        case 'c':
             blinkclass();
             checkOverlaps();
-    }});
+        break;
 
-    document.addEventListener('keydown', function(event) {
-    if (event.key === 'h') {
-        window.location.href = "../home";
-    }});
+        case 'h':
+            window.location.href = "../home";
+        break;
+
+        case '0':
+            window.scrollTo(0,0*f)
+        break;
+        
+        case '1':
+            window.scrollTo(0,1*f)
+        break;
+
+        case '2':
+            window.scrollTo(0,2*f)
+        break;
+
+        case '3':
+            window.scrollTo(0,3*f)
+        break;
+
+        case 'n':
+            document.getElementById("timePicker").style.display = "block";
+            document.getElementById("timePicker").focus()
+        break;
+    }
+});
 </script>
 </html>
