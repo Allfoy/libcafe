@@ -48,7 +48,7 @@ const keywordLinks = {
     'wisd': {
         link: 'https://apps.noordhoff.nl/se/content/book/4acdfa97-1845-4bf6-8320-10181b908e29/ebooks/a476fd26-1eeb-4c59-979c-16b971e37cc1',
         imageSrc: '../img/covers/MATHD.jpeg',
-        actualName: 'Mathematics D',
+        actualName: 'you’ve been π-d',//'Mathematics D',
         picto : '🧮'
     },
     'me': {
@@ -59,7 +59,7 @@ const keywordLinks = {
     'maat': {
         link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/covers/MAAT.jpg',
-        actualName: 'Maatschappijleer',
+        actualName: 'Social studies',
         picto : '🌎'
     },
     'ckv':{
@@ -371,7 +371,8 @@ function getLinkAndImageForEvent(title) {
     // Return a default link and image source if no match is found
     return {
         ...noBook,
-        actualName: title
+        actualName: title,
+        picto:''
     };
 }
 

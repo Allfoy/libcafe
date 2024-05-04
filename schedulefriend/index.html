@@ -3,34 +3,87 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Friend's schedule</title>
+	<title>Schedule</title>
     <link rel="icon" href="../img/favicon.ico">
     <style>
-        .events{
-        text-align: center;
-        display: flex;
-        width: fit-content;
-        flex-direction: column;
-        margin: auto;
+        p{
+            margin-block-start: 5px;
+            margin-block-end: 5px;
         }
+        .events{
+            text-align: center;
+            display: grid;
+            width: fit-content;
+            grid-template-columns: 15vw 15vw 15vw 15vw 15vw 15vw ;/*1+5*/
+            grid-template-rows:auto auto auto auto auto auto auto auto auto auto auto; /*11*/
+            gap: 0px 10px;
+            align-items: stretch;
+            justify-items: stretch;
+        }
+        .time{
+            grid-column:1;
+            background-color: #fed7bb;
+            width: auto;
+            height: auto;
+            border-radius: 7.5px;
+            padding: 20px;
+        }
+
         .event{
             background-color: #f7c8a6;
             width: auto;
             height: auto;
-            border-radius: 25px;
-            margin: 10px;
-            padding: 20px;
+            border-radius: 15px;
+            padding: 20px 0;
+            text-align: center;
         }
+
+        .column1{grid-column:2;}
+        .column2{grid-column:3;}
+        .column3{grid-column:4;}
+        .column4{grid-column:5;}
+        .column5{grid-column:6;}
+
+        .days{
+            background-color: #fed7bb;
+            width: auto;
+            height: auto;
+            border-radius: 7.5px;
+            padding: 20px;
+            grid-row: 1;
+        }
+        .friendName{
+            background-color: #bbf5fe;
+            width: auto;
+            height: auto;
+            border-radius: 25px;
+            padding: 20px;
+            grid-row: 1;
+            grid-column: 1;
+        }
+
+        .row1{grid-row: 2;}
+        .row2{grid-row: 3;}
+        .row3{grid-row: 4;}
+        .row4{grid-row: 5;}
+        .row5{grid-row: 6;}
+        .row6{grid-row: 7;}
+        .row7{grid-row: 8;}
+        .row8{grid-row: 9;}
+        .row9{grid-row: 10;}
+        .row10{grid-row: 11;}
+
+
         .body{
             background-color: #f9f1e3;
         }
     </style>
 </head>
 <body class="body">
-    <div class="centeredbutton">go&nbsp<a href="../home">home</a></div>
+    <div class="centeredbutton">go&nbsp<a href="../home/">home</a></div>
 	<div class="events" id="events"></div>
     <label for="dateInput">Choose a date:</label>
-    <input type="date" id="dateInput" oninput="CalIDcookie()" onchange="CalIDcookie()">
+    <input type="date" id="dateInput" onchange="CalIDcookie()">
 	<div id="user"></div>
 </body>
 <script>
@@ -42,10 +95,14 @@ function fetchEventsAndUpdateTime(CalID) {
 	// Get today's date and tomorrow's date in the format required by the Google Calendar API
 	const today = new Date().toISOString().split('T')[0];
     //get and convert user inputted date
-    var chosenDate = document.getElementById("dateInput").value;
-    console.log(chosenDate)
-    const chosenday = new Date(chosenDate).toISOString().split('T')[0];
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${CalID}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${chosenday}T00:00:00Z&timeMax=${chosenday}T23:59:59Z`)
+    const dateChosen = document.getElementById("dateInput").value;
+    const chosenDate = new Date(dateChosen);
+    const chosenday = chosenDate.getDay();
+    const minDate = new Date().setDate(chosenDate.getDate()-chosenday+1); // so tuesday chosenday=2, -2+1= -1 and 2-1=1=monday
+    const maxDate = new Date().setDate(chosenDate.getDate()-chosenday+5); // so tuesday chosenday=2, -2+1 = -1 and 2-1=1= monday, +4=friday
+    const minday = new Date(minDate).toISOString().split('T')[0];
+    const maxday = new Date(maxDate).toISOString().split('T')[0];
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${CalID}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${minday}T00:00:00Z&timeMax=${maxday}T23:59:59Z`)
         .then(response => response.json())
         .then(data => {
 			const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
@@ -54,11 +111,24 @@ function fetchEventsAndUpdateTime(CalID) {
             const numB = parseInt(b.summary.match(/^\d+/)[0]);
             return numA - numB; // Sort events based on the numbers in their titles
         });
-            const eventsdiv = document.getElementById('events');
-			eventsdiv.innerHTML = `<p></p>` 
-			sortedEvents.forEach(event => {
-            eventsdiv.innerHTML += `<p class="event">${event.summary} (${event.location})</p>`;
-			});
+        const eventsdiv = document.getElementById('events');
+        const friendName = getName()
+        eventsdiv.innerHTML = `<p class="friendName">${friendName}</p>`;
+        for (i=0;i<5;i++) {
+            arr = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
+            eventsdiv.innerHTML += `<p class="days column${i+1}">${arr[i]}</p>`;
+        }
+
+        sortedEvents.forEach(event => {
+            const startTime = new Date(event.start.dateTime).toLocaleTimeString().slice(0, -3);
+            const endTime = new Date(event.end.dateTime).toLocaleTimeString().slice(0, -3);
+            const day = new Date(event.start.dateTime).getDay();
+            const row = event.summary.match(/\d+/)[0];
+            const title = getLinkAndImageForEvent(event.summary);
+            eventsdiv.innerHTML += 
+            `<p class="time row${row}" title="${day}">${startTime} - ${endTime}</p>
+            <p class="event column${day} row${row}" title="${event.location}">${title.actualName}${title.picto}</p>`;
+        });
 		
 		
 		
@@ -97,5 +167,152 @@ function getCookie(cname) {
     }
     return "";
 }
+
+const keywordLinks = {
+    'entl': {
+        actualName: 'English',
+        picto : '🍵'
+    },
+    'nat': {
+        actualName: 'Physics',
+        picto : '🍎'
+    },
+    'schk': {
+        actualName: 'Chemistry',
+        picto : '🧪'
+    },
+    'biol': {
+        actualName: 'Biology',
+        picto : '🫀'
+    },
+    'netl': {
+        actualName: 'Dutch',
+        picto : '🌷'
+    },
+    'sptl': {
+        actualName: 'Spanish',
+        picto : '🐂'
+    },
+    'wisb': {
+        actualName: 'Mathematics B',
+        picto : '🧮'
+    },
+    'wisd': {
+        actualName: 'you’ve been π-d',//'Mathematics D',
+        picto : '🧮'
+    },
+    'me': {
+        actualName: 'Mentorles',
+        picto : ''
+    },
+    'maat': {
+        actualName: 'Social studies',
+        picto : '🌎'
+    },
+    'ckv':{
+        actualName: 'CKV',
+        picto : '🎥'
+    },
+    'rt':{
+        actualName: 'Route-uur',
+        picto : '🥱'
+    },
+    'wisa':{
+        actualName: 'Mathematics A',
+        picto : '🧮'
+    },
+    'econ':{
+        actualName: 'Economics',
+        picto : '💸'
+    },
+    'lo':{
+        actualName: 'PE',
+        picto : '🏀'
+    },
+    'kumu':{
+        actualName: 'Music',
+        picto : '🎼'
+    },
+    'kua':{
+        actualName: 'General Arts',
+        picto : '🎨'
+    },
+    'ak':{
+        actualName: 'Geography',
+        picto : '🪨'
+    },
+    'ges':{
+        actualName: 'History',
+        picto : '🕰️'
+    },
+    'maw':{
+        actualName: 'Social sciences',
+        picto : '🤓'
+    },
+    '-wi':{
+        actualName: 'Mathematics rt',
+        picto : '🧮'
+    },
+    'CKV':{
+        actualName: 'CKV event',
+        picto : '🎥'
+    },
+    'Zelfstudie':{
+        actualName: 'Zelfstudie',
+        picto : '📖'
+    },
+    'exact':{
+        actualName: 'Exact',
+        picto : '🎯'
+    },'fatl':{
+        actualName:'French',
+        picto : '🥐'
+    },'delf':{
+        actualName:'French crazy mode',
+        picto : '🥐'
+    }
+    // Add more keywords and links for silly guy
+};
+
+function getLinkAndImageForEvent(title) {
+    // Check if any keyword in the title matches, and return the corresponding link and image source
+    for (const keyword in keywordLinks) {
+        if (title.includes(keyword)) {
+            return {
+                actualName: keywordLinks[keyword].actualName,
+                picto: keywordLinks[keyword].picto
+            };
+        }
+    }
+    // Return a default link and image source if no match is found
+    return {
+        actualName: title,
+        picto:''
+    };
+}
+
+function getName(){
+    const friendcookie = getCookie('friendcookie');
+    switch (friendcookie) {
+        case '0pspeo6e4k6e329k4h56mkam0k9t6gnq':
+            return 'Casper'
+        break;
+        case 'i32q28ad785oqs2dom81460a186j6uvr':
+                return 'Kevin'
+        break;
+        case 'kvme0ikmjq4825g8ee860tm058clorcg':
+                return 'Allfoy'
+        break;
+        case '3hvsosg4io5fdefbn66meln2un2hu33k':
+                return 'Troy'
+        break;
+        case '32ddu2ndrbe8jtp1olg6rko3f5cntog3':
+                return 'Myrthe'
+        break;
+        default:
+            return 'who dis?'
+        break;
+    }
+};
 </script>
 </html>
