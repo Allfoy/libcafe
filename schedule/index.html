@@ -19,6 +19,30 @@
             gap: 0px 10px;
             align-items: stretch;
             justify-items: stretch;
+            z-index: 1;
+        }
+        .timeBox{
+            pointer-events: none;
+            position: absolute;
+            top: 95px;
+            display: block;
+            z-index: 9;
+            opacity: 60%;
+            height: 96%;
+            width: 94.4%;
+        }
+        .timeLine{
+            display:block;
+            z-index: 9;
+            background-color: rgb(47, 255, 168);
+            opacity: 60%;
+            border-radius: 35px;
+            position: absolute;
+            height: 0.5%;
+            width: 100%;
+            margin: auto;
+            top: 0%;
+            pointer-events: auto;
         }
         .time{
             grid-column:1;
@@ -27,6 +51,7 @@
             height: auto;
             border-radius: 7.5px;
             padding: 20px;
+            z-index: inherit;
         }
 
         .event{
@@ -36,6 +61,7 @@
             border-radius: 15px;
             padding: 20px 0;
             text-align: center;
+            z-index: inherit;
         }
 
         .column1{grid-column:2;}
@@ -51,6 +77,7 @@
             border-radius: 7.5px;
             padding: 20px;
             grid-row: 1;
+            z-index: inherit;
         }
 
         .row1{grid-row: 2;}
@@ -73,6 +100,9 @@
 <body class="body">
     <div class="centeredbutton">go&nbsp<a href="../home/">home</a></div>
 	<div class="events" id="events"></div>
+    <div class="timeBox" id="timeBox">
+        <div class="timeLine" id="timeLine"></div>
+    </div>
     <label for="dateInput">Choose a date:</label>
     <input type="date" id="dateInput" onchange="CalIDcookie()">
 	<div id="user"></div>
@@ -103,7 +133,7 @@ function fetchEventsAndUpdateTime(CalID) {
             return numA - numB; // Sort events based on the numbers in their titles
         });
         const eventsdiv = document.getElementById('events');
-        eventsdiv.innerHTML = `<p></p>`;
+        eventsdiv.innerHTML += `<p></p>`;
         for (i=0;i<5;i++) {
             arr = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
             eventsdiv.innerHTML += `<p class="days column${i+1}">${arr[i]}</p>`;
@@ -142,6 +172,7 @@ function CalIDcookie(){
     }else{
         console.log("we have found the cookie:" + getCookie("calendarsId"));
         fetchEventsAndUpdateTime(getCookie("calendarsId"));
+        showTime()
     }
         //'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
         //'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
@@ -163,6 +194,82 @@ function getCookie(cname) {
         }
     }
     return "";
+}
+
+function showTime(){
+    const timeLine = document.getElementById('timeLine');
+    let d = new Date();
+    d = d.toLocaleTimeString();
+    d = d.slice(0,-3);
+    timeLine.title=d;
+    const min = tT(d)
+    if (min<=tT('8:15')){ // 0:00 - 8:15
+        timeLine.style.top = '0%';
+        console.log('it be early');
+        timeBox = document.getElementById('timeBox');
+        timeBox.style.borderStyle = 'solid';
+    }else if (min<=tT('10:30')){
+        const empty = tT('8:15');
+        const full = tT('10:30');
+        let percentage = (100*(min-empty))/(full-empty);
+        const minPP = 0; // f(0) = minPP
+        const maxPP = 29; //f(100) = maxPP
+        percentage = ((maxPP-minPP)/100)*percentage+minPP; // y=rc*x+b
+        timeLine.style.top = percentage +'%';
+    }else if (min<=tT('10:50')){
+        let percentage = 100; // always 100% due to the break
+        const minPP = 0; // f(0) = minPP
+        const maxPP = 30.5; //f(100) = maxPP
+        percentage = ((maxPP-minPP)/100)*percentage+minPP; // y=rc*x+b
+        timeLine.style.top = percentage +'%';
+    }else if (min<=tT('12:20')){
+        const empty = tT('10:50');
+        const full = tT('12:20');
+        let percentage = (100*(min-empty))/(full-empty);
+        const minPP = 30.5; // f(0) = minPP
+        const maxPP = 49; //f(100) = maxPP
+        percentage = ((maxPP-minPP)/100)*percentage+minPP; // y=rc*x+b
+        timeLine.style.top = percentage +'%';
+    }else  if (min<=tT('12:45')){
+        let percentage = 100; //always 100% due to the break
+        const minPP = 30.5; // f(0) = minPP
+        const maxPP = 49; //f(100) = maxPP
+        percentage = ((maxPP-minPP)/100)*percentage+minPP; // y=rc*x+b
+        timeLine.style.top = percentage +'%';
+    }else if (min<=tT('14:15')){
+        const empty = tT('12:45');
+        const full = tT('14:15');
+        let percentage = (100*(min-empty))/(full-empty);
+        const minPP = 49; // f(0) = minPP
+        const maxPP = 69.7; //f(100) = maxPP
+        percentage = ((maxPP-minPP)/100)*percentage+minPP; // y=rc*x+b
+        timeLine.style.top = percentage +'%';
+    }else if (min<=tT('14:30')){
+        let percentage = 100;
+        const minPP = 49; // f(0) = minPP
+        const maxPP = 69.7; //f(100) = maxPP
+        percentage = ((maxPP-minPP)/100)*percentage+minPP; // y=rc*x+b
+        timeLine.style.top = percentage +'%';
+    }else if (min<=tT('16:45')){
+        const empty = tT('14:30');
+        const full = tT('16:45');
+        let percentage = (100*(min-empty))/(full-empty);
+        const minPP = 69.7; // f(0) = minPP
+        const maxPP = 100; //f(100) = maxPP
+        percentage = ((maxPP-minPP)/100)*percentage+minPP; // y=rc*x+b, rc=(b-a)
+        timeLine.style.top = percentage +'%';
+    }else if(min>=tT('16:45')){// 16:45 - 23:59
+        timeLine.style.top = '100%'
+        console.log('it be late')
+        timeBox = document.getElementById('timeBox');
+        timeBox.style.borderStyle = 'solid';
+    }
+}
+
+function tT(str){ // tT = translateTime
+    str = str.split(':'); // so end up array 12 : 23
+    str = parseInt(str[0])*60+parseInt(str[1]);
+    return str;
 }
 
 const keywordLinks = {
