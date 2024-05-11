@@ -145,7 +145,6 @@ const keywordLinks = {
     }
     // Add more keywords and links for silly guy
 };
-CalIDcookie();
 // here some code for the cookie
 // this works by checking if this specific cookie exist, if it don't make one, another bit of code for switching
 function CalIDcookie(){
@@ -162,6 +161,17 @@ function CalIDcookie(){
         console.log("we have found the cookie:" + getCookie("calendarsId"));
         fetchEventsAndUpdateTime(getCookie("calendarsId"));
         startendfree(getCookie("calendarsId"));
+    }
+};
+function CalIDcookie2(){
+    if(!(document.cookie.split(";").some((item) => item.trim().startsWith("friendcookie" + "=")))){
+        alert("you need to select a friend in the finder");
+        sleep(2000);
+        window.location.replace("https://allfoy.github.io/libcafe/home/");
+    }else{
+        console.log("we have found the cookie:" + getCookie("friendcookie"));
+        fetchEventsAndUpdateTime(getCookie("friendcookie"));
+        startendfree(getCookie("friendcookie"));
     }
 };
 function switchcookie(){
@@ -229,131 +239,150 @@ function fetchEventsAndUpdateTime(calid) {
             const eventContainer = document.getElementById('event-container');
             const upcomingEventContainer = document.getElementById('upcoming-event-container');
             const eventButton = document.getElementById('event-button');
-            
-            if(!currentEvent){
-                    // make src a variable and let default {be black}
-                    let imagesrc = "https://fakeimg.pl/200x100/cccccc/fff";
-                    // local due to the breaks being in such format
-                    const localTime = new Date().toLocaleTimeString('en-US', {hour12: false});
-                    const breaks = {
-                        "10:30": "10:50",
-                        "12:20": "12:45",
-                        "14:15": "14:30"
-                    };
-                    //put the conditions in an object literal for readability
-                    const conditions = {
-                        //is it weekend?
-                        weekend: new Date().getDay() === 6 || new Date().getDay() === 0,
-                        // is it break?
-                        isInBreak: Object.entries(breaks).some(([start, end]) => {return localTime >= start && localTime <= end;}),
-                        //isInFP: freePeriods.forEach(period => {console.log(period.block + period.startTime + period.endTime)})
-                    };
-                    // reorderment
-                    if(conditions.weekend){
-                        imagesrc = "weekend";//is it weekend
-                    }else{ if(conditions.isInBreak){
-                        imagesrc = "break";//is it break?
-                        }else if(imagesrc == "freeperiod"){
-                        imagesrc = "freeperiod";} // no event, no weekend and no break means no school (maybe add a free period check later)
-                        else{imagesrc = "schoolover";}}
-                        // actually set the source to the one deducted by last bit of code
-                        document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
-            }
-            if (currentEvent) {
-            //some code that be dem adaptiveicon
-            // there do be a current
-            // make src a variable and let default {be black}
+            //code for binary conditions
+            // first digit 0 declaration starts
+                // make src a variable and let default {be black}
                 let imagesrc = "https://fakeimg.pl/200x100/cccccc/fff";
-                imagesrc = "inschool";
-                document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
-            // the norma code now
-                const eventTitle = currentEvent.summary;
-                const eventStart = new Date(currentEvent.start.dateTime);
-                const eventEnd = new Date(currentEvent.end.dateTime);
-                const linkAndImage = getLinkAndImageForEvent(eventTitle);
-                document.getElementById('adaptivebi').src = linkAndImage.imageSrc;
-                eventButton.href = linkAndImage.link;
-                const classIcon = document.getElementById('classIcon')
-                classIcon.innerHTML = linkAndImage.picto;
-                // Display the current time in military format
+                // local due to the breaks being in such format
                 const currentTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-
-
-                // Display the current event and time in the container
-                eventContainer.innerHTML = `
-                    <h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${currentEvent.location})</p>
-                    <p>${eventStart.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} to ${eventEnd.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>
-                    <p>Time: ${currentTime}</p>
-                    `;
-
-                // Update the link and image for the event button based on the current event's title
-                
-            } else {
-                const currentTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-                eventContainer.innerHTML = `<p>No ongoing events.</p><p>Time: ${currentTime}</p>`;
-                eventButton.href = 'https://allfoy.github.io/libcafe/home/error1'; // Set a default link or disable the button if no ongoing event
-            }
-// here code for upcoming event and time remaining
-            if (upcomingEvent && currentEvent) {
-                const upcomingEventTitle = upcomingEvent.summary;
-                const upcomingEventStart = new Date(upcomingEvent.start.dateTime);
-                //console.log(currentEvent);
-                const CurrentEventEnd = new Date(currentEvent.end.dateTime);
-                const linkAndImage = getLinkAndImageForEvent(upcomingEventTitle);
-                // Calculate the time until this event ends
-                const timeUntilEndEvent = CurrentEventEnd - now;
-                const hoursUntilEndEvent = Math.floor(timeUntilEndEvent / (1000 * 60 * 60));
-                const minutesUntilEndEvent = Math.floor((timeUntilEndEvent % (1000 * 60 * 60)) / (1000 * 60));
-                const secondsUntilEndEvent = Math.ceil((timeUntilEndEvent % (1000 * 60))/(1000));
-                // Calculate the time until the upcoming event
-                const timeUntilNextEvent = upcomingEventStart - now;
-                const hoursUntilNextEvent = Math.floor(timeUntilNextEvent / (1000 * 60 * 60));
-                const minutesUntilNextEvent = Math.floor((timeUntilNextEvent % (1000 * 60 * 60)) / (1000 * 60));
-                const secondsUntilNextEvent = Math.ceil((timeUntilNextEvent % (1000 * 60)) / (1000));
-                // Display the upcoming event and countdown in the container
-                upcomingEventContainer.innerHTML = `
-                    <h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>
-                    <p>Time Until This Event Ends: ${hoursUntilEndEvent} h ${minutesUntilEndEvent} min ${secondsUntilEndEvent} s</p>
-                    <p>Time Until Next Event: ${hoursUntilNextEvent} h ${minutesUntilNextEvent} min ${secondsUntilNextEvent} s</p>
-                `;
-                if(hoursUntilEndEvent == hoursUntilNextEvent && minutesUntilEndEvent == minutesUntilNextEvent && secondsUntilEndEvent == secondsUntilNextEvent){
-                    upcomingEventContainer.innerHTML = `
-                    <h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>
-                    <p>Time Until Next Event (no break): ${hoursUntilNextEvent} h ${minutesUntilNextEvent} min ${secondsUntilNextEvent} s</p>
-                `;
-                }
-            }   else if(upcomingEvent && !currentEvent){
-                const upcomingEventTitle = upcomingEvent.summary;
-                const upcomingEventStart = new Date(upcomingEvent.start.dateTime);
-                const linkAndImage = getLinkAndImageForEvent(upcomingEventTitle);
-                // Calculate the time until the upcoming event
-                const timeUntilNextEvent = upcomingEventStart - now;
-                const hoursUntilNextEvent = Math.floor(timeUntilNextEvent / (1000 * 60 * 60));
-                const minutesUntilNextEvent = Math.floor((timeUntilNextEvent % (1000 * 60 * 60)) / (1000 * 60));
-                const secondsUntilNextEvent = Math.ceil((timeUntilNextEvent % (1000 * 60))/(1000));
-                // Display the upcoming event and countdown in the container
-                upcomingEventContainer.innerHTML = `
-                    <h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>
-                    <p>Time Until Next Event: ${hoursUntilNextEvent} h ${minutesUntilNextEvent} min ${secondsUntilNextEvent} s</p>
-                `;
-
-            } else {
-                upcomingEventContainer.innerHTML = '<p>No upcoming events.</p>';
+                const breaks = {
+                    "10:30": "10:50",
+                    "12:20": "12:45",
+                    "14:15": "14:30"
+                };
+                const conditions = {//put the conditions in an object literal for readability
+                    weekend: new Date().getDay() === 6 || new Date().getDay() === 0, //is it weekend?
+                    isInBreak: Object.entries(breaks).some(([start, end]) => {return currentTime >= start && currentTime <= end;}), // is it break?
+                };
+            // first digit 0 declaration ends
+            // first digit 1 declaration starts
+                let linkAndImage;
+            // first digit 1 declaration ends
+            // second digit any declaration starts
+                let timeUntilEndEvent;
+                let hoursUntilEndEvent;
+                let minutesUntilEndEvent;
+                let secondsUntilEndEvent;
+                let timeUntilNextEvent;
+                let hoursUntilNextEvent;
+                let minutesUntilNextEvent;
+                let secondsUntilNextEvent;
+            // second digit any declaration ends
+            let conditionkey = (currentEvent ? 2 : 0) + (upcomingEvent ? 1 : 0); // turn currentEvent and upcomingEvents existancy into a decimal representation of binary
+            switch (conditionkey) {
+                case 3://situation 11=3
+                    // first digit 1 code starts
+                        linkAndImage = getLinkAndImageForEvent(currentEvent.summary);
+                        imagesrc = "inschool";
+                        document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
+                        document.getElementById('adaptivebi').src = linkAndImage.imageSrc;
+                        eventButton.href = linkAndImage.link;
+                        document.getElementById('classIcon').innerHTML = linkAndImage.picto;
+                        // Display the current event and time in the container
+                        eventContainer.innerHTML = `
+                            <h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${currentEvent.location})</p>
+                            <p>${new Date(currentEvent.start.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} to ${new Date(currentEvent.end.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>
+                            <p>Time: ${currentTime}</p>
+                        `;
+                    // first digit 1 code ends
+                    // double digit 11 code starts
+                        linkAndImage = getLinkAndImageForEvent(upcomingEvent.summary);
+                        // Calculate the time until this event ends
+                        timeUntilEndEvent = new Date(currentEvent.end.dateTime) - now;
+                        hoursUntilEndEvent = Math.floor(timeUntilEndEvent / (1000 * 60 * 60));
+                        minutesUntilEndEvent = Math.floor((timeUntilEndEvent % (1000 * 60 * 60)) / (1000 * 60));
+                        secondsUntilEndEvent = Math.ceil((timeUntilEndEvent % (1000 * 60))/(1000));
+                        // Calculate the time until the upcoming event
+                        timeUntilNextEvent = new Date(upcomingEvent.start.dateTime) - now;
+                        hoursUntilNextEvent = Math.floor(timeUntilNextEvent / (1000 * 60 * 60));
+                        minutesUntilNextEvent = Math.floor((timeUntilNextEvent % (1000 * 60 * 60)) / (1000 * 60));
+                        secondsUntilNextEvent = Math.ceil((timeUntilNextEvent % (1000 * 60)) / (1000));
+                        // Display the upcoming event and countdown in the container
+                        upcomingEventContainer.innerHTML = `
+                            <h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>
+                            <p>Time Until This Event Ends: ${hoursUntilEndEvent} h ${minutesUntilEndEvent} min ${secondsUntilEndEvent} s</p>
+                            <p>Time Until Next Event: ${hoursUntilNextEvent} h ${minutesUntilNextEvent} min ${secondsUntilNextEvent} s</p>
+                        `;
+                        if(hoursUntilEndEvent == hoursUntilNextEvent && minutesUntilEndEvent == minutesUntilNextEvent && secondsUntilEndEvent == secondsUntilNextEvent){
+                            upcomingEventContainer.innerHTML = `
+                            <h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>
+                            <p>Time Until Next Event (no break): ${hoursUntilNextEvent} h ${minutesUntilNextEvent} min ${secondsUntilNextEvent} s</p>
+                        `;
+                        }
+                    // double digit 11 code ends
+                break;
+                case 1://situation 01=1
+                    // first digit 0 code starts
+                        // reorderment
+                        if(conditions.weekend){
+                            imagesrc = "weekend";//is it weekend
+                        }else{ if(conditions.isInBreak){
+                            imagesrc = "break";//is it break?
+                            }else if(imagesrc == "freeperiod"){
+                            imagesrc = "freeperiod";} // no event, no weekend and no break means no school (maybe add a free period check later)
+                            else{imagesrc = "schoolover";}}
+                            // actually set the source to the one deducted by last bit of code
+                            document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
+                        eventContainer.innerHTML = `<p>No ongoing events.</p><p>Time: ${currentTime}</p>`;
+                        eventButton.href = 'https://allfoy.github.io/libcafe/home/error1'; // Set a default link or disable the button if no ongoing event
+                    // first digit 0 code ends
+                    // double digit 01 code starts
+                        linkAndImage = getLinkAndImageForEvent(upcomingEvent.summary);
+                        // Calculate the time until the upcoming event
+                        timeUntilNextEvent = new Date(upcomingEvent.start.dateTime) - now;
+                        hoursUntilNextEvent = Math.floor(timeUntilNextEvent / (1000 * 60 * 60));
+                        minutesUntilNextEvent = Math.floor((timeUntilNextEvent % (1000 * 60 * 60)) / (1000 * 60));
+                        secondsUntilNextEvent = Math.ceil((timeUntilNextEvent % (1000 * 60))/(1000));
+                        // Display the upcoming event and countdown in the container
+                        upcomingEventContainer.innerHTML = `
+                            <h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>
+                            <p>Time Until Next Event: ${hoursUntilNextEvent} h ${minutesUntilNextEvent} min ${secondsUntilNextEvent} s</p>
+                        `;
+                    // double digit 01 code ends
+                break;
+                case 2://situation 10=2
+                    // first digit 1 code starts
+                        linkAndImage = getLinkAndImageForEvent(currentEvent.summary);
+                        imagesrc = "inschool";
+                        document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
+                        document.getElementById('adaptivebi').src = linkAndImage.imageSrc;
+                        eventButton.href = linkAndImage.link;
+                        document.getElementById('classIcon').innerHTML = linkAndImage.picto;
+                        // Display the current event and time in the container
+                        eventContainer.innerHTML = `
+                            <h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${currentEvent.location})</p>
+                            <p>${new Date(currentEvent.start.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} to ${new Date(currentEvent.end.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>
+                            <p>Time: ${currentTime}</p>
+                        `;
+                    // first digit 1 code ends
+                break;
+                default:// situation 00 = 0
+                    // first digit 0 code starts                    
+                        // reorderment
+                        if(conditions.weekend){
+                            imagesrc = "weekend";//is it weekend
+                        }else{ if(conditions.isInBreak){
+                            imagesrc = "break";//is it break?
+                            }else if(imagesrc == "freeperiod"){
+                            imagesrc = "freeperiod";} // no event, no weekend and no break means no school (maybe add a free period check later)
+                            else{imagesrc = "schoolover";}}
+                            // actually set the source to the one deducted by last bit of code
+                            document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
+                        eventContainer.innerHTML = `<p>No ongoing events.</p><p>Time: ${currentTime}</p>`;
+                        eventButton.href = 'https://allfoy.github.io/libcafe/home/error1'; // Set a default link or disable the button if no ongoing event
+                    // first digit 0 code ends
+                    //double digit 00 code starts
+                        upcomingEventContainer.innerHTML = '<p>No upcoming events.</p>';
+                    //double digit 00 code ends
+                break;
             }
         })
         .catch(error => {
             console.error('Error fetching events:', error);
         });
-        setTimeout(fetchEventsAndUpdateTime,1000,getCookie("calendarsId"))
+        setTimeout(fetchEventsAndUpdateTime,1000,calid)
 }
 
-// Initial fetch and time update
-fetchEventsAndUpdateTime(getCookie("calendarsId"));
-
-// Set up interval to update time every 1 second (adjust as needed)
-//document.addEventListener("DOMContentLoaded", (event) => {
-//    setInterval(fetchEventsAndUpdateTime(calendarId), 500);
-//});
 // here code for adaptive book
 // Function to get the link and image for the event based on its title
 function getLinkAndImageForEvent(title) {
@@ -558,25 +587,3 @@ function getTimeForBlock(block) {
     startFP.setHours(parseInt(hours), parseInt(minutes), 0, 0); // Set hours, minutes, seconds, and milliseconds
     return startFP;
 }
-
-//here function for adaptiveicon
-// for now it's directly in the code
-
-
-/*function changeCalID(){
-    var CalID = prompt("What is your calendarID?","allfoy");
-    var user = 'unknown2'
-    switch (CalID) {
-        case 'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
-        case 'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
-        case 'myrthe': CalID = '32ddu2ndrbe8jtp1olg6rko3f5cntog3'; user = 'Myrthe';break;
-		case 'troy'  : CalID = '3hvsosg4io5fdefbn66meln2un2hu33k'; user = 'Troy'  ;break;
-        default      : CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
-        // we gonna make it remember allat later
-    }
-    console.log(CalID)
-    document.getElementById('user').innerHTML = `${user}`;
-    fetchEventsAndUpdateTime(CalID);
-    startendfree(CalID);
-}*/
-
