@@ -25,7 +25,7 @@ const keywordLinks = {
         link: 'https://apps.noordhoff.nl/se/content/book/3c9f39f7-6a4b-4403-a898-508d1ddcf68f/ebooks/2afd6210-0fb1-4007-8d2a-b63ef7cad649',
         imageSrc: '../img/covers/BIO.jpeg',
         actualName: 'Biology',
-        picto : '🫀'
+        picto : '🌱'
     },
     'netl': {
         link: 'https://apps.noordhoff.nl/se/content/book/a904673b-f07d-480a-8201-57b56d94112b/ebooks/89f0e06c-3f93-403f-9804-04bad7a197de',
@@ -295,16 +295,15 @@ function fetchEventsAndUpdateTime(calid) {
                         minutesUntilNextEvent = Math.floor((timeUntilNextEvent % (1000 * 60 * 60)) / (1000 * 60));
                         secondsUntilNextEvent = Math.ceil((timeUntilNextEvent % (1000 * 60)) / (1000));
                         // Display the upcoming event and countdown in the container
-                        document.getElementById('upcoming-event-container').innerHTML = `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>`;
+                        if (!(document.getElementById('upcoming-event-container').innerHTML === `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>`)){
+                        document.getElementById('upcoming-event-container').innerHTML = `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>`
+                        }
                         document.getElementById('countdown-container').innerHTML = `
                             <p>Time Until This Event Ends: ${hoursUntilEndEvent} h ${minutesUntilEndEvent} min ${secondsUntilEndEvent} s</p>
                             <p>Time Until Next Event: ${hoursUntilNextEvent} h ${minutesUntilNextEvent} min ${secondsUntilNextEvent} s</p>
                         `
                         if(hoursUntilEndEvent == hoursUntilNextEvent && minutesUntilEndEvent == minutesUntilNextEvent && secondsUntilEndEvent == secondsUntilNextEvent){
-                            document.getElementById('upcoming-event-container').innerHTML = `
-                            <h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>
-                            <p>Time Until Next Event (no break): ${hoursUntilNextEvent} h ${minutesUntilNextEvent} min ${secondsUntilNextEvent} s</p>
-                        `;
+                            document.getElementById('countdown-container').innerHTML = `<p>Time Until Next Event (no break): ${hoursUntilNextEvent} h ${minutesUntilNextEvent} min ${secondsUntilNextEvent} s</p>`;
                         }
                     // double digit 11 code ends
                 break;
@@ -344,10 +343,10 @@ function fetchEventsAndUpdateTime(calid) {
                         document.getElementById('event-button').href = linkAndImage.link;
                         document.getElementById('classIcon').innerHTML = linkAndImage.picto;
                         // Display the current event and time in the container
-                        document.getElementById('event-container').innerHTML = `
-                            <h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${currentEvent.location})</p>
-                            <p>${new Date(currentEvent.start.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} to ${new Date(currentEvent.end.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>
-                        `;
+                        if(!(document.getElementById('upcoming-event-container').innerHTML === `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>`)){
+                            document.getElementById('upcoming-event-container').innerHTML = `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>`;
+                        }
+                        document.getElementById('countdown-container').innerHTML = `<p>${new Date(currentEvent.start.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} to ${new Date(currentEvent.end.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>`;
                     // first digit 1 code ends
                 break;
                 default:// situation 00 = 0
