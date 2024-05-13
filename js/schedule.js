@@ -38,12 +38,13 @@ function fetchEventsAndUpdateTime(CalID) {
     fetch(`https://www.googleapis.com/calendar/v3/calendars/${CalID}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${minday}T00:00:00Z&timeMax=${maxday}T23:59:59Z`)
         .then(response => response.json())
         .then(data => {
-			const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
-			const sortedEvents = events.sort((a, b) => {
+            const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
+            const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
+            const sortedEvents = filteredEvents.sort((a, b) => {
             const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
             const numB = parseInt(b.summary.match(/^\d+/)[0]);
-            return numA - numB; // Sort events based on the numbers in their titles
-        });
+                return numA - numB; // Sort events based on the numbers in their titles
+            });
         const eventsdiv = document.getElementById('events');
         for (i=0;i<5;i++) {
             arr = ['Monday','Tuesday','Wednesday','Thursday','Friday'];

@@ -277,10 +277,10 @@ function fetchEventsAndUpdateTime(calid) {
                         document.getElementById('event-button').href = linkAndImage.link;
                         document.getElementById('classIcon').innerHTML = linkAndImage.picto;
                         // Display the current event and time in the container
-                        document.getElementById('event-container').innerHTML = `
-                            <h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${currentEvent.location})</p>
-                            <p>${new Date(currentEvent.start.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} to ${new Date(currentEvent.end.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>
-                        `;
+                        if(!(document.getElementById('event-container').innerHTML === `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${currentEvent.location})</p>`)){
+                        document.getElementById('event-container').innerHTML = `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${currentEvent.location})</p>`;
+                        }
+                        document.getElementById('countdown-container').innerHTML = `<p>${new Date(currentEvent.start.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} to ${new Date(currentEvent.end.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>`;
                     // first digit 1 code ends
                     // double digit 11 code starts
                         linkAndImage = getLinkAndImageForEvent(upcomingEvent.summary);
@@ -317,7 +317,9 @@ function fetchEventsAndUpdateTime(calid) {
                             imagesrc = "freeperiod";} // no event, no weekend and no break means no school (maybe add a free period check later)
                             else{imagesrc = "schoolover";}}
                             document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
-                        document.getElementById('event-container').innerHTML = `<p>No ongoing events.</p>`;
+                            if(!(document.getElementById('event-container').innerHTML === `<p>No ongoing events.</p>`)){
+                                document.getElementById('event-container').innerHTML = `<p>No ongoing events.</p>`;
+                            }
                         document.getElementById('event-button').href = 'https://allfoy.github.io/libcafe/home/error1'; // Set a default link or disable the button if no ongoing event
                     // first digit 0 code ends
                     // double digit 01 code starts
@@ -343,11 +345,16 @@ function fetchEventsAndUpdateTime(calid) {
                         document.getElementById('event-button').href = linkAndImage.link;
                         document.getElementById('classIcon').innerHTML = linkAndImage.picto;
                         // Display the current event and time in the container
-                        if(!(document.getElementById('upcoming-event-container').innerHTML === `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>`)){
-                            document.getElementById('upcoming-event-container').innerHTML = `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>`;
+                        if(!(document.getElementById('event-container').innerHTML === `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>`)){
+                            document.getElementById('event-container').innerHTML = `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>`;
                         }
                         document.getElementById('countdown-container').innerHTML = `<p>${new Date(currentEvent.start.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} to ${new Date(currentEvent.end.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>`;
                     // first digit 1 code ends
+                    //double digit 10 code starts
+                        if(!(document.getElementById('upcoming-event-container').innerHTML === '<p>No upcoming events.</p>')){
+                        document.getElementById('upcoming-event-container').innerHTML = '<p>No upcoming events.</p>';
+                        }
+                    //double digit 10 code ends
                 break;
                 default:// situation 00 = 0
                     // first digit 0 code starts
@@ -357,13 +364,18 @@ function fetchEventsAndUpdateTime(calid) {
                             imagesrc = "break";//is it break?
                             }else if(imagesrc == "freeperiod"){
                             imagesrc = "freeperiod";} // no event, no weekend and no break means no school (maybe add a free period check later)
-                            else{imagesrc = "schoolover";}}
-                            document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
+                            else{imagesrc = "schoolover";}
+                        }
+                        document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
+                        if(!(document.getElementById('event-container').innerHTML === `<p>No ongoing events.</p>`)){
                         document.getElementById('event-container').innerHTML = `<p>No ongoing events.</p>`;
+                        }
                         document.getElementById('event-button').href = 'https://allfoy.github.io/libcafe/home/error1'; // Set a default link or disable the button if no ongoing event
                     // first digit 0 code ends
                     //double digit 00 code starts
+                        if(!(document.getElementById('upcoming-event-container').innerHTML === '<p>No upcoming events.</p>')){
                         document.getElementById('upcoming-event-container').innerHTML = '<p>No upcoming events.</p>';
+                        }
                     //double digit 00 code ends
                 break;
             }
