@@ -41,27 +41,37 @@ function fetchEventsAndUpdateTime(CalID) {
             const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
             const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
             const sortedEvents = filteredEvents.sort((a, b) => {
-            const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
-            const numB = parseInt(b.summary.match(/^\d+/)[0]);
+                const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
+                const numB = parseInt(b.summary.match(/^\d+/)[0]);
                 return numA - numB; // Sort events based on the numbers in their titles
             });
-        const eventsdiv = document.getElementById('events');
-        for (i=0;i<5;i++) {
-            arr = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
-            eventsdiv.innerHTML += `<p class="days column${i+1}">${arr[i]}</p>`;
-        }
-
-        sortedEvents.forEach(event => {
-            const startTime = new Date(event.start.dateTime).toLocaleTimeString().slice(0, -3);
-            const endTime = new Date(event.end.dateTime).toLocaleTimeString().slice(0, -3);
-            const day = new Date(event.start.dateTime).getDay();
-            const row = event.summary.match(/\d+/)[0];
-            const title = getLinkAndImageForEvent(event.summary);
-            eventsdiv.innerHTML += 
-            `<p class="time row${row}" title="${day}">${startTime} - ${endTime}</p>
-            <p class="event column${day} row${row}" title="${event.location}">${title.actualName}${title.picto}</p>`;
-        });
-		
+            const eventsdiv = document.getElementById('events');
+            for (i=0;i<5;i++) {
+                arr = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
+                eventsdiv.innerHTML += `<p class="days column${i+1}">${arr[i]}</p>`;
+            }
+            sortedEvents.forEach(event => {
+                const startTime = new Date(event.start.dateTime).toLocaleTimeString().slice(0, -3);
+                const endTime = new Date(event.end.dateTime).toLocaleTimeString().slice(0, -3);
+                const day = new Date(event.start.dateTime).getDay();
+                const row = event.summary.match(/\d+/)[0];
+                const title = getLinkAndImageForEvent(event.summary);
+                eventsdiv.innerHTML += 
+                `<p class="time row${row}" title="${row}">${startTime} - ${endTime}</p>
+                <p class="event column${day} row${row}" title="${event.location}">${title.actualName}${title.picto}</p>`;
+            });
+            let realDay = new Date().getDay(); // flag for which column
+            const blockStartTimes = ["00:00", "08:15", "09:00", "09:45", "10:50", "11:35", "12:45", "13:30", "14:30", "15:15", "16:00"]
+            for(i=0;i<blockStartTimes.length;i++){
+                let d = new Date().toLocaleTimeString();
+                d = d.slice(0,-3);
+                if(d>=blockStartTimes[i]&&d<blockStartTimes[i+1]){
+                    let nodeList = document.getElementsByClassName(`column${realDay} row${i}`);
+                    for (let i = 0; i < nodeList.length; i++) {
+                        nodeList[i].style.backgroundColor = "#7ae4ff";
+                    }
+                }
+            }
 		
 		
 		
