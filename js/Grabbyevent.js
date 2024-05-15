@@ -93,6 +93,11 @@ const keywordLinks = {
         actualName: 'Music',
         picto : '🎼'
     },
+    'kubv':{
+        ...noBook,
+        actualName: 'Sketchy',
+        picto : '✏️🕶️🕵️'
+    },
     'kua':{
         link: 'https://allfoy.github.io/libcafe/home/error2',
         imageSrc: '../img/covers/KUA.jpg',

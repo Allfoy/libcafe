@@ -253,6 +253,10 @@ const keywordLinks = {
         actualName: 'Music',
         picto : '🎼'
     },
+    'kubv':{
+        actualName: 'Sketchy',
+        picto : '✏️🕶️🕵️'
+    },
     'kua':{
         actualName: 'General Arts',
         picto : '🎨'

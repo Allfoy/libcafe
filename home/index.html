@@ -688,6 +688,7 @@
 			function confetti(){
 				const classIcon = document.getElementById('classIcon'); 
 				var text = classIcon.textContent;
+				/*switch(day) day go make text = string*/
 				if(text != '☕'){
 					jsConfetti.addConfetti({emojis:[text]})//.then(() => jsConfetti.clearCanvas());
 				}else{
@@ -702,7 +703,7 @@
 					for(let mutation of mutationsList) {
 						if (mutation.type === 'childList' || mutation.type === 'subtree') { //  condition: directchild OR child of nth child
 							// Content of the target node has changed, trigger confetti
-							confetti();
+							setTimeout(confetti, 36*1000);
 							break; // Exit loop after triggering confetti once
 						}
 					}
