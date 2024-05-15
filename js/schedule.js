@@ -218,7 +218,7 @@ const keywordLinks = {
         picto : '🧮'
     },
     'wisd': {
-        actualName: 'you’ve been π-d',//'Mathematics D',
+        actualName:'Mathematics D',
         picto : '🧮'
     },
     'me': {

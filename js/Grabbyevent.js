@@ -48,7 +48,7 @@ const keywordLinks = {
     'wisd': {
         link: 'https://apps.noordhoff.nl/se/content/book/4acdfa97-1845-4bf6-8320-10181b908e29/ebooks/a476fd26-1eeb-4c59-979c-16b971e37cc1',
         imageSrc: '../img/covers/MATHD.jpeg',
-        actualName: 'you’ve been π-d',//'Mathematics D',
+        actualName: 'Mathematics D',
         picto : '🧮'
     },
     'me': {
