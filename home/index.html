@@ -46,7 +46,7 @@
 			</ul>
 			<div class="dayimage" id="dayimage">
 				<div class="weekday" id="weekday">errorday</div>
-				<img class="icony" id="icony" src="https://fakeimg.pl/200x100/cccccc/000000"></img>
+				<img class="icony" id="icony" src="https://fakeimg.pl/200x100/cccccc/000000" width="200px"></img>
 				<img class="freeIcony" id="freeIcony" src="https://fakeimg.pl/200x100/cccccc/ff0000"></img>
 			</div>
 			<button class="classIcon" id="classIcon" onclick="confetti()">☕</button>
@@ -698,13 +698,18 @@
 			
 		</script>
 		<script>
-				// Callback function to execute when mutations are observed
+				let firstTime = true;
+				// Callback function to execute when mutations/changes are observed
 				const callback = function(mutationsList, observer) {
 					for(let mutation of mutationsList) {
 						if (mutation.type === 'childList' || mutation.type === 'subtree') { //  condition: directchild OR child of nth child
-							// Content of the target node has changed, trigger confetti
-							setTimeout(confetti, 36*1000);
-							break; // Exit loop after triggering confetti once
+							if (firstTime) {
+								firstTime = false;
+								break;
+							}else {
+								setTimeout(confetti, 36*1000);
+								break;// not exactly sure why it's exiting the loop but possibly so it doesn't spam confetti?
+							}
 						}
 					}
 				};
@@ -714,7 +719,6 @@
 
 				// Start observing the target node for configured mutations
 				observer.observe(document.getElementById('event-container'), { attributes: true, childList: true, subtree: true });
-
 		</script>
 		<script>CalIDcookie();</script>
 	</body>

@@ -256,6 +256,7 @@ function fetchEventsAndUpdateTime(calid) {
                 const conditions = {//put the conditions in an object literal for readability
                     weekend: new Date().getDay() === 6 || new Date().getDay() === 0, //is it weekend?
                     isInBreak: Object.entries(breaks).some(([start, end]) => {return currentTime >= start && currentTime <= end;}), // is it break?
+                    isBeforeSchool: tT(new Date().toLocaleTimeString().slice(0,-3)) <=tT('8:15')
                 };
             // first digit 0 declaration ends
             // first digit 1 declaration starts
@@ -316,11 +317,13 @@ function fetchEventsAndUpdateTime(calid) {
                     // first digit 0 code starts
                         if(conditions.weekend){
                             imagesrc = "weekend";//is it weekend
-                        }else{ if(conditions.isInBreak){
+                            }else if(conditions.isInBreak){
                             imagesrc = "break";//is it break?
                             }else if(imagesrc == "freeperiod"){
                             imagesrc = "freeperiod";} // no event, no weekend and no break means no school (maybe add a free period check later)
-                            else{imagesrc = "schoolover";}}
+                            else if(conditions.isBeforeSchool){
+                            imagesrc = "beforeschool";
+                            }else {imagesrc = "afterschool";}
                             document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
                             if(!(document.getElementById('event-container').innerHTML === `<p>No ongoing events.</p>`)){
                                 document.getElementById('event-container').innerHTML = `<p>No ongoing events.</p>`;
@@ -363,14 +366,15 @@ function fetchEventsAndUpdateTime(calid) {
                 break;
                 default:// situation 00 = 0
                     // first digit 0 code starts
-                        if(conditions.weekend){
-                            imagesrc = "weekend";//is it weekend
-                        }else{ if(conditions.isInBreak){
-                            imagesrc = "break";//is it break?
-                            }else if(imagesrc == "freeperiod"){
-                            imagesrc = "freeperiod";} // no event, no weekend and no break means no school (maybe add a free period check later)
-                            else{imagesrc = "schoolover";}
-                        }
+                    if(conditions.weekend){
+                        imagesrc = "weekend";//is it weekend
+                        }else if(conditions.isInBreak){
+                        imagesrc = "break";//is it break?
+                        }else if(imagesrc == "freeperiod"){
+                        imagesrc = "freeperiod";} // no event, no weekend and no break means no school (maybe add a free period check later)
+                        else if(conditions.isBeforeSchool){
+                        imagesrc = "beforeschool";
+                        }else {imagesrc = "afterschool";}
                         document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
                         if(!(document.getElementById('event-container').innerHTML === `<p>No ongoing events.</p>`)){
                         document.getElementById('event-container').innerHTML = `<p>No ongoing events.</p>`;
@@ -593,4 +597,10 @@ function getTimeForBlock(block) {
     const startFP = new Date();
     startFP.setHours(parseInt(hours), parseInt(minutes), 0, 0); // Set hours, minutes, seconds, and milliseconds
     return startFP;
+}
+
+function tT(str){ // tT = translateTime
+    str = str.split(':'); // so end up array 12 : 23
+    str = parseInt(str[0])*60+parseInt(str[1]);
+    return str;
 }
