@@ -557,7 +557,7 @@ function findFreePeriods(events, firstEvent, finalEvent) {
 function displayFreePeriods(freePeriods) {
     const eventsContainer = document.getElementById('events-container');
     eventsContainer.innerHTML += '<h2>Free Periods</h2>';
-
+    let flag = true;
     if (freePeriods.length === 0) {
         eventsContainer.innerHTML += '<p>No free periods found.</p>';
     } else {
@@ -566,25 +566,22 @@ function displayFreePeriods(freePeriods) {
         freePeriods.forEach(period => {
             var d = new Date();
             // currently manual but you could go function
-            var timeFormatted = [d.getHours(),d.getMinutes()]
-            timeFormatted[0] = (parseInt(timeFormatted[0]))*60;
-            var timeFormatted = timeFormatted[0]+timeFormatted[1];
-            var timeStart = period.startTime.split(":");
-            timeStart[0] = (parseInt(timeStart[0]))*60;
-            var timeEnd = period.endTime.split(":");
-            timeEnd[0] = (parseInt(timeEnd[0]))*60;
-            var timestarts = timeStart[0]+parseInt(timeStart[1]);
-            var timeEnds = timeEnd[0]+parseInt(timeEnd[1]); 
-            
+            var timeFormatted = tT(d.getHours()+':'+d.getMinutes())
+            var timeStart = tT(period.startTime);
+            var timeEnd = tT(period.endTime); 
+            //console.log(timeStart, timeFormatted, timeEnd)
             eventsContainer.innerHTML += `<p><strong>Block ${period.block}:</strong> ${period.startTime} to ${period.endTime}</p>`;
             // check if rn is between the free periods
-            if (timestarts < timeFormatted && timeFormatted < timeEnds){
-                document.getElementById('freeIcony').style.display = 'flex';
-                console.log("it do be freeperiod");
-                document.getElementById('freeIcony').src = "../img/icony/" + "freeperiod" + ".jpg";
-            } else {
-                document.getElementById('freeIcony').style.display = 'none';
-                console.log("it don't be freeperiod");
+            if(flag){
+                if (timeStart < timeFormatted && timeFormatted < timeEnd){
+                    document.getElementById('freeIcony').style.display = 'flex';
+                    //console.log("it do be freeperiod");
+                    flag = false;
+                    document.getElementById('freeIcony').src = "../img/icony/" + "freeperiod" + ".jpg";
+                } else {
+                    document.getElementById('freeIcony').style.display = 'none';
+                    //console.log("it don't be freeperiod");
+                }
             }
         });
         }
