@@ -12,8 +12,9 @@ function CalIDcookie(){
         startendfree(getCookie("calendarsId"));
     }else{
         console.log("we have found the cookie:" + getCookie("calendarsId"));
+        document.getElementById('events').innerHTML = ``;
         fetchEventsAndUpdateTime(getCookie("calendarsId"));
-        showTime()
+        showTime();
     }
         //'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
         //'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
@@ -85,6 +86,7 @@ function CalIDcookie2(){
         prompt("you need to select a friend");
     }else{
         console.log("we have found the cookie:" + getCookie("friendcookie"));
+        document.getElementById('events').innerHTML = ``;
         fetchEventsAndUpdateTime(getCookie("friendcookie"));
         showTime();
         const friendName = getName()
