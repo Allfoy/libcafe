@@ -243,7 +243,7 @@ function fetchEventsAndUpdateTime(calid) {
             //code for binary conditions
             // first digit 0 declaration starts
                 // make src a variable and let default {be black}
-                let imagesrc = "https://fakeimg.pl/200x100/cccccc/fff";
+                let imagesrc = "error";
                 // local due to the breaks being in such format
                 const currentTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
                 //code for the time since it's shown in all 4 cases
@@ -256,7 +256,8 @@ function fetchEventsAndUpdateTime(calid) {
                 const conditions = {//put the conditions in an object literal for readability
                     weekend: new Date().getDay() === 6 || new Date().getDay() === 0, //is it weekend?
                     isInBreak: Object.entries(breaks).some(([start, end]) => {return currentTime >= start && currentTime <= end;}), // is it break?
-                    isBeforeSchool: tT(new Date().toLocaleTimeString().slice(0,-3)) <=tT('8:15')
+                    isBeforeSchool: tT(new Date().toLocaleTimeString()) <= tT(new Date(filteredEvents[0].start.dateTime).toLocaleTimeString()),
+                    isAfterSchool: tT(new Date().toLocaleTimeString()) >= tT(new Date(filteredEvents[filteredEvents.length-1].end.dateTime).toLocaleTimeString()),
                 };
             // first digit 0 declaration ends
             // first digit 1 declaration starts
@@ -319,11 +320,9 @@ function fetchEventsAndUpdateTime(calid) {
                             imagesrc = "weekend";//is it weekend
                             }else if(conditions.isInBreak){
                             imagesrc = "break";//is it break?
-                            }else if(imagesrc == "freeperiod"){
-                            imagesrc = "freeperiod";} // no event, no weekend and no break means no school (maybe add a free period check later)
-                            else if(conditions.isBeforeSchool){
+                            }else if(conditions.isBeforeSchool){
                             imagesrc = "beforeschool";
-                            }else {imagesrc = "afterschool";}
+                            }else if(conditions.isAfterSchool){imagesrc = "afterschool";}
                             document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
                             if(!(document.getElementById('event-container').innerHTML === `<p>No ongoing events.</p>`)){
                                 document.getElementById('event-container').innerHTML = `<p>No ongoing events.</p>`;
@@ -370,11 +369,9 @@ function fetchEventsAndUpdateTime(calid) {
                         imagesrc = "weekend";//is it weekend
                         }else if(conditions.isInBreak){
                         imagesrc = "break";//is it break?
-                        }else if(imagesrc == "freeperiod"){
-                        imagesrc = "freeperiod";} // no event, no weekend and no break means no school (maybe add a free period check later)
-                        else if(conditions.isBeforeSchool){
+                        }else if(conditions.isBeforeSchool){
                         imagesrc = "beforeschool";
-                        }else {imagesrc = "afterschool";}
+                        }else if(conditions.isAfterSchool){imagesrc = "afterschool";}
                         document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
                         if(!(document.getElementById('event-container').innerHTML === `<p>No ongoing events.</p>`)){
                         document.getElementById('event-container').innerHTML = `<p>No ongoing events.</p>`;

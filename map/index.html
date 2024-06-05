@@ -164,6 +164,11 @@ function fetchEventsAndUpdateTime(CalID) {
         .then(data => {
 			const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
             const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
+            const sortedEvents = filteredEvents.sort((a, b) => {
+                const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
+                const numB = parseInt(b.summary.match(/^\d+/)[0]);
+                return numA - numB; // Sort events based on the numbers in their titles
+            });
             const now = slider;
             let currentEvent = null;
             let upcomingEvent = null;
@@ -180,7 +185,13 @@ function fetchEventsAndUpdateTime(CalID) {
                     
                 }
             }
-            if (!currentEvent){id = getid(CalID);console.info(`${hours}:${minutes} (${id.name}) : no current lesson`);move(id.id,getlocation("p000"))}
+            if (!currentEvent){
+                id = getid(CalID);
+                console.info(`${hours}:${minutes} (${id.name}) : no current lesson`);
+                let locationFree = (now<=tT(new Date(filteredEvents[0].start.dateTime).toLocaleTimeString())||now>=tT(new Date(filteredEvents[filteredEvents.length-1].end.dateTime).toLocaleTimeString()))?"p000":"p111";
+                console.log(locationFree)
+                move(id.id,getlocation(locationFree))
+            }
         }).catch(error => {
             console.error('Error fetching events:', error);
         });
@@ -235,9 +246,17 @@ function getid(CalID){
     return {id, name}
 };
 
+function tT(str){ // tT = translateTime
+    str = str.split(':'); // so end up array 12 : 23
+    str = parseInt(str[0])*60+parseInt(str[1]);
+    return str;
+}
+
 //locations 
 const pcoords = {
     "000":{x:1246, y:189},
+    "111":{x:722, y:1380},
+    "404":{x:0,y:0},
     "102":{x:804, y:923},
     "104":{x:1032, y:930},
     "106":{x:999, y:1004},
