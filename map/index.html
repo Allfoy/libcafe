@@ -170,6 +170,7 @@ function fetchEventsAndUpdateTime(CalID) {
                 return numA - numB; // Sort events based on the numbers in their titles
             });
             const now = slider;
+            let nowDate = new Date(now);
             let currentEvent = null;
             let upcomingEvent = null;
 			for (const event of filteredEvents) {
@@ -188,8 +189,8 @@ function fetchEventsAndUpdateTime(CalID) {
             if (!currentEvent){
                 id = getid(CalID);
                 console.info(`${hours}:${minutes} (${id.name}) : no current lesson`);
-                let locationFree = (now<=tT(new Date(filteredEvents[0].start.dateTime).toLocaleTimeString())||now>=tT(new Date(filteredEvents[filteredEvents.length-1].end.dateTime).toLocaleTimeString()))?"p000":"p111";
-                console.log(locationFree)
+                let locationFree = (now.toLocaleTimeString()<= new Date(filteredEvents[0].start.dateTime).toLocaleTimeString()||now.toLocaleTimeString()>=new Date(filteredEvents[filteredEvents.length-1].end.dateTime).toLocaleTimeString())?"p000":"p111";
+                //console.log(now.toLocaleTimeString(), new Date(filteredEvents[0].start.dateTime).toLocaleTimeString(),new Date(filteredEvents[filteredEvents.length-1].end.dateTime).toLocaleTimeString())
                 move(id.id,getlocation(locationFree))
             }
         }).catch(error => {

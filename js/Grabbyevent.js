@@ -256,8 +256,8 @@ function fetchEventsAndUpdateTime(calid) {
                 const conditions = {//put the conditions in an object literal for readability
                     weekend: new Date().getDay() === 6 || new Date().getDay() === 0, //is it weekend?
                     isInBreak: Object.entries(breaks).some(([start, end]) => {return currentTime >= start && currentTime <= end;}), // is it break?
-                    isBeforeSchool: tT(new Date().toLocaleTimeString()) <= tT(new Date(filteredEvents[0].start.dateTime).toLocaleTimeString()),
-                    isAfterSchool: tT(new Date().toLocaleTimeString()) >= tT(new Date(filteredEvents[filteredEvents.length-1].end.dateTime).toLocaleTimeString()),
+                    isBeforeSchool: new Date().toLocaleTimeString() <= new Date(filteredEvents[0].start.dateTime).toLocaleTimeString(),
+                    isAfterSchool: new Date().toLocaleTimeString() >= new Date(filteredEvents[filteredEvents.length-1].end.dateTime).toLocaleTimeString(),
                 };
             // first digit 0 declaration ends
             // first digit 1 declaration starts
