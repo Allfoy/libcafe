@@ -188,8 +188,14 @@ function fetchEventsAndUpdateTime(CalID) {
             }
             if (!currentEvent){
                 id = getid(CalID);
-                console.info(`${hours}:${minutes} (${id.name}) : no current lesson`);
-                let locationFree = (now.toLocaleTimeString()<= new Date(filteredEvents[0].start.dateTime).toLocaleTimeString()||now.toLocaleTimeString()>=new Date(filteredEvents[filteredEvents.length-1].end.dateTime).toLocaleTimeString())?"p000":"p111";
+                let locationFree = "p404";
+                if(now.toLocaleTimeString()<= new Date(filteredEvents[0].start.dateTime).toLocaleTimeString()||now.toLocaleTimeString()>=new Date(filteredEvents[filteredEvents.length-1].end.dateTime).toLocaleTimeString()){
+                    console.info(`${hours}:${minutes} (${id.name}) : outside school`);
+                    locationFree = "p000";
+                }else{
+                    console.info(`${hours}:${minutes} (${id.name}) : within school`);
+                    locationFree = id.place;
+                }
                 //console.log(now.toLocaleTimeString(), new Date(filteredEvents[0].start.dateTime).toLocaleTimeString(),new Date(filteredEvents[filteredEvents.length-1].end.dateTime).toLocaleTimeString())
                 move(id.id,getlocation(locationFree))
             }
@@ -212,31 +218,34 @@ function move(id,location){
 function getid(CalID){
     var id;
     var name;
+    var place;
     switch (CalID) {
                     case "kvme0ikmjq4825g8ee860tm058clorcg":
-                        //move allfoy pfp element
                         id = "a";
                         name = "Allfoy";
+                        place = "p001";
                     break;
                     case "0pspeo6e4k6e329k4h56mkam0k9t6gnq":
                         //move casper pfp element
                         id = "c";
                         name = "Casper";
+                        place = "p002";
                     break;
                     case "i32q28ad785oqs2dom81460a186j6uvr":
                         //move kevin pfp element
                         id = "k";
                         name = "Kevin";
+                        place = "p001";
                     break;
                     case "3hvsosg4io5fdefbn66meln2un2hu33k":
-                        //move troy pfp element
                         id = "t";
                         name = "Troy";
+                        place = "p002";
                     break;
                     case "32ddu2ndrbe8jtp1olg6rko3f5cntog3":
-                        //move myrthe pfp element
                         id = "m";
                         name = "Myrthe";
+                        place = "p003";
                     break;
                     // case "?????":
                     //     //move myrthe pfp element
@@ -244,7 +253,7 @@ function getid(CalID){
                     //     name = "???";
                     // break;
                 }
-    return {id, name}
+    return {id, name, place}
 };
 
 function tT(str){ // tT = translateTime
@@ -256,7 +265,9 @@ function tT(str){ // tT = translateTime
 //locations 
 const pcoords = {
     "000":{x:1246, y:189},
-    "111":{x:722, y:1380},
+    "001":{x:848, y:1743},
+    "002":{x:979, y:124},
+    "003":{x:884, y:95},
     "404":{x:0,y:0},
     "102":{x:804, y:923},
     "104":{x:1032, y:930},

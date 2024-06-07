@@ -292,16 +292,18 @@ function fetchEventsAndUpdateTime(calid) {
                     // double digit 11 code starts
                         linkAndImage = getLinkAndImageForEvent(upcomingEvent.summary);
                         // Calculate the time until this event ends
+                        msInHour = 60 * 60 * 1000;
+                        msInMinute = 60 * 1000;
+                        msInSecond = 1000;
                         timeUntilEndEvent = new Date(currentEvent.end.dateTime) - now;
-                        hoursUntilEndEvent = Math.floor(timeUntilEndEvent / (1000 * 60 * 60));
-                        minutesUntilEndEvent = Math.floor((timeUntilEndEvent % (1000 * 60 * 60)) / (1000 * 60));
-                        secondsUntilEndEvent = Math.ceil((timeUntilEndEvent % (1000 * 60))/(1000));
+                        hoursUntilEndEvent = Math.floor(timeUntilEndEvent / msInHour);
+                        minutesUntilEndEvent = Math.floor((timeUntilEndEvent % msInHour) / msInMinute);
+                        secondsUntilEndEvent = Math.ceil((timeUntilEndEvent % msInMinute) / msInSecond);
                         // Calculate the time until the upcoming event
                         timeUntilNextEvent = new Date(upcomingEvent.start.dateTime) - now;
-                        hoursUntilNextEvent = Math.floor(timeUntilNextEvent / (1000 * 60 * 60));
-                        minutesUntilNextEvent = Math.floor((timeUntilNextEvent % (1000 * 60 * 60)) / (1000 * 60));
-                        secondsUntilNextEvent = Math.ceil((timeUntilNextEvent % (1000 * 60)) / (1000));
-                        // Display the upcoming event and countdown in the container
+                        hoursUntilNextEvent = Math.floor(timeUntilNextEvent / msInHour);
+                        minutesUntilNextEvent = Math.floor((timeUntilNextEvent % msInHour) / msInMinute);
+                        secondsUntilNextEvent = Math.ceil((timeUntilNextEvent % msInMinute) / msInSecond);              // Display the upcoming event and countdown in the container
                         if (!(document.getElementById('upcoming-event-container').innerHTML === `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>`)){
                         document.getElementById('upcoming-event-container').innerHTML = `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>`
                         }
@@ -332,10 +334,13 @@ function fetchEventsAndUpdateTime(calid) {
                     // double digit 01 code starts
                         linkAndImage = getLinkAndImageForEvent(upcomingEvent.summary);
                         // Calculate the time until the upcoming event
+                        msInHour = 60 * 60 * 1000;
+                        msInMinute = 60 * 1000;
+                        msInSecond = 1000;
                         timeUntilNextEvent = new Date(upcomingEvent.start.dateTime) - now;
-                        hoursUntilNextEvent = Math.floor(timeUntilNextEvent / (1000 * 60 * 60));
-                        minutesUntilNextEvent = Math.floor((timeUntilNextEvent % (1000 * 60 * 60)) / (1000 * 60));
-                        secondsUntilNextEvent = Math.ceil((timeUntilNextEvent % (1000 * 60))/(1000));
+                        hoursUntilNextEvent = Math.floor(timeUntilNextEvent / msInHour);
+                        minutesUntilNextEvent = Math.floor((timeUntilNextEvent % msInHour) / msInMinute);
+                        secondsUntilNextEvent = Math.ceil((timeUntilNextEvent % msInMinute) / msInSecond);
                         // Display the upcoming event and countdown in the container
                         if(!(document.getElementById('upcoming-event-container').innerHTML === `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>`)){
                             document.getElementById('upcoming-event-container').innerHTML = `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>`;
