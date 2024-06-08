@@ -189,7 +189,9 @@ function fetchEventsAndUpdateTime(CalID) {
             if (!currentEvent){
                 id = getid(CalID);
                 let locationFree = "p404";
-                if(now.toLocaleTimeString()<= new Date(filteredEvents[0].start.dateTime).toLocaleTimeString()||now.toLocaleTimeString()>=new Date(filteredEvents[filteredEvents.length-1].end.dateTime).toLocaleTimeString()){
+                const startest = filteredEvents[0]?.start.dateTime ? new Date(filteredEvents[0].start.dateTime).toLocaleTimeString():'00:00:00'; //checks for weekend case
+                const endest = filteredEvents[filteredEvents.length-1]?.end.dateTime ? new Date(filteredEvents[filteredEvents.length-1].end.dateTime).toLocaleTimeString():'00:00:00'; //checks for weekend case
+                if(now.toLocaleTimeString()<= startest||now.toLocaleTimeString()>=endest){
                     console.info(`${hours}:${minutes} (${id.name}) : outside school`);
                     locationFree = "p000";
                 }else{
@@ -265,9 +267,9 @@ function tT(str){ // tT = translateTime
 //locations 
 const pcoords = {
     "000":{x:1246, y:189},
-    "001":{x:848, y:1743},
-    "002":{x:979, y:124},
-    "003":{x:884, y:95},
+    "001":{x:848, y:1743}, //p2 north traintable
+    "002":{x:979, y:124}, //p0 east table
+    "003":{x:884, y:95}, //p0 north table
     "404":{x:0,y:0},
     "102":{x:804, y:923},
     "104":{x:1032, y:930},
