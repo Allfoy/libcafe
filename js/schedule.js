@@ -225,7 +225,7 @@ const keywordLinks = {
     },
     'me': {
         actualName: 'Mentorles',
-        picto : ''
+        picto : '🔰'
     },
     'maat': {
         actualName: 'Social studies',
@@ -296,6 +296,12 @@ const keywordLinks = {
     },'delf':{
         actualName:'French crazy mode',
         picto : '🥐'
+    },'PWS':{
+        actualName:'PWS',
+        picto: '📑'
+    },'workshop':{
+        actualName:'Workshop',
+        picto:'🛠️'
     }
     // Add more keywords and links for silly guy
 };
@@ -304,14 +310,26 @@ function getLinkAndImageForEvent(title) {
     // Check if any keyword in the title matches, and return the corresponding link and image source
     for (const keyword in keywordLinks) {
         if (title.includes(keyword)) {
-            return {
-                actualName: keywordLinks[keyword].actualName,
-                picto: keywordLinks[keyword].picto
-            };
+            if(!(keywordLinks[keyword].actualName.includes('Workshop'))){
+                return {
+                    link: keywordLinks[keyword].link,
+                    imageSrc: keywordLinks[keyword].imageSrc,
+                    actualName: keywordLinks[keyword].actualName,
+                    picto: keywordLinks[keyword].picto
+                };
+            }else{
+                return {
+                    link: keywordLinks[keyword].link,
+                    imageSrc: keywordLinks[keyword].imageSrc,
+                    actualName: keywordLinks[keyword].actualName + ' ' + title.slice(11,12),
+                    picto: keywordLinks[keyword].picto
+                };
+            }
         }
     }
     // Return a default link and image source if no match is found
     return {
+        ...noBook,
         actualName: title,
         picto:''
     };

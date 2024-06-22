@@ -54,7 +54,7 @@ const keywordLinks = {
     'me': {
         ...noBook,
         actualName: 'Mentorles',
-        picto : ''
+        picto : '🔰'
     },
     'maat': {
         link: 'https://allfoy.github.io/libcafe/home/error2',
@@ -147,6 +147,14 @@ const keywordLinks = {
         ...noBook,
         actualName:'French crazy mode',
         picto : '🥐'
+    },'PWS':{
+        ...noBook,
+        actualName:'PWS',
+        picto: '📑'
+    },'workshop':{
+        ...noBook,
+        actualName:'Workshop',
+        picto:'🛠️'
     }
     // Add more keywords and links for silly guy
 };
@@ -219,9 +227,9 @@ function fetchEventsAndUpdateTime(calid) {
     fetch(`https://www.googleapis.com/calendar/v3/calendars/${calid}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${today}T00:00:00Z&timeMax=${tomorrowFormatted}T23:59:59Z`)
         .then(response => response.json())
         .then(data => {
-/*testweek*/const events = data.items// noted due to testweek .filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
-            var filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
-/*testweek*/filteredEvents = filteredEvents.filter(function(event){return (!event.summary.includes("Toetsweek"))});     
+            const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
+            var filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});    
+//second filter for test filteredEvents = filteredEvents.filter(function(event){return (!event.summary.includes("filterthisstring"))});     
             const now = new Date();
             let currentEvent = null;
             let upcomingEvent = null;
@@ -404,12 +412,21 @@ function getLinkAndImageForEvent(title) {
     // Check if any keyword in the title matches, and return the corresponding link and image source
     for (const keyword in keywordLinks) {
         if (title.includes(keyword)) {
-            return {
-                link: keywordLinks[keyword].link,
-                imageSrc: keywordLinks[keyword].imageSrc,
-                actualName: keywordLinks[keyword].actualName,
-                picto: keywordLinks[keyword].picto
-            };
+            if(!(keywordLinks[keyword].actualName.includes('Workshop'))){
+                return {
+                    link: keywordLinks[keyword].link,
+                    imageSrc: keywordLinks[keyword].imageSrc,
+                    actualName: keywordLinks[keyword].actualName,
+                    picto: keywordLinks[keyword].picto
+                };
+            }else{
+                return {
+                    link: keywordLinks[keyword].link,
+                    imageSrc: keywordLinks[keyword].imageSrc,
+                    actualName: keywordLinks[keyword].actualName + ' ' + title.slice(11,12),
+                    picto: keywordLinks[keyword].picto
+                };
+            }
         }
     }
     // Return a default link and image source if no match is found
