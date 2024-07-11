@@ -262,11 +262,13 @@ function fetchEventsAndUpdateTime(calid) {
                     "12:20": "12:45",
                     "14:15": "14:30"
                 };
+                let schoolStart =  filteredEvents[0]?.start.dateTime == !undefined ? filteredEvents[0]?.start.dateTime : '0' ;
+                let schoolEnd = filteredEvents[filteredEvents.length-1]?.end.dateTime == !undefined ? filteredEvents[filteredEvents.length-1]?.end.dateTime : '01/01/1970 23:59:59' ;
                 const conditions = {//put the conditions in an object literal for readability
                     weekend: new Date().getDay() === 6 || new Date().getDay() === 0, //is it weekend?
                     isInBreak: Object.entries(breaks).some(([start, end]) => {return currentTime >= start && currentTime <= end;}), // is it break?
-                    isBeforeSchool: new Date().toLocaleTimeString() <= new Date(filteredEvents[0].start.dateTime).toLocaleTimeString(),
-                    isAfterSchool: new Date().toLocaleTimeString() >= new Date(filteredEvents[filteredEvents.length-1].end.dateTime).toLocaleTimeString(),
+                    isBeforeSchool: new Date().toLocaleTimeString() <= new Date(schoolStart).toLocaleTimeString(),
+                    isAfterSchool: new Date().toLocaleTimeString() >= new Date(schoolEnd).toLocaleTimeString(),
                 };
             // first digit 0 declaration ends
             // first digit 1 declaration starts
@@ -385,7 +387,9 @@ function fetchEventsAndUpdateTime(calid) {
                         imagesrc = "break";//is it break?
                         }else if(conditions.isBeforeSchool){
                         imagesrc = "beforeschool";
-                        }else if(conditions.isAfterSchool){imagesrc = "afterschool";}
+                        }else if(conditions.isAfterSchool){
+                            imagesrc = "afterschool";
+                        }else{imagesrc = "free"}
                         document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
                         if(!(document.getElementById('event-container').innerHTML === `<p>No ongoing events.</p>`)){
                         document.getElementById('event-container').innerHTML = `<p>No ongoing events.</p>`;
