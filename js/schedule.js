@@ -189,7 +189,7 @@ function tT(str){ // tT = translateTime
     str = parseInt(str[0])*60+parseInt(str[1]);
     return str;
 }
-
+const noBook = {link: 'https://allfoy.github.io/libcafe/home/error2', imageSrc: '../img/bg.jpg'};
 const keywordLinks = {
     'entl': {
         actualName: 'English',

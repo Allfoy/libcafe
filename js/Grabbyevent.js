@@ -1,4 +1,3 @@
-//const apiKey = 'AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ';
 //let calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg';
 // object literal with keywords and their respective links
 const noBook = {link: 'https://allfoy.github.io/libcafe/home/error2', imageSrc: '../img/bg.jpg'};
@@ -10,19 +9,19 @@ const keywordLinks = {
         picto : '🍵'
     },
     'nat': {
-        link: 'https://e-book.boomdigitaal.nl/boek/9789464420180?layoutmode-double=1/sso',
+        link: 'https://e-book.boomdigitaal.nl/boek/9789464420890?q=polaris%206#iss=https%3A%2F%2Faccount.boom.nl%2Fauth%2Frealms%2Fboom',
         imageSrc: '../img/covers/physics.jpg',
         actualName: 'Physics',
         picto : '🍎'
     },
     'schk': {
-        link: 'https://apps.noordhoff.nl/se/content/book/3d237f12-c196-4650-839c-bea7f798792e/ebooks/3847b67a-6f0b-4d10-9f5e-d485d7496fda',
+        link: 'https://apps.noordhoff.nl/se/content/theme/31072a13-c01d-4253-9a3f-1a3689d579ab/ebook/667b14f9-7f50-4860-899a-ee03ed8bc19f?page=52',
         imageSrc: '../img/covers/CHEM.jpeg',
         actualName: 'Chemistry',
         picto : '🧪'
     },
     'biol': {
-        link: 'https://apps.noordhoff.nl/se/content/book/3c9f39f7-6a4b-4403-a898-508d1ddcf68f/ebooks/2afd6210-0fb1-4007-8d2a-b63ef7cad649',
+        link: 'https://apps.noordhoff.nl/se/content/book/fb400e62-28bf-46db-b196-0a0549d7ed83/ebook/b0a8dc8b-f367-4775-bd07-25670a4edb44?page=0',
         imageSrc: '../img/covers/BIO.jpeg',
         actualName: 'Biology',
         picto : '🌱'
@@ -528,7 +527,7 @@ function displayTomorrowEvents(calid2) {
 }
 
 // Function to display events on the HTML page
-function displayEvents(firstEvent, finalEvent) {
+async function displayEvents(firstEvent, finalEvent) {
     const eventsContainer = document.getElementById('events-container');
     
     // Format start time of first event
@@ -540,11 +539,12 @@ function displayEvents(firstEvent, finalEvent) {
     const formattedEndTime = endTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
     const firstInfo = getLinkAndImageForEvent(firstEvent.summary);
     const finalInfo = getLinkAndImageForEvent(finalEvent.summary);
-
+    const startAdvised = await AdvisedEquipment(formattedStartTime)
+    const endAdvised = await AdvisedEquipment(formattedEndTime)
     eventsContainer.innerHTML = `
         <h2>Today's Events</h2>
-        <p><strong>First Event:</strong> ${firstInfo.actualName}${firstInfo.picto}, <strong>Start Time:</strong> ${formattedStartTime}</p>
-        <p><strong>Final Event:</strong> ${finalInfo.actualName}${finalInfo.picto}, <strong>End Time:</strong> ${formattedEndTime}</p>
+        <p><strong>First Event:</strong> ${firstInfo.actualName}${firstInfo.picto}, <strong>Start Time:</strong> ${formattedStartTime}, use ${startAdvised}</p>
+        <p><strong>Final Event:</strong> ${finalInfo.actualName}${finalInfo.picto}, <strong>End Time:</strong> ${formattedEndTime}, use ${endAdvised}</p>
     `;
 }
 
@@ -624,4 +624,67 @@ function tT(str){ // tT = translateTime
     str = str.split(':'); // so end up array 12 : 23
     str = parseInt(str[0])*60+parseInt(str[1]);
     return str;
-}
+};
+
+async function AdvisedEquipment(time) {
+    const [hours, minutes] = time.split(':').map(Number); // so 14:43 to 14 and 43
+    const decimalHours = hours + minutes * 0.01 ; // now to 14.43
+    const roundedHour = Math.ceil(decimalHours); // now to 15
+    try {
+        const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=20c2d8479ef5424bbeb133221241009&q=Lelystad&hour=${roundedHour}`);
+        const data = await response.json();
+        const hourdata = data.forecast.forecastday[0].hour[0];
+        // rain check
+        const advice = hourdata.will_it_rain === 1 ? '☂️' : '🕶️';
+        return advice;
+    } catch (error) {
+        console.error('Error fetching weather data:', error);
+        return 'Error'; // or some default value
+    }
+// weatherAPIkey = "20c2d8479ef5424bbeb133221241009",
+/*
+            specific data i'm accessing ends up in
+            {
+                "chance_of_rain": 74,
+                "chance_of_snow": 0,
+                "cloud": 89,
+                "condition": {
+                "text": "Patchy rain nearby",
+                "icon": "//cdn.weatherapi.com/weather/64x64/day/176.png",
+                "code": 1063
+                },
+                "dewpoint_c": 10.6,
+                "dewpoint_f": 51.1,
+                "diff_rad": 62.1,
+                "feelslike_c": 16.5,
+                "feelslike_f": 61.6,
+                "gust_kph": 42.9,
+                "gust_mph": 26.6,
+                "heatindex_c": 16.5,
+                "heatindex_f": 61.6,
+                "humidity": 68,
+                "is_day": 1,
+                "precip_in": 0,
+                "precip_mm": 0.01,
+                "pressure_in": 29.76,
+                "pressure_mb": 1008,
+                "short_rad": 224.42,
+                "snow_cm": 0,
+                "temp_c": 16.5,
+                "temp_f": 61.6,
+                "time": "2024-09-10 09:00",
+                "time_epoch": 1725951600,
+                "uv": 4,
+                "vis_km": 10,
+                "vis_miles": 6,
+                "will_it_rain": 1,
+                "will_it_snow": 0,
+                "wind_degree": 227,
+                "wind_dir": "SW",
+                "wind_kph": 32.8,
+                "wind_mph": 20.4,
+                "windchill_c": 16.5,
+                "windchill_f": 61.6
+            }
+            */
+};
