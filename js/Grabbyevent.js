@@ -631,7 +631,7 @@ async function AdvisedEquipment(time) {
     const decimalHours = hours + minutes * 0.01 ; // now to 14.43
     const roundedHour = Math.ceil(decimalHours); // now to 15
     try {
-        const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=20c2d8479ef5424bbeb133221241009&q=Lelystad&hour=${roundedHour}`);
+        const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=20c2d8479ef5424bbeb133221241009&q=Lelystad&hour=${roundedHour}`);
         const data = await response.json();
         const hourdata = data.forecast.forecastday[0].hour[0];
         // rain check
