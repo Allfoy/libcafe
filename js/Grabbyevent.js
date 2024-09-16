@@ -628,7 +628,7 @@ function tT(str){ // tT = translateTime
 
 async function AdvisedEquipment(time,startDay) {
     const [hours, minutes] = time.split(':').map(Number); // so 14:43 to 14 and 43
-    const decimalHours = hours+3 + minutes * 0.01 ; // now to 14.43
+    const decimalHours = hours + minutes * 0.01 ; // now to 14.43
     const roundedHour =  startDay ? Math.floor(decimalHours) : Math.ceil(decimalHours); // now to 15 or 14 if start of day
     try {
         const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=20c2d8479ef5424bbeb133221241009&q=Lelystad&hour=${roundedHour}`);
