@@ -45,7 +45,7 @@ const keywordLinks = {
         picto : '🧮'
     },
     'wisd': {
-        link: 'https://apps.noordhoff.nl/se/content/book/4acdfa97-1845-4bf6-8320-10181b908e29/ebooks/a476fd26-1eeb-4c59-979c-16b971e37cc1',
+        link: 'https://apps.noordhoff.nl/se/content/book/7dabacb4-cac5-410d-86cb-1ec2fc5aa80a/ebooks/4298dc06-3dd2-4ee7-a4c8-b923bc8622fb',
         imageSrc: '../img/covers/MATHD.jpeg',
         actualName: 'Mathematics D',
         picto : '🧮'
@@ -539,8 +539,8 @@ async function displayEvents(firstEvent, finalEvent) {
     const formattedEndTime = endTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
     const firstInfo = getLinkAndImageForEvent(firstEvent.summary);
     const finalInfo = getLinkAndImageForEvent(finalEvent.summary);
-    const startAdvised = await AdvisedEquipment(formattedStartTime)
-    const endAdvised = await AdvisedEquipment(formattedEndTime)
+    const startAdvised = await AdvisedEquipment(formattedStartTime,1)
+    const endAdvised = await AdvisedEquipment(formattedEndTime,0)
     eventsContainer.innerHTML = `
         <h2>Today's Events</h2>
         <p><strong>First Event:</strong> ${firstInfo.actualName}${firstInfo.picto}, <strong>Start Time:</strong> ${formattedStartTime}, use ${startAdvised}</p>
@@ -626,16 +626,16 @@ function tT(str){ // tT = translateTime
     return str;
 };
 
-async function AdvisedEquipment(time) {
+async function AdvisedEquipment(time,startDay) {
     const [hours, minutes] = time.split(':').map(Number); // so 14:43 to 14 and 43
-    const decimalHours = hours + minutes * 0.01 ; // now to 14.43
-    const roundedHour = Math.ceil(decimalHours); // now to 15
+    const decimalHours = hours+3 + minutes * 0.01 ; // now to 14.43
+    const roundedHour =  startDay ? Math.floor(decimalHours) : Math.ceil(decimalHours); // now to 15 or 14 if start of day
     try {
         const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=20c2d8479ef5424bbeb133221241009&q=Lelystad&hour=${roundedHour}`);
         const data = await response.json();
         const hourdata = data.forecast.forecastday[0].hour[0];
         // rain check
-        const advice = hourdata.will_it_rain === 1 ? '☂️' : '🕶️';
+        const advice = hourdata.will_it_rain === 1 ? `☂️, chance:${hourdata.chance_of_rain}%` : `🕶️, temp:${hourdata.temp_c}°C`;
         return advice;
     } catch (error) {
         console.error('Error fetching weather data:', error);
