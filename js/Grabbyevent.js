@@ -543,8 +543,8 @@ async function displayEvents(firstEvent, finalEvent) {
     const endAdvised = await AdvisedEquipment(formattedEndTime,0)
     eventsContainer.innerHTML = `
         <h2>Today's Events</h2>
-        <p><strong>First Event:</strong> ${firstInfo.actualName}${firstInfo.picto}, <strong>Start Time:</strong> ${formattedStartTime}, use ${startAdvised}</p>
-        <p><strong>Final Event:</strong> ${finalInfo.actualName}${finalInfo.picto}, <strong>End Time:</strong> ${formattedEndTime}, use ${endAdvised}</p>
+        <p><strong>First Event:</strong> ${firstInfo.actualName}${firstInfo.picto}</p><p> <strong>Start Time:</strong> ${formattedStartTime}</p><p> use ${startAdvised}</p>
+        <p><strong>Final Event:</strong> ${finalInfo.actualName}${finalInfo.picto}</p><p> <strong>End Time:</strong> ${formattedEndTime}</p><p> use ${endAdvised}</p>
     `;
 }
 
@@ -635,7 +635,7 @@ async function AdvisedEquipment(time,startDay) {
         const data = await response.json();
         const hourdata = data.forecast.forecastday[0].hour[0];
         // rain check
-        const advice = hourdata.will_it_rain === 1 ? `☂️, chance:${hourdata.chance_of_rain}%` : `🕶️, temp:${hourdata.temp_c}°C`;
+        const advice = hourdata.will_it_rain === 1 ? `☂️, <strong>chance:</strong>${hourdata.chance_of_rain}%` : `🕶️, <strong>temp:</strong>${hourdata.temp_c}°C`;
         return advice;
     } catch (error) {
         console.error('Error fetching weather data:', error);
