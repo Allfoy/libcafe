@@ -34,18 +34,29 @@
     </style>
 </head>
 <body class="body">
-    <div class="centeredbutton">go&nbsp<a href="../home">home</a></div>
+    <div class="centeredbutton">go&nbsp<a href="../friend">friend</a></div>
     <div>click on a friend to select them</div>
+    <p id="current"></p>
 	<input class="search" id="search" type="text" onkeyup="search()" placeholder="Search for names..">
 	<ul id="results">
-		<li id="allfoy" onclick="reveal('allfoy')"><a>Allfoy</a></li>
-		<li id="casper" onclick="reveal('casper')"><a>Casper</a></li>
-		<li id="kevin" onclick="reveal('kevin')"><a>Kevin</a></li>
-		<li id="myrthe" onclick="reveal('myrthe')"><a>Myrthe</a></li>
-		<li id="troy" onclick="reveal('troy')"><a>Troy</a></li>
 	</ul>
 </body>
 <script>
+// Your list of names
+const names = ["Aaron","Abby","Abel","Abner","Abraham","Abram","Ace","Ada","Adalee","Adalynn","Addilyn","Addilynn","Adelaide","Adeline","Adkins","Adonis","Adriana","Adriel","Aguilar","Ahmed","Aidan","Aiden","Ainhoa","Aisha","Aislinn","Aitana","Alaia","Alan","Alana","Alani","Alaya","Alayah","Alayna","Alberto","Aleena","Alejandra","Alessandra","Alexa","Alexander","Alexandria","Alexia","Alfaro","Alfredo","Ali","Alicia","Alistair","Aliya","Aliyah","Allan","Allen","Allfoy","Allison","Alonzo","Alvarado","Alyssa","Amari","Amaya","Amber","Ameer","Amelia","Amelie","Amina","Amir","Amirah","Amy","Ana","Analia","Anastasia","Anders","Andersen","Anderson","Andre","Andrea","Andres","Andrews","Angel","Angelica","Anna","Annie","Annika","Anthony","Antonella","Antonio","Anya","April","Archer","Ares","Ariana","Ariel","Arielle","Aries","Ariya","Armani","Armstrong","Arnold","Arroyo","Aspen","Astrid","Atkinson","Atticus","Aubree","Aubrey","Aurelia","Avalos","Avalynn","Avery","Avi","Avianna","Axel","Axl","Aya","Ayaan","Ayala","Ayan","Ayden","Azariah","Azrael","Bailey","Baker","Baldwin","Ball","Ballard","Banks","Barajas","Barker","Barnes","Barnett","Barrera","Barrett","Barron","Bartlett","Bass","Bates","Bauer","Bautista","Baylee","Bear","Beasley","Beatrice","Beck","Becker","Beckham","Beil","Bell","Bella","Bellamy","Belle","Beltran","Ben","Bender","Benjamin","Benson","Bentlee","Bentley","Benton","Berg","Berkley","Bernal","Berry","Best","Bexley","Bishop","Black","Blackburn","Blaine","Blake","Blanchard","Blankenship","Blevins","Boden","Bonilla","Booker","Boston","Bowen","Bowman","Boyd","Boyer","Boyle","Bradley","Bradshaw","Brady","Braelynn","Branch","Brandon","Brandt","Braylee","Braylen","Brecken","Brendan","Bria","Bridger","Briella","Brinley","Bristol","Brittany","Brixton","Brock","Bronson","Brooke","Brooklyn","Brooklynn","Brown","Browning","Bruce","Bruno","Brylee","Bryson","Buchanan","Bullock","Burgess","Burnett","Burton","Bush","Butler","Caden","Cain","Calderon","Caldwell","Calhoun","Cali","Callan","Callie","Calum","Camacho","Cameron","Camilla","Camille","Campbell","Campos","Cano","Cantu","Capri","Cara","Carey","Carlos","Carlson","Carolina","Carr","Carroll","Carson","Carter","Case","Cash","Casper","Caspian","Cassandra","Castaneda","Castillo","Castro","Cataleya","Catherine","Cayson","Cecilia","Celia","Celine","Chambers","Chan","Chana","Chandler","Chanel","Charlee","Charleigh","Charles","Charlie","Chavez","Chaya","Chelsea","Chen","Cherry","Chloe","Choi","Chris","Christian","Christopher","Church","Cillian","Cisneros","Clare","Clarissa","Clark","Clarke","Clayton","Clementine","Clements","Cline","Clyde","Cobb","Cody","Coen","Coffey","Cohen","Coleman","Colette","Colin","Collier","Collin","Collins","Colon","Colton","Compton","Conner","Connor","Conrad","Contreras","Conway","Coraline","Cordova","Corinne","Corona","Cortes","Cortez","Cox","Crawford","Crew","Crystal","Cuevas","Cullen","Cummings","Curtis","Dahlia","Dakota","Dallas","Dalton","Damian","Damien","Dangelo","Daniel","Daniella","Danielle","Daniels","Darian","Dariel","Dario","Darius","Daugherty","Davenport","Davian","David","Davidson","Davila","Davis","Daxton","Dayton","Dean","Decker","Dejesus","Delacruz","Delaney","Delgado","Denver","Derek","Devin","Diaz","Diego","Dion","Dior","Dodson","Dominguez","Dominik","Donaldson","Donovan","Dorsey","Douglas","Doyle","Drake","Dream","Dudley","Duffy","Duke","Duncan","Dunlap","Durham","Dylan","Easton","Eaton","Edison","Eduardo","Edward","Edwin","Elaina","Eleanor","Elias","Eliezer","Elijah","Elina","Elisabeth","Elise","Eliseo","Elisha","Eliza","Elizabeth","Ella","Ellen","Elliana","Ellianna","Ellie","Elliot","Elliott","Ellis","Ellison","Eloise","Emani","Ember","Emberly","Emelia","Emerson","Emersyn","Emery","Emilia","Emilio","Emir","Emmaline","Emmeline","Emmett","Emmitt","Emory","English","Enoch","Enriquez","Erick","Erik","Erin","Ernesto","Escobar","Espinosa","Espinoza","Esquivel","Esteban","Estella","Estelle","Estes","Etta","Eugene","Eva","Evan","Evangeline","Evans","Evelyn","Evelynn","Faith","Fallon","Farley","Farmer","Farrell","Faulkner","Felicity","Felix","Ferguson","Fernanda","Fields","Finley","Finn","Fiona","Fisher","Fletcher","Flora","Florence","Flores","Flowers","Flynn","Forest","Forrest","Foster","Fowler","Fox","Francis","Franco","Frank","Frankie","Franklin","Frederick","Frost","Fry","Frye","Fuentes","Fuller","Gabriel","Gabriela","Gabriella","Gael","Gaines","Galilea","Galindo","Gallagher","Galvan","Garcia","Gardner","Garner","Garrett","Gary","Gates","Gatlin","Gentry","George","Gianna","Giavanna","Gibson","Gideon","Giles","Gill","Gillespie","Gilmore","Giovanna","Giuliana","Glass","Golden","Gomez","Good","Goodman","Goodwin","Gordon","Gould","Gracie","Graham","Grant","Gray","Graysen","Green","Greer","Gregory","Grey","Griffin","Griffith","Grimes","Gross","Guadalupe","Guerra","Guerrero","Guevara","Gwen","Hadlee","Hadleigh","Hahn","Hail","Hale","Haley","Hall","Halo","Hammond","Hancock","Hardin","Harlan","Harlee","Harlem","Harley","Harlow","Harmon","Harmony","Harper","Harrell","Harrington","Harris","Harrison","Hassan","Hattie","Hayes","Haynes","Hazel","Heath","Hebert","Hector","Helena","Hendrix","Henley","Henry","Henson","Hickman","Hill","Hines","Hobbs","Hodge","Hodges","Hoffman","Holden","Holland","Holloway","Holmes","Holt","Hood","Hoover","Hopkins","Horne","Horton","Houston","Howard","Howell","Huang","Hubbard","Huber","Hudson","Huerta","Huffman","Hughes","Hugo","Hull","Humphrey","Hunt","Hunter","Hurley","Hurst","Hutchinson","Huynh","Ibarra","Ibrahim","Imani","Indie","Ingram","Isaac","Isabella","Isaiah","Ishaan","Isla","Ivan","Ivory","Izabella","Jabari","Jack","Jackson","Jacobs","Jacobson","Jada","Jade","Jaiden","Jakari","Jakobe","Jalen","Jamal","Jamie","Janelle","Jaramillo","Jarvis","Jasiah","Jasmine","Jasper","Javier","Jaxon","Jaxxon","Jay","Jaycee","Jayda","Jayla","Jaylah","Jaziel","Jazmin","Jazmine","Jedidiah","Jeffery","Jennifer","Jensen","Jeremiah","Jerry","Jesse","Jesus","Jianna","Jimena","Jimenez","John","Johns","Johnston","Jolie","Jordan","Jorge","Josie","Josue","Journee","Jovanni","Jovie","Julia","Juliana","Julien","Juliette","Julio","Julius","Junior","Justin","Kabir","Kace","Kade","Kaden","Kai","Kaiden","Kailey","Kairo","Kaiser","Kaisley","Kaison","Kaitlyn","Kaiya","Kalani","Kaleb","Kali","Kallie","Kamden","Kamdyn","Kamila","Kamryn","Kane","Kannon","Kara","Kareem","Karla","Kasen","Kashton","Kate","Katelyn","Katherine","Katie","Kaur","Kaysen","Keanu","Keegan","Keenan","Kehlani","Keilani","Keira","Keith","Keller","Kelly","Kendall","Kenia","Kenna","Kent","Kenzie","Kerr","Kevin","Keyla","Khari","Khloe","Kiaan","Kian","Kiana","Kiara","Kieran","Kim","Kimberly","King","Kingston","Kinley","Knapp","Knight","Knox","Kobe","Kody","Kole","Kolton","Kora","Korbyn","Krew","Kristopher","Kye","Kyleigh","Kylian","Kylo","Kyng","Kyson","Lachlan","Laila","Lamb","Lana","Lance","Landon","Landyn","Lane","Lang","Larson","Lawrence","Lawson","Layla","Layne","Layton","Le","Lea","Leah","Leandro","Ledger","Lee","Legacy","Legend","Leighton","Leila","Leland","Lennon","Lennox","Leon","Leonard","Levi","Levy","Lewis","Lexi","Leyla","Li","Lian","Liana","Lilah","Lilian","Lillian","Lilliana","Lillie","Lilyana","Lim","Lincoln","Lindsey","Lionel","Little","Liu","Liv","Lloyd","Logan","London","Long","Lopez","Lorelei","Loretta","Louisa","Love","Lowe","Lowery","Lu","Luciana","Luciano","Lucille","Luella","Luka","Lukas","Luna","Lydia","Lylah","Lynn","Lyons","Lyric","Mack","Macy","Madden","Maddox","Madeleine","Madelynn","Madilynn","Magana","Magnus","Mahoney","Maison","Makai","Makayla","Makenzie","Malcolm","Maldonado","Malik","Mallory","Malone","Manning","Mara","Marcel","Marceline","Marcus","Maren","Margot","Marie","Marilyn","Marin","Marisol","Mark","Marlon","Marlowe","Marshall","Martin","Maryam","Mason","Massey","Mata","Mateo","Maurice","Mavis","Maximus","May","Maya","Mayer","McBride","McCall","McCann","McCarthy","McCarty","McClain","McClure","McConnell","McCormick","McDaniel","McDowell","McFarland","McGee","McGuire","McIntosh","McIntyre","McKinney","McLaughlin","McLean","McMillan","McPherson","Meadows","Medina","Megan","Meilani","Mejia","Mekhi","Melani","Melendez","Melina","Melton","Mercado","Merritt","Meyers","Meza","Michael","Michaela","Michelle","Middleton","Mila","Miles","Miley","Miller","Miranda","Misael","Mitchell","Molina","Molly","Montes","Montgomery","Moody","Moon","Moore","Morales","Moran","Mordechai","Morgan","Morris","Morrison","Morrow","Morton","Moses","Moss","Mueller","Muhammad","Mullen","Munoz","Murillo","Murphy","Murray","Myers","Myla","Mylah","Myra","Myrthe","Nalani","Nancy","Naomi","Nash","Nataly","Natasha","Nathalia","Nathalie","Nathan","Navarro","Naya","Neil","Nevaeh","Newton","Nguyen","Nicholas","Nichols","Nico","Nicolas","Nielsen","Niko","Nikolai","Nikolas","Nolan","Norris","Novak","Nunez","Nylah","Nyomi","Oakley","Oaklyn","Ochoa","Odom","Oliver","Olsen","Orozco","Ortega","Ortiz","Owen","Owens","OConnell","OConnor","ODonnell","ONeill","Pace","Pacheco","Page","Paige","Palacios","Paloma","Paris","Park","Parker","Parrish","Parsons","Patterson","Patton","Paxton","Payne","Payton","Pearl","Pearson","Peck","Pena","Pennington","Penny","Peralta","Perez","Perkins","Person","Peters","Petersen","Phan","Phillip","Phillips","Phoebe","Pierce","Pittman","Pollard","Pope","Poppy","Porter","Portillo","Potts","Powers","Presley","Preston","Prince","Princess","Princeton","Priscilla","Promise","Pruitt","Quinn","Quintana","Quintero","Rachel","Raelynn","Ramirez","Ramos","Ramsey","Randolph","Randy","Rangel","Raphael","Raquel","Raul","Ray","Raya","Raymond","Rayna","Reagan","Rebekah","Reed","Reese","Reeves","Reginald","Reid","Reign","Reina","Remi","Remy","Rey","Reyna","Rhodes","Ricardo","Rice","Richards","Richardson","Richmond","Ricky","Ridge","Rio","Rios","Rivera","Rivers","Roach","Roberson","Robert","Robertson","Robin","Robles","Rocky","Rodgers","Rodney","Rodriguez","Rogelio","Rogers","Rohan","Rojas","Rollins","Roman","Romeo","Romero","Romina","Ronan","Rosa","Rosalee","Rosales","Rosario","Roselyn","Rosie","Roth","Rowan","Rowe","Rowland","Royal","Royalty","Ruben","Rubio","Ruby","Ruiz","Rush","Russell","Ryan","Ryann","Ryder","Rylan","Ryland","Sage","Saige","Saint","Salas","Salem","Salgado","Salinas","Sam","Samantha","Samira","Sampson","Samson","Samuel","Santana","Santiago","Santos","Sarah","Saunders","Scarlette","Schaefer","Schmidt","Schmitt","Schneider","Schroeder","Schultz","Schwartz","Sebastian","Selah","Selene","Sergio","Sexton","Shah","Shane","Shannon","Shaw","Shawn","Shay","Shelton","Shepherd","Sheppard","Sherman","Shields","Siena","Sierra","Silva","Simmons","Simon","Simpson","Sincere","Singleton","Skinner","Sky","Skylar","Skyler","Sloan","Sloane","Snow","Snyder","Sofia","Solomon","Soren","Sosa","Soto","Sparks","Spears","Spence","Spencer","Stafford","Stanley","Stanton","Stark","Stephen","Stevens","Stevenson","Stewart","Stone","Stout","Strickland","Strong","Stuart","Suarez","Sullivan","Summers","Sutton","Swanson","Sylvie","Talon","Tang","Tanner","Tapia","Tate","Tatum","Taylor","Teagan","Teresa","Terrance","Terry","Thatcher","Thomas","Thornton","Tiana","Tiffany","Timothy","Titan","Tommy","Torres","Trent","Trevino","Tripp","Troy","Tru","Trujillo","Truong","Tucker","Turner","Ty","Tyler","Tyson","Uriah","Uriel","Valentin","Valentino","Valenzuela","Valeria","Van","Vanessa","Vargas","Vasquez","Vaughan","Vaughn","Vazquez","Vega","Velasquez","Velez","Vicente","Vienna","Villalobos","Villarreal","Villegas","Vincenzo","Violet","Violette","Virginia","Vu","Walker","Wall","Walter","Wang","Ward","Warner","Warren","Waters","Watkins","Watson","Watts","Wayne","Weaver","Weber","Webster","Weeks","Welch","Wells","Wes","West","Weston","Whitaker","White","Whitehead","Whitney","Wiggins","Wilcox","Wilkins","Wilkinson","Williams","Williamson","Willis","Willow","Wilson","Winnie","Winston","Winter","Wise","Wolfe","Wong","Woods","Wu","Wyatt","Wynter","Xander","Xiong","Yang","Yareli","Yasmin","York","Yousef","Yusuf","Zahir","Zahra","Zaire","Zander","Zara","Zavala","Zavier","Zayd","Zayden","Zayn","Zev","Zimmerman","Zion","Zoie","Zoya","Zuniga","Zyair"];
+
+// Get the 'results' ul element
+const results = document.getElementById('results');
+
+// Function to create and append list items
+names.forEach(name => {
+    const li = document.createElement('li');
+    li.id = name;  // Sets the id to the lowercase version of the name
+    li.setAttribute('onclick', `reveal('${name}')`);  // Adds the onclick attribute
+    li.innerHTML = `<a>${name}</a>`;  // Adds the name inside an anchor tag
+    results.appendChild(li);  // Appends the new li to the ul
+});
+
 function search(){
 	var input, filter, ul, li, a, i, txtValue;
     input = document.getElementById("search");
@@ -62,22 +73,19 @@ function search(){
         }
     }
 }
+let result = 'idk'
 function reveal(name){
-	var li = document.getElementById(name);
+	let li = document.getElementById(name);
 	switch (li.innerText) {
-        case 'Kevin'   : result = 'i32q28ad785oqs2dom81460a186j6uvr';createfriend(result); break;
-        case 'Allfoy'  : result = 'kvme0ikmjq4825g8ee860tm058clorcg';createfriend(result); break;
-        case 'Myrthe'  : result = '32ddu2ndrbe8jtp1olg6rko3f5cntog3';createfriend(result); break;
-		case 'Troy'    : result = '3hvsosg4io5fdefbn66meln2un2hu33k';createfriend(result); break;
-		case 'Casper'  : var password = prompt("Casper has set it to private, enter a password","password"); if(password == "35271"){ result = '0pspeo6e4k6e329k4h56mkam0k9t6gnq'; createfriend(result);break;}else{break;};
-        case 'i32q28ad785oqs2dom81460a186j6uvr'  : result = 'Kevin'; break;
-        case 'kvme0ikmjq4825g8ee860tm058clorcg'  : result = 'Allfoy'; break;
-        case '32ddu2ndrbe8jtp1olg6rko3f5cntog3'  : result = 'Myrthe'; break;
-		case '3hvsosg4io5fdefbn66meln2un2hu33k'  : result = 'Troy'; break;
-		case '0pspeo6e4k6e329k4h56mkam0k9t6gnq'  : result = 'Casper';break;
-
-}
-	li.innerHTML = result;
+        case 'Kevin'   : result = 'Kevin';createfriend('i32q28ad785oqs2dom81460a186j6uvr'); break;
+        case 'Allfoy'  : result = 'Allfoy';createfriend('kvme0ikmjq4825g8ee860tm058clorcg'); break;
+        case 'Myrthe'  : result = 'Myrthe';createfriend('32ddu2ndrbe8jtp1olg6rko3f5cntog3'); break;
+		case 'Troy'    : result = 'Troy';createfriend('3hvsosg4io5fdefbn66meln2un2hu33k'); break;
+		case 'Casper'  : var password = prompt("Casper has set it to private, enter a password","password"); if(password == "35271"){ result = 'Casper'; createfriend('0pspeo6e4k6e329k4h56mkam0k9t6gnq');break;}else{break;};
+        
+    }
+    document.getElementById('current').innerHTML = `current friendcookie: ${getCookie('friendcookie')} -- from: ${result} -- last clicked ${name}`;
+	// li.innerHTML = result; noted cuz not necessary and breaks stuff
 }
 function createfriend(calid){
     const d = new Date();
@@ -85,5 +93,33 @@ function createfriend(calid){
     let expires = "expires="+ d.toUTCString();
     document.cookie = "friendcookie" + "=" + calid + ";" + expires + ";path=/";
 }
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+document.addEventListener('keydown', function(event) {
+    switch (event.key) {
+        case 'm':
+            window.location.href = "../map";
+        break;
+        case 'h':
+            window.location.href = "../home";
+        break;
+        case 'f':
+            window.location.href = "../friend";
+        break;
+    }
+});
 </script>
 </html>

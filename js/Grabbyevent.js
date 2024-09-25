@@ -228,7 +228,12 @@ function fetchEventsAndUpdateTime(calid) {
         .then(data => {
             const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
             var filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});    
-//second filter for test filteredEvents = filteredEvents.filter(function(event){return (!event.summary.includes("filterthisstring"))});     
+            //second filter for test filteredEvents = filteredEvents.filter(function(event){return (!event.summary.includes("filterthisstring"))});
+            filteredEvents = filteredEvents.sort((a, b) => {
+                const dateA = new Date(a.start.dateTime); // Convert dateTime strings to Date objects
+                const dateB = new Date(b.start.dateTime);
+                return dateA - dateB; // Sort based on the dateTime
+            });
             const now = new Date();
             let currentEvent = null;
             let upcomingEvent = null;
@@ -261,8 +266,8 @@ function fetchEventsAndUpdateTime(calid) {
                     "12:20": "12:45",
                     "14:15": "14:30"
                 };
-                let schoolStart =  filteredEvents[0]?.start.dateTime !== undefined ? filteredEvents[0]?.start.dateTime : '0' ;
-                let schoolEnd = filteredEvents[filteredEvents.length-1]?.end.dateTime !== undefined ? filteredEvents[filteredEvents.length-1]?.end.dateTime : '01/01/1970 23:59:59' ;
+                let schoolStart =  filteredEvents[0]?.start.dateTime ?? '0' ;
+                let schoolEnd = filteredEvents[filteredEvents.length-1]?.end.dateTime ?? '01/01/1970 23:59:59' ;
                 const conditions = {//put the conditions in an object literal for readability
                     weekend: new Date().getDay() === 6 || new Date().getDay() === 0, //is it weekend?
                     isInBreak: Object.entries(breaks).some(([start, end]) => {return currentTime >= start && currentTime <= end;}), // is it break?
@@ -460,9 +465,9 @@ function startendfree(calid1){
             const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
             const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
             const sortedEvents = filteredEvents.sort((a, b) => {
-                const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
-                const numB = parseInt(b.summary.match(/^\d+/)[0]);
-                return numA - numB; // Sort events based on the numbers in their titles
+                const dateA = new Date(a.start.dateTime); // Convert dateTime strings to Date objects
+                const dateB = new Date(b.start.dateTime);
+                return dateA - dateB; // Sort based on the dateTime
             });
             /* sortedEvents.forEach(event => {
             console.log(event.summary);
@@ -509,9 +514,9 @@ function displayTomorrowEvents(calid2) {
             const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
             const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
             const sortedEvents = filteredEvents.sort((a, b) => {
-                const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
-                const numB = parseInt(b.summary.match(/^\d+/)[0]);
-                return numA - numB; // Sort events based on the numbers in their titles
+                const dateA = new Date(a.start.dateTime); // Convert dateTime strings to Date objects
+                const dateB = new Date(b.start.dateTime);
+                return dateA - dateB; // Sort based on the dateTime
             });
 
             const firstEvent = sortedEvents[0];
@@ -543,8 +548,8 @@ async function displayEvents(firstEvent, finalEvent) {
     const endAdvised = await AdvisedEquipment(formattedEndTime,0)
     eventsContainer.innerHTML = `
         <h2>Today's Events</h2>
-        <p><strong>First Event:</strong> ${firstInfo.actualName}${firstInfo.picto}</p><p> <strong>Start Time:</strong> ${formattedStartTime}</p><p> use ${startAdvised}</p>
-        <p><strong>Final Event:</strong> ${finalInfo.actualName}${finalInfo.picto}</p><p> <strong>End Time:</strong> ${formattedEndTime}</p><p> use ${endAdvised}</p>
+        <p><strong>First Event:</strong> ${firstInfo.actualName}${firstInfo.picto}</p><p> <strong>Start Time:</strong> ${formattedStartTime}</p><p> ${startAdvised}</p>
+        <p><strong>Final Event:</strong> ${finalInfo.actualName}${finalInfo.picto}</p><p> <strong>End Time:</strong> ${formattedEndTime}</p><p> ${endAdvised}</p>
     `;
 }
 
@@ -579,7 +584,7 @@ function findFreePeriods(events, firstEvent, finalEvent) {
 
 // Function to display free periods
 function displayFreePeriods(freePeriods) {
-    const eventsContainer = document.getElementById('events-container');
+    const eventsContainer = document.getElementById('eventz-container');
     eventsContainer.innerHTML += '<h2>Free Periods</h2>';
     let flag = true;
     if (freePeriods.length === 0) {
@@ -634,57 +639,28 @@ async function AdvisedEquipment(time,startDay) {
         const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=20c2d8479ef5424bbeb133221241009&q=Lelystad&hour=${roundedHour}`);
         const data = await response.json();
         const hourdata = data.forecast.forecastday[0].hour[0];
+        // console.info(hourdata);
+        hourdata.chance_of_rain = hourdata.chance_of_rain == '100' ? hourdata.chance_of_rain = '': hourdata.chance_of_rain + '%' ; 
+        console.info(hourdata.chance_of_rain)
         // rain check
-        const advice = hourdata.will_it_rain === 1 ? `☂️, <strong>chance:</strong>${hourdata.chance_of_rain}%` : `🕶️, <strong>temp:</strong>${hourdata.temp_c}°C`;
+        const advice = hourdata.will_it_rain === 1 ? `${hourdata.chance_of_rain} ${hourdata.condition.text} ☔` : `${hourdata.temp_c}°C and ${hourdata.condition.text} 🕶️ `;
         return advice;
     } catch (error) {
         console.error('Error fetching weather data:', error);
         return 'Error'; // or some default value
     }
 // weatherAPIkey = "20c2d8479ef5424bbeb133221241009",
-/*
-            specific data i'm accessing ends up in
-            {
-                "chance_of_rain": 74,
-                "chance_of_snow": 0,
-                "cloud": 89,
-                "condition": {
-                "text": "Patchy rain nearby",
-                "icon": "//cdn.weatherapi.com/weather/64x64/day/176.png",
-                "code": 1063
-                },
-                "dewpoint_c": 10.6,
-                "dewpoint_f": 51.1,
-                "diff_rad": 62.1,
-                "feelslike_c": 16.5,
-                "feelslike_f": 61.6,
-                "gust_kph": 42.9,
-                "gust_mph": 26.6,
-                "heatindex_c": 16.5,
-                "heatindex_f": 61.6,
-                "humidity": 68,
-                "is_day": 1,
-                "precip_in": 0,
-                "precip_mm": 0.01,
-                "pressure_in": 29.76,
-                "pressure_mb": 1008,
-                "short_rad": 224.42,
-                "snow_cm": 0,
-                "temp_c": 16.5,
-                "temp_f": 61.6,
-                "time": "2024-09-10 09:00",
-                "time_epoch": 1725951600,
-                "uv": 4,
-                "vis_km": 10,
-                "vis_miles": 6,
-                "will_it_rain": 1,
-                "will_it_snow": 0,
-                "wind_degree": 227,
-                "wind_dir": "SW",
-                "wind_kph": 32.8,
-                "wind_mph": 20.4,
-                "windchill_c": 16.5,
-                "windchill_f": 61.6
-            }
-            */
 };
+document.addEventListener('keydown', function(event) {
+    switch (event.key) {
+        case 'm':
+            window.location.href = "../map";
+        break;
+        case 'h':
+            window.location.href = "../home";
+        break;
+        case 'f':
+            window.location.href = "../friend";
+        break;
+    }
+});

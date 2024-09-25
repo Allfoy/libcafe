@@ -43,7 +43,7 @@ if ((window.innerWidth <= 1500) || (window.innerHeight <= 700)){
 function hidey(goney) {
     var goner = document.getElementById(goney);
     var width = goner.offsetWidth;
-    console.log(width);
+    // console.log(width);
     if(goner.style.left === 0 + 'px'){goner.style.left= - width + 20 + 'px';}
     else {goner.style.left = 0 + 'px'}
 }
