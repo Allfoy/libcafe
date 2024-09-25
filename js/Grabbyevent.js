@@ -641,7 +641,6 @@ async function AdvisedEquipment(time,startDay) {
         const hourdata = data.forecast.forecastday[0].hour[0];
         // console.info(hourdata);
         hourdata.chance_of_rain = hourdata.chance_of_rain == '100' ? hourdata.chance_of_rain = '': hourdata.chance_of_rain + '%' ; 
-        console.info(hourdata.chance_of_rain)
         // rain check
         const advice = hourdata.will_it_rain === 1 ? `${hourdata.chance_of_rain} ${hourdata.condition.text} ☔` : `${hourdata.temp_c}°C and ${hourdata.condition.text} 🕶️ `;
         return advice;
