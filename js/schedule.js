@@ -9,12 +9,11 @@ function CalIDcookie(){
         document.cookie = "calendarsId" + "=" + CalID + ";" + expires + ";path=/";
         console.log("we have found a cookie: "+document.cookie);
         fetchEventsAndUpdateTime(getCookie("calendarsId"));
-        startendfree(getCookie("calendarsId"));
     }else{
         console.log("we have found the cookie:" + getCookie("calendarsId"));
         document.getElementById('events').innerHTML = ``;
         fetchEventsAndUpdateTime(getCookie("calendarsId"));
-        showTime();
+        // showTime();
     }
         //'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
         //'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
@@ -26,29 +25,21 @@ document.getElementById('dateInput').valueAsDate = new Date();
 
 function fetchEventsAndUpdateTime(CalID) {
     // Fetch events from Google Calendar API
-	// Get today's date and tomorrow's date in the format required by the Google Calendar API
-	const today = new Date().toISOString().split('T')[0];
-    //get and convert user inputted date
-    const dateChosen = document.getElementById("dateInput").value;
-    const chosenDate = new Date(dateChosen);
-    const chosenday = chosenDate.getDay();
-    const minDate = new Date().setDate(chosenDate.getDate()-chosenday+1); // so tuesday chosenday=2, -2+1= -1 and 2-1=1=monday
-    const maxDate = new Date().setDate(chosenDate.getDate()-chosenday+5); // so tuesday chosenday=2, -2+1 = -1 and 2-1=1= monday, +4=friday
-    const minday = new Date(minDate).toISOString().split('T')[0];
-    const maxday = new Date(maxDate).toISOString().split('T')[0];
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${CalID}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${minday}T00:00:00Z&timeMax=${maxday}T23:59:59Z`)
+    const monday = getDatee(1);
+    const friday = getDatee(5);
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${CalID}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${monday}T00:00:00Z&timeMax=${friday}T23:59:59Z`)
         .then(response => response.json())
         .then(data => {
             const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
-            const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
-            const sortedEvents = filteredEvents.sort((a, b) => {
-                const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
-                const numB = parseInt(b.summary.match(/^\d+/)[0]);
-                return numA - numB; // Sort events based on the numbers in their titles
+            //const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
+            sortedEvents = events.sort((a, b) => {
+                const dateA = new Date(a.start.dateTime); // Convert dateTime strings to Date objects
+                const dateB = new Date(b.start.dateTime);
+                return dateA - dateB; // Sort based on the dateTime
             });
             const eventsdiv = document.getElementById('events');
+            arr = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
             for (i=0;i<5;i++) {
-                arr = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
                 eventsdiv.innerHTML += `<p class="days column${i+1}">${arr[i]}</p>`;
             }
             sortedEvents.forEach(event => {
@@ -302,6 +293,9 @@ const keywordLinks = {
     },'workshop':{
         actualName:'Workshop',
         picto:'🛠️'
+    },'LOB':{
+        actualName:'LOB',
+        picto:'🔮'
     }
     // Add more keywords and links for silly guy
 };
@@ -340,21 +334,31 @@ function getName(){
     switch (friendcookie) {
         case '0pspeo6e4k6e329k4h56mkam0k9t6gnq':
             return 'Casper'
-        break;
         case 'i32q28ad785oqs2dom81460a186j6uvr':
                 return 'Kevin'
-        break;
         case 'kvme0ikmjq4825g8ee860tm058clorcg':
                 return 'Allfoy'
-        break;
         case '3hvsosg4io5fdefbn66meln2un2hu33k':
                 return 'Troy'
-        break;
         case '32ddu2ndrbe8jtp1olg6rko3f5cntog3':
                 return 'Myrthe'
-        break;
         default:
             return 'who dis?'
-        break;
     }
 };
+
+function getDatee(day){
+    switch(day){
+        case 1:a=-6;b=1;
+        break;
+        case 5:a=-2;b=5;
+        break;
+        default:console.error('ERROR: that aint monday nor friday');a=0;b=0;
+        break;
+    }
+    const chosenDateObject = new Date(document.getElementById("dateInput").value);
+    let dayzDate = new Date(chosenDateObject); 
+    dayzDate.setDate(chosenDateObject.getDate() - chosenDateObject.getDay() + (chosenDateObject.getDay() === 0 ? a : b));
+    const dayz = dayzDate.toISOString().split('T')[0];
+    return dayz
+}
