@@ -154,6 +154,10 @@ const keywordLinks = {
         ...noBook,
         actualName:'Workshop',
         picto:'🛠️'
+    },'LOB':{
+        ...noBook,
+        actualName:'LOB',
+        picto:'🔮'
     }
     // Add more keywords and links for silly guy
 };
