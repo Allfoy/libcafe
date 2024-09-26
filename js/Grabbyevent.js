@@ -33,7 +33,7 @@ const keywordLinks = {
         picto : '🌷'
     },
     'sptl': {
-        link: 'https://apps.noordhoff.nl/se/content/book/443fbd5e-bef7-4222-ae56-f41d5e83e468/ebooks/5569eff5-1057-4de0-8129-e3e703fbf89e',
+        link: 'https://apps.noordhoff.nl/se/content/book/443fbd5e-bef7-4222-ae56-f41d5e83e468/ebooks/68f9e10a-0c93-4da3-9614-349dae92241b',
         imageSrc: '../img/covers/SPAN.jpeg',
         actualName: 'Spanish',
         picto : '🐂'
@@ -656,13 +656,13 @@ async function AdvisedEquipment(time,startDay) {
 };
 document.addEventListener('keydown', function(event) {
     switch (event.key) {
-        case 'm':
+        case 'M':
             window.location.href = "../map";
         break;
-        case 'h':
+        case 'H':
             window.location.href = "../home";
         break;
-        case 'f':
+        case 'F':
             window.location.href = "../friend";
         break;
     }
