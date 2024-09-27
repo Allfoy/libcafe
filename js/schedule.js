@@ -362,3 +362,17 @@ function getDatee(day){
     const dayz = dayzDate.toISOString().split('T')[0];
     return dayz
 }
+
+document.addEventListener('keydown', function(event) {
+    switch (event.key) {
+        case 'M':
+            window.location.href = "../map";
+        break;
+        case 'H':
+            window.location.href = "../home";
+        break;
+        case 'F':
+            window.location.href = "../friend";
+        break;
+    }
+});

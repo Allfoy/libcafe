@@ -3,53 +3,68 @@ var menu = CMenu("#menu1")
 .config({
     menus: [
         {
-            title: "map",
-            icon: "none",
+            title: "Magister",
+            icon: "my-icon icon3",
             href:{
-                url: "../map",
+                url: "https://porteum.magister.net/magister/#/vandaag",
                 blank: true
                 }
         },
         {
-            title: "woahh",
-            icon: ["my-icon icon1"],
+            title: "Noordhoff",
+            icon: "my-icon icon1",
+            href:{
+                url: "https://apps.noordhoff.nl/my/nl/bookshelf?redirectPath=%2Fhome%2Foverview&redirectPlatform=sep",
+                blank: true
+                }
         }, 
         {
-            title: "More??",
-            icon: "my-icon icon1",
+            title: "More",
+            icon: "fa fa-folder",
             menus: [
                     {
-                        title: 'subMenu1',
-                        icon: 'none'
+                        disabled: true,
+                        title: "disabled",
+                        icon: "fa fa-ban"
                     },
                     {
-                        title: 'subMenu2',
-                        icon: 'fa fa-none'
-                    }
+                        disabled: true,
+                        title: "disabled",
+                        icon: "fa fa-ban"
+                    },
                 ]
         },
         {
-            title: "crazy",
-            icon: "my-icon icon1"
-        },
-        {
-            title: "click",
-            icon: "my-icon icon1"
-        },
-        {
-            title: "numworks",
-            href: "#class:~:text=switch%20user-,numworks"
-        },
-        {
-            title: "clickMe!",
-            click: function() {
-                alert('click event callback');
-            }
+            title: "Translate",
+            icon: "my-icon icon4",
+            href:{
+                url: "https://translate.google.com/?sl=auto&tl=en&op=translate",
+                blank: true
+                }
         },
         {
             disabled: true,
-            title: "disabled"
-        }
+            title: "disabled",
+            icon: "fa fa-ban"
+        },
+        {
+            title: "Numworks",
+            icon: "my-icon icon2",
+            href:{
+                url: "https://www.numworks.com/simulator/",
+                blank: true
+                }
+        },
+        {
+            disabled: true,
+            title: "disabled",
+            icon: "fa fa-ban"
+        },
+        {
+            disabled: true,
+            title: "disabled",
+            icon: "fa fa-ban"
+        },
     ]
 })
 
@@ -65,6 +80,7 @@ $(document).mousemove(function(e) {
 
 $(document).keydown(function(e) {
     if (e.key === 'Z') {  // Checks if 'Z' is pressed
+        console.info(e)
       menu.show([mousePos.x, mousePos.y]);  // Show the menu at the stored mouse position
       return false;  // Prevents any default behavior (optional)
     }
