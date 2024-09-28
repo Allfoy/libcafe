@@ -421,32 +421,24 @@ function fetchEventsAndUpdateTime(calid) {
 // here code for adaptive book
 // Function to get the link and image for the event based on its title
 function getLinkAndImageForEvent(title) {
+    const regex = /^\d\s([^\-]+).*/; // use regex101 if you wanna relearn lmao
     // Check if any keyword in the title matches, and return the corresponding link and image source
     for (const keyword in keywordLinks) {
         if (title.includes(keyword)) {
-            if(!(keywordLinks[keyword].actualName.includes('Workshop'))){
                 return {
                     link: keywordLinks[keyword].link,
                     imageSrc: keywordLinks[keyword].imageSrc,
                     actualName: keywordLinks[keyword].actualName,
                     picto: keywordLinks[keyword].picto
                 };
-            }else{
-                return {
-                    link: keywordLinks[keyword].link,
-                    imageSrc: keywordLinks[keyword].imageSrc,
-                    actualName: keywordLinks[keyword].actualName + ' ' + title.slice(11,12),
-                    picto: keywordLinks[keyword].picto
-                };
-            }
-        }
+        }else
+        // Return a default link and image source if no match is found
+        return {
+            ...noBook,
+            actualName: title.replace(regex,'$1').charAt(0).toUpperCase()+title.replace(regex,'$1').slice(1),
+            picto:'❓'
+        };
     }
-    // Return a default link and image source if no match is found
-    return {
-        ...noBook,
-        actualName: title,
-        picto:''
-    };
 }
 
 
