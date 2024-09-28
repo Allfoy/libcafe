@@ -431,14 +431,14 @@ function getLinkAndImageForEvent(title) {
                     actualName: keywordLinks[keyword].actualName,
                     picto: keywordLinks[keyword].picto
                 };
-        }else
-        // Return a default link and image source if no match is found
-        return {
-            ...noBook,
-            actualName: title.replace(regex,'$1').charAt(0).toUpperCase()+title.replace(regex,'$1').slice(1),
-            picto:'❓'
-        };
+        }
     }
+    // Return a default link and image source if no match is found
+    return {
+        ...noBook,
+        actualName: title.replace(regex,'$1').charAt(0).toUpperCase()+title.replace(regex,'$1').slice(1),
+        picto:'❓'
+    };
 }
 
 
