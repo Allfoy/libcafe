@@ -3,6 +3,41 @@
     top: 50%;
 }
 
+.icon-anilist {
+    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=anilist.co/home');
+}
+
+.icon-discord {
+    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=discord.com');
+}
+.icon-magister {
+    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=accounts.magister.net/profile/#/');
+}
+
+.icon-noordhoff {
+    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=apps.noordhoff.nl');
+}
+
+.icon-numworks {
+    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=numworks.com/simulator');
+}
+
+.icon-outlook {
+    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=outlook.live.com/mail/0/');
+}
+
+.icon-translate {
+    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=translate.google.com');
+}
+
+.icon-whatsapp {
+    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=https://web.whatsapp.com/');
+}
+
+.icon-yt {
+    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=youtube.com');
+}
+
 .my-icon {
     background: url('../img/wheelMenuIcons.png');
 }
@@ -12,13 +47,13 @@
 }
 
 .icon2 {
-    background-position: 0 -56px;
+    background-position: 0 -40px;
 }
 
 .icon3 {
-    background-position: 0 -116px;
+    background-position: 0 -80px;
 }
 
 .icon4 {
-    background-position: 0 -172px;
+    background-position: 0 -118px;
 }

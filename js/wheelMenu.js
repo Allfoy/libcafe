@@ -1,76 +1,101 @@
 var menu = CMenu("#menu1")
 
 .config({
+    // totalAngle:"360",
+    // spaceDeg: "0", //broken
+    background:"#52302eBB",
+    backgroundHover:"#52302eFF",
+    // pageBackground:"transparent",
+    diameter:"240",
+    position:"right",
+    // start:"0", //broken
+    // horizontal:"true",
+    // hideAfterClick:"true",
     menus: [
         {
             title: "Magister",
-            icon: "my-icon icon3",
+            icon: "icon-magister",
             href:{
-                url: "https://porteum.magister.net/magister/#/vandaag",
+                url: "https://porteum.magister.net/magister/#/vandaag/",
                 blank: true
                 }
         },
         {
-            title: "Noordhoff",
-            icon: "my-icon icon1",
-            href:{
-                url: "https://apps.noordhoff.nl/my/nl/bookshelf?redirectPath=%2Fhome%2Foverview&redirectPlatform=sep",
-                blank: true
-                }
-        }, 
-        {
-            title: "More",
+            title: "Schooln't",
             icon: "fa fa-folder",
             menus: [
                     {
-                        disabled: true,
-                        title: "disabled",
-                        icon: "fa fa-ban"
+                        title: "Discord",
+                        icon: "icon-discord",
+                        href:{
+                            url: "https://www.discord.com/channels/@me",
+                            blank: true
+                            }
                     },
                     {
-                        disabled: true,
-                        title: "disabled",
-                        icon: "fa fa-ban"
+                        title: "Youtube",
+                        icon: "icon-yt",
+                        href:{
+                            url: "https://www.youtube.com/",
+                            blank: true
+                            }
+                    },
+                    {
+                        title: "Whatsapp",
+                        icon: "icon-whatsapp",
+                        href:{
+                            url: "https://web.whatsapp.com/",
+                            blank: true
+                            }
+                    },
+                    {
+                        title: "Anilist",
+                        icon: "icon-anilist",
+                        href:{
+                            url: "https://anilist.co/home",
+                            blank: true
+                            }
                     },
                 ]
         },
         {
-            title: "Translate",
-            icon: "my-icon icon4",
+            title: "Outlook",
+            icon: "icon-outlook",
             href:{
-                url: "https://translate.google.com/?sl=auto&tl=en&op=translate",
+                url: "https://outlook.live.com/mail/0/",
                 blank: true
                 }
         },
         {
-            disabled: true,
-            title: "disabled",
-            icon: "fa fa-ban"
-        },
-        {
             title: "Numworks",
-            icon: "my-icon icon2",
+            icon: "icon-numworks",
             href:{
                 url: "https://www.numworks.com/simulator/",
                 blank: true
                 }
         },
         {
-            disabled: true,
-            title: "disabled",
-            icon: "fa fa-ban"
-        },
+            title: "Noordhoff",
+            icon: "icon-noordhoff",
+            href:{
+                url: "https://apps.noordhoff.nl/my/nl/bookshelf?redirectPath=%2Fhome%2Foverview&redirectPlatform=sep/",
+                blank: true
+                }
+        }, 
         {
-            disabled: true,
-            title: "disabled",
-            icon: "fa fa-ban"
+            title: "Translate",
+            icon: "icon-translate",
+            href:{
+                url: "https://translate.google.com/?sl=auto&tl=en&op=translate/",
+                blank: true
+                }
         },
     ]
 })
 
 
 
-let mousePos = { x: 0, y: 0 };
+let mousePos = { x: '50%', y: '50%' };
 
   // Track mouse movement to store the latest mouse position
 $(document).mousemove(function(e) {
