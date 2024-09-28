@@ -172,11 +172,11 @@ function CalIDcookie(){
         document.cookie = "calendarsId" + "=" + CalID + ";" + expires + ";path=/";
         console.log("we have found a cookie: "+document.cookie);
         fetchEventsAndUpdateTime(getCookie("calendarsId"));
-        startendfree(getCookie("calendarsId"));
+        startendfree(getCookie("calendarsId"),0);
     }else{
         console.log("we have found the cookie:" + getCookie("calendarsId"));
         fetchEventsAndUpdateTime(getCookie("calendarsId"));
-        startendfree(getCookie("calendarsId"));
+        startendfree(getCookie("calendarsId"),0);
     }
 };
 function CalIDcookie2(){
@@ -187,7 +187,7 @@ function CalIDcookie2(){
     }else{
         console.log("we have found the cookie:" + getCookie("friendcookie"));
         fetchEventsAndUpdateTime(getCookie("friendcookie"));
-        startendfree(getCookie("friendcookie"));
+        startendfree(getCookie("friendcookie"),0);
     }
 };
 function switchcookie(){
@@ -241,11 +241,9 @@ function fetchEventsAndUpdateTime(calid) {
             const now = new Date();
             let currentEvent = null;
             let upcomingEvent = null;
-            /*events.forEach(event => {
-                console.log(event.summary);
-                console.log(event.start.dateTime);
-                console.log(event.end.dateTime);
-                }); */
+            // filteredEvents.forEach(event => {
+            //     console.log(event.summary,event.start.dateTime,event.end.dateTime);
+            //     }); 
             // Find the first event that is currently happening
             for (const event of filteredEvents) {
                 const eventStart = new Date(event.start.dateTime);
@@ -451,11 +449,13 @@ function redirectToLink() {
 }
 
 //here code for start and end event times and now also missingblocks AKA free periods
-function startendfree(calid1){
+function startendfree(calid1,nDay){
     // Get today's date and tomorrow's date in the format required by the Google Calendar API
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date();
+    let day = new Date(today).setDate(today.getDate() + nDay)
+    day = new Date(day).toISOString().split('T')[0]
     // Fetch events from Google Calendar API and determine which events to display
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calid1}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${today}T00:00:00Z&timeMax=${today}T23:59:59Z`)
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calid1}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${day}T00:00:00Z&timeMax=${day}T23:59:59Z`)
         .then(response => response.json())
         .then(data => {
             const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
@@ -477,27 +477,23 @@ function startendfree(calid1){
                 const finalEventEndTime = new Date(finalEvent.end.dateTime);
                 finalEventEndTime.setMinutes(finalEventEndTime.getMinutes() + 10); // Add 10 minutes to the final event end time
                 if (currentTime >= finalEventEndTime) {
-                    if(new Date().getDay() + 1 === 6){
-                        document.getElementById('events-container').innerHTML = `<p>no events cuz tommorow be free</p>`;
-                    }
-                    else {
                         // Display events for tomorrow
-                        displayTomorrowEvents(getCookie("calendarsId"));}
+                        displayTomorrowEvents(getCookie("calendarsId"));
                 } else {
-                    // Display events for today
+                    // Display events for nDay
                     const firstEvent = sortedEvents[0];
                     const finalEvent = sortedEvents[sortedEvents.length - 1];
                     const freePeriods = findFreePeriods(sortedEvents);
-                    displayEvents(firstEvent, finalEvent);
+                    displayEvents(nDay,firstEvent, finalEvent);
                     displayFreePeriods(freePeriods);
                 }
             } else {
-                document.getElementById('events-container').innerHTML = `no events today fella`;
+                startendfree(calid1,nDay+1) // so does this same function again
             }        
         })
         .catch(error => console.error('Error fetching data:', error));
 }
-//startendfree(getCookie("calendarsId"))
+//startendfree(getCookie("calendarsId"),0)
 // Display events for tomorrow
 function displayTomorrowEvents(calid2) {
     const tomorrow = new Date();
@@ -521,14 +517,14 @@ function displayTomorrowEvents(calid2) {
             if(firstEvent == undefined){
                 document.getElementById('events-container').innerHTML = `<p>no events cuz tommorow be free</p>`;
             }else{
-            displayEvents(firstEvent, finalEvent);
+            displayEvents(0,firstEvent, finalEvent);
             displayFreePeriods(freePeriods);}
         })
         .catch(error => console.error('Error fetching data:', error));
 }
 
 // Function to display events on the HTML page
-async function displayEvents(firstEvent, finalEvent) {
+async function displayEvents(nDay,firstEvent, finalEvent) {
     const eventsContainer = document.getElementById('events-container');
     
     // Format start time of first event
@@ -542,8 +538,9 @@ async function displayEvents(firstEvent, finalEvent) {
     const finalInfo = getLinkAndImageForEvent(finalEvent.summary);
     const startAdvised = await AdvisedEquipment(formattedStartTime,1)
     const endAdvised = await AdvisedEquipment(formattedEndTime,0)
+    let header = nDay==0 ? `<h2>Events of Today</h2>`:`<h2>Events of ${nDay} days later</h2>`;
     eventsContainer.innerHTML = `
-        <h2>Today's Events</h2>
+        ${header}
         <p><strong>First Event:</strong> ${firstInfo.actualName}${firstInfo.picto}</p><p> <strong>Start Time:</strong> ${formattedStartTime}</p><p> ${startAdvised}</p>
         <p><strong>Final Event:</strong> ${finalInfo.actualName}${finalInfo.picto}</p><p> <strong>End Time:</strong> ${formattedEndTime}</p><p> ${endAdvised}</p>
     `;
