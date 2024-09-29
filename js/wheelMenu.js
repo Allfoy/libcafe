@@ -56,6 +56,11 @@ var menu = CMenu("#menu1")
                             blank: true
                             }
                     },
+                    {
+                        title: "Ani-cli -c",
+                        icon: "fa fa-terminal",
+                        click:function(){window.location.href='anicbatch://runbatchfile';}
+                    },
                 ]
         },
         {
@@ -105,7 +110,6 @@ $(document).mousemove(function(e) {
 
 $(document).keydown(function(e) {
     if (e.key === 'Z') {  // Checks if 'Z' is pressed
-        console.info(e)
       menu.show([mousePos.x, mousePos.y]);  // Show the menu at the stored mouse position
       return false;  // Prevents any default behavior (optional)
     }

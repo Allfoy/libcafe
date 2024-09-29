@@ -485,7 +485,7 @@ function startendfree(calid1,nDay){
                     const finalEvent = sortedEvents[sortedEvents.length - 1];
                     const freePeriods = findFreePeriods(sortedEvents);
                     displayEvents(nDay,firstEvent, finalEvent);
-                    displayFreePeriods(freePeriods);
+                    displayFreePeriods(nDay,freePeriods);
                 }
             } else {
                 startendfree(calid1,nDay+1) // so does this same function again
@@ -517,8 +517,8 @@ function displayTomorrowEvents(calid2) {
             if(firstEvent == undefined){
                 document.getElementById('events-container').innerHTML = `<p>no events cuz tommorow be free</p>`;
             }else{
-            displayEvents(0,firstEvent, finalEvent);
-            displayFreePeriods(freePeriods);}
+            displayEvents(1,firstEvent, finalEvent);
+            displayFreePeriods(1,freePeriods);}
         })
         .catch(error => console.error('Error fetching data:', error));
 }
@@ -538,7 +538,7 @@ async function displayEvents(nDay,firstEvent, finalEvent) {
     const finalInfo = getLinkAndImageForEvent(finalEvent.summary);
     const startAdvised = await AdvisedEquipment(formattedStartTime,1)
     const endAdvised = await AdvisedEquipment(formattedEndTime,0)
-    let header = nDay==0 ? `<h2>Events of Today</h2>`:`<h2>Events of ${nDay} days later</h2>`;
+    let header = nDay==0 ? `<h2>Events of Today</h2>`:(nDay==1 ? `<h2>Events of Tomorrow</h2>`:`<h2>Events of ${nDay} days later</h2>`);
     eventsContainer.innerHTML = `
         ${header}
         <p><strong>First Event:</strong> ${firstInfo.actualName}${firstInfo.picto}</p><p> <strong>Start Time:</strong> ${formattedStartTime}</p><p> ${startAdvised}</p>
@@ -576,7 +576,7 @@ function findFreePeriods(events, firstEvent, finalEvent) {
 }
 
 // Function to display free periods
-function displayFreePeriods(freePeriods) {
+function displayFreePeriods(nDay,freePeriods) {
     const eventsContainer = document.getElementById('eventz-container');
     eventsContainer.innerHTML += '<h2>Free Periods</h2>';
     let flag = true;
@@ -593,6 +593,7 @@ function displayFreePeriods(freePeriods) {
             var timeEnd = tT(period.endTime); 
             //console.log(timeStart, timeFormatted, timeEnd)
             eventsContainer.innerHTML += `<p><strong>Block ${period.block}:</strong> ${period.startTime} to ${period.endTime}</p>`;
+            if(nDay!==0){return} // so it wont say you're in a freeperiod when schoolinfo is from another day
             // check if rn is between the free periods
             if(flag){
                 if (timeStart < timeFormatted && timeFormatted < timeEnd){

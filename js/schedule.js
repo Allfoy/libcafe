@@ -348,17 +348,9 @@ function getName(){
 };
 
 function getDatee(day){
-    switch(day){
-        case 1:a=-6;b=1;
-        break;
-        case 5:a=-2;b=5;
-        break;
-        default:console.error('ERROR: that aint monday nor friday');a=0;b=0;
-        break;
-    }
     const chosenDateObject = new Date(document.getElementById("dateInput").value);
     let dayzDate = new Date(chosenDateObject); 
-    dayzDate.setDate(chosenDateObject.getDate() - chosenDateObject.getDay() + (chosenDateObject.getDay() === 0 ? a : b));
+    dayzDate.setDate(chosenDateObject.getDate() - chosenDateObject.getDay() + (chosenDateObject.getDay() === 0 ? day-7 : day));
     const dayz = dayzDate.toISOString().split('T')[0];
     return dayz
 }
