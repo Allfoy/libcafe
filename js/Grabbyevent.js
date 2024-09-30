@@ -422,6 +422,9 @@ function getLinkAndImageForEvent(title) {
     const regex = /^\d\s([^\-]+).*/; // use regex101 if you wanna relearn lmao
     // Check if any keyword in the title matches, and return the corresponding link and image source
     for (const keyword in keywordLinks) {
+        const linkID = document.getElementById(keyword);
+        if(linkID != null){
+        linkID.innerHTML = `<a class="btn" href="${keywordLinks[keyword].link}">Book</a>`;}
         if (title.includes(keyword)) {
                 return {
                     link: keywordLinks[keyword].link,
