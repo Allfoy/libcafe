@@ -163,11 +163,11 @@ function fetchEventsAndUpdateTime(CalID) {
         .then(response => response.json())
         .then(data => {
 			const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
-            const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
-            const sortedEvents = filteredEvents.sort((a, b) => {
-                const numA = parseInt(a.summary.match(/^\d+/)[0]); // Extract number from event title
-                const numB = parseInt(b.summary.match(/^\d+/)[0]);
-                return numA - numB; // Sort events based on the numbers in their titles
+            let filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
+            filteredEvents = filteredEvents.sort((a, b) => {
+                const dateA = new Date(a.start.dateTime); // Convert dateTime strings to Date objects
+                const dateB = new Date(b.start.dateTime);
+                return dateA - dateB; // Sort based on the dateTime
             });
             const now = slider;
             let nowDate = new Date(now);
@@ -417,27 +417,21 @@ document.addEventListener('keydown', function(event) {
             blinkclass();
             checkOverlaps();
         break;
-
-        case 'M':
+        case 'H':
             window.location.href = "../home";
         break;
-
         case '0':
             window.scrollTo(0,0*f)
         break;
-        
         case '1':
             window.scrollTo(0,1*f)
         break;
-
         case '2':
             window.scrollTo(0,2*f)
         break;
-
         case '3':
             window.scrollTo(0,3*f)
         break;
-
         case 'N':
             document.getElementById("timePicker").style.display = "block";
             document.getElementById("timePicker").focus()
