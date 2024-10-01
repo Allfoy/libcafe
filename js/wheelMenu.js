@@ -57,9 +57,9 @@ var menu = CMenu("#menu1")
                             }
                     },
                     {
-                        title: "Ani-cli -c",
+                        title: "Menu.sh",
                         icon: "fa fa-terminal",
-                        click:function(){window.location.href='anicbatch://runbatchfile';}
+                        click:function(){window.location.href='menubatch://runbatchfile';}
                     },
                 ]
         },

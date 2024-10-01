@@ -28,5 +28,14 @@
     </video>
 </body>
 <script>
-    document.getElementById("videoFr").loop = true;</script>
+    document.getElementById("videoFr").loop = true;
+    
+    document.addEventListener('keydown', function(event) {
+    switch (event.key) {
+        case 'H':
+            window.location.href = "../home";
+        break;
+    }
+});
+</script>
 </html>

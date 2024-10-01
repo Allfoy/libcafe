@@ -658,5 +658,8 @@ document.addEventListener('keydown', function(event) {
         case 'F':
             window.location.href = "../friend";
         break;
+        case 'S':
+            window.location.href = "../schedule";
+        break;
     }
 });

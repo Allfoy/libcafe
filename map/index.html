@@ -377,7 +377,8 @@ createElem(kcoords,'k');
 function getlocation(location){
     // determine which object to use aka which buildingscoords
     //const building = document.getElementById('map').src.substr(17,1) + "coords";
-    const buildingName = location.substr(0,1) + "coords"; //pcoords
+    location = location.replace(/[^\w]/g,'')
+    const buildingName = location.toLowerCase().substr(0,1) + "coords"; //pcoords
     const building = eval(buildingName); // turns the pcoords string into the object
     const room = location.substr(1,3) // 316
     // Check if the room code exists in the object literal
