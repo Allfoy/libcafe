@@ -7,7 +7,7 @@ var menu = CMenu("#menu1")
     backgroundHover:"#52302eFF",
     // pageBackground:"transparent",
     diameter:"240",
-    position:"right",
+    position:"right", // position is reversed
     // start:"0", //broken
     // horizontal:"true",
     // hideAfterClick:"true",
@@ -68,6 +68,22 @@ var menu = CMenu("#menu1")
             icon: "icon-outlook",
             href:{
                 url: "https://outlook.live.com/mail/0/",
+                blank: true
+                }
+        },
+        {
+            title: "Examen",
+            icon: "icon-examen",
+            href:{
+                url: "https://eindexamensite.nl/dashboard",
+                blank: true
+                }
+        },
+        {
+            title: "Priyo",
+            icon: "icon-priyo",
+            href:{
+                url: "https://porteum.onderwijsportalen.nl/dashboard",
                 blank: true
                 }
         },

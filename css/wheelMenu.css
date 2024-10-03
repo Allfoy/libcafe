@@ -4,14 +4,19 @@
 }
 
 .icon-anilist {
-    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=anilist.co/home');
+    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=anilist.co');
 }
 
 .icon-discord {
     background: url('https://www.google.com/s2/favicons?sz=256&domain_url=discord.com');
 }
+
+.icon-examen {
+    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=eindexamensite.nl');
+}
+
 .icon-magister {
-    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=accounts.magister.net/profile/#/');
+    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=accounts.magister.net/');
 }
 
 .icon-noordhoff {
@@ -19,11 +24,15 @@
 }
 
 .icon-numworks {
-    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=numworks.com/simulator');
+    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=numworks.com');
 }
 
 .icon-outlook {
-    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=outlook.live.com/mail/0/');
+    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=outlook.live.com/');
+}
+
+.icon-priyo {
+    background: url('https://www.google.com/s2/favicons?sz=256&domain_url=porteum.onderwijsportalen.nl')
 }
 
 .icon-translate {

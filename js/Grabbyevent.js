@@ -27,7 +27,7 @@ const keywordLinks = {
         picto : '🌱'
     },
     'netl': {
-        link: 'https://apps.noordhoff.nl/se/content/book/a904673b-f07d-480a-8201-57b56d94112b/ebooks/89f0e06c-3f93-403f-9804-04bad7a197de',
+        link: 'https://apps.noordhoff.nl/se/content/theme/adc21711-b368-469e-89b1-61d97bdd56a6/ebook/02d703ba-b91a-45bc-91c0-2248cc7c3b57',
         imageSrc: '../img/covers/DUTCH.jpeg',
         actualName: 'Dutch',
         picto : '🌷'
