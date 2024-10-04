@@ -158,6 +158,22 @@ const keywordLinks = {
         ...noBook,
         actualName:'LOB',
         picto:'🔮'
+    },'ltc':{
+        ...noBook,
+        actualName:'Latin',
+        picto:'🏛'
+    },'gtc':{
+        ...noBook,
+        actualName:'Greek',
+        picto:'🏛'
+    },'beco':{
+        ...noBook,
+        actualName:'Beco',
+        picto:'🏭'
+    },'boekenclub':{
+        ...noBook,
+        actualName:'Bookclub',
+        picto:'📚'
     }
     // Add more keywords and links for silly guy
 };
@@ -269,7 +285,8 @@ function fetchEventsAndUpdateTime(calid) {
                     "14:15": "14:30"
                 };
                 let schoolStart =  filteredEvents[0]?.start.dateTime ?? '0' ;
-                let schoolEnd = filteredEvents[filteredEvents.length-1]?.end.dateTime ?? '01/01/1970 23:59:59' ;
+                let todaysEvents = filteredEvents.filter(function(event){return event.end.dateTime.includes(filteredEvents[0].end.dateTime.replace(/(?=T)(.*?)(?<=Z)/g,''))})
+                let schoolEnd = todaysEvents[todaysEvents.length-1] ?? '01/01/1970 23:59:59';
                 const conditions = {//put the conditions in an object literal for readability
                     weekend: new Date().getDay() === 6 || new Date().getDay() === 0, //is it weekend?
                     isInBreak: Object.entries(breaks).some(([start, end]) => {return currentTime >= start && currentTime <= end;}), // is it break?

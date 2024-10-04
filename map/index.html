@@ -4,16 +4,12 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../img/favicon.ico">
+    <link href="https://fonts.cdnfonts.com/css/minecraft-3" rel="stylesheet">
 	<title>map</title>
     <style>
         .body{
             background-color: #f9f1e3;
             margin: 0px;
-        }
-        .contain{
-            position: absolute;
-            left: 0px;
-            top: 0px;
         }
         .map{
             width:1519px;
@@ -25,24 +21,38 @@
         .users{
             position: relative;
             display: flex;
-            flex-wrap: wrap; /* Allows items to wrap onto multiple lines */ /* Aligns items to the start of the flex container */
+            flex-wrap: wrap;
             z-index: 3;
-        }
-        .allfoy{
-            position: absolute;
-            display: none;
-            border-radius: 90%;
-            width: 24px;
-            z-index: 3;
-            transition: 2.5s;
         }
         .pfp{
             position: absolute;
             display: none;
-            border-radius: 50%;
+            overflow:visible;
+            white-space: nowrap;
             width: 24px;
+            height: 24px;
             z-index: 3;
             transition: 2.5s;
+        }
+        .pfp img{
+            position: absolute;
+            top: 50%;
+            width: 24px;
+            border-radius: 100%;
+        }
+        .label{
+            position: relative;
+            margin: 0;
+            width:fit-content;
+            text-align: center;
+            white-space: nowrap;
+            font-size: xx-small;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-family: 'Minecraft', sans-serif;
+            background-color: rgba(104, 104, 104, 0.4);
+            background-blend-mode: multiply;
         }
         .pix{
             position: fixed;
@@ -76,11 +86,12 @@
         <div id="pix" class="pix"></div>
         <div class="users">
             <img id="map" class="map" src="../img/locations/floors.jpg"/>
-            <img id="a" class="allfoy" title="Allfoy" src="../img/pfp/allfoy.jpg"/>
-            <img id="t" class="pfp" title="Troy" src="../img/pfp/troy.jpg"/>
-            <img id="k" class="pfp" title="Kevin" src="../img/pfp/kevin.jpg"/>
-            <img id="c" class="pfp" title="Casper" src="../img/pfp/casper.jpg"/>
-            <img id="m" class="pfp" title="Myrthe" src="../img/pfp/myrthe.jpg"/>
+            <div id="a" class="pfp" title="Allfoy"><p class="label">&nbsp Allfoy &nbsp</p><img src="../img/pfp/allfoy.jpg"/></div>
+            <div id="t" class="pfp" title="Troy"  ><p class="label">&nbsp Troy   &nbsp</p>  <img src="../img/pfp/troy.jpg"  /></div>
+            <div id="k" class="pfp" title="Kevin" ><p class="label">&nbsp Kevin  &nbsp</p> <img src="../img/pfp/kevin.jpg" /></div>
+            <div id="c" class="pfp" title="Casper"><p class="label">&nbsp Casper &nbsp</p><img src="../img/pfp/casper.jpg"/></div>
+            <div id="m" class="pfp" title="Myrthe"><p class="label">&nbsp Myrthe &nbsp</p><img src="../img/pfp/myrthe.jpg"/></div>
+            <div id="o" class="pfp" title="Onah"  ><p class="label">&nbsp Onah   &nbsp</p>  <img src="../img/pfp/onah.jpg"  /></div>
             <!-- <img id="?" class="pfp" title="???" src="../img/pfp/???.jpg"/> -->
         </div>
 </body>
@@ -93,6 +104,7 @@ function initiate(){
         'i32q28ad785oqs2dom81460a186j6uvr', // kevin
         '3hvsosg4io5fdefbn66meln2un2hu33k', // troy
         '32ddu2ndrbe8jtp1olg6rko3f5cntog3', // myrthe
+        'k1jvlnvnatotdc1rkba5tkevo8r98gjk', // onah
         //'????',  // ???
     ];
     ids.forEach(id => {
@@ -103,7 +115,7 @@ function initiate(){
     setTimeout(checkOverlaps,4500)
     document.addEventListener('keydown', function(event) {
         // when n is pressed
-        if (event.key === 'm') {
+        if (event.key === 'M') {
             clearTimeout(theLoop)
         }
     });
@@ -118,15 +130,16 @@ map.onclick = function(e) {
 window.onload = function(){window.scrollTo(0,795)};
 
 function checkOverlaps() {
-    var images = ['a', 't', 'k', 'c', 'm'];
+    var images = ['a', 't', 'k', 'c', 'm','o'];
     for (var i = 0; i < images.length; i++) {
-        var currentImg = document.getElementById(images[i]);
+        const currentImg = document.getElementById(images[i]);
+        const p = currentImg.querySelector('p');
         for (var j = i+1; j < images.length; j++) {
             if (i !== j) {
                 var otherImg = document.getElementById(images[j]);
                 if (currentImg.style.top == otherImg.style.top && currentImg.style.left == otherImg.style.left) {
                     // Overlap detected, adjust position
-                    var newX = parseInt(currentImg.style.left.replace('px','')) + 24 + 5;
+                    var newX = parseInt(currentImg.style.left.replace('px','')) + 24 + (13*(p.offsetWidth)/24);
                     otherImg.style.left = newX + 'px';
                     
                 }
@@ -156,10 +169,7 @@ function fetchEventsAndUpdateTime(CalID) {
 //    currentEvent="dead";
 //    currentEvent.location="p000"
     const today = new Date().toISOString().split('T')[0];
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() +1); // change 7 to 3 or 4 if you notice inconsistencies again
-    const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${CalID}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${today}T00:00:00Z&timeMax=${tomorrowFormatted}T23:59:59Z`)
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${CalID}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${today}T00:00:00Z&timeMax=${today}T23:59:59Z`)
         .then(response => response.json())
         .then(data => {
 			const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
@@ -208,14 +218,10 @@ function fetchEventsAndUpdateTime(CalID) {
 };
 function move(id,location){
     const elem = document.getElementById(id);
-    const elemy = {
-        "width": 24/2,
-        "height": 24/2
-    }
     elem.style.display = "block";   
     // takes width of elemy and width of pix into consideration
-    elem.style.left = location.x - elemy.width + 5 + 'px';
-    elem.style.top = location.y - elemy.height + 5 +'px';
+    elem.style.left = location.x -12 + 5 + 'px';
+    elem.style.top = location.y -12 -6.4 +'px';
 };
 function getid(CalID){
     var id;
@@ -248,6 +254,11 @@ function getid(CalID){
                         id = "m";
                         name = "Myrthe";
                         place = "p003";
+                    break;
+                    case "k1jvlnvnatotdc1rkba5tkevo8r98gjk":
+                        id = "o";
+                        name = "Onah";
+                        place = "p001";
                     break;
                     // case "?????":
                     //     //move myrthe pfp element
@@ -413,7 +424,7 @@ function blinkclass() {
 document.addEventListener('keydown', function(event) {
     const f = 3038/4;
     switch (event.key) {
-        case 'c':
+        case 'C':
             blinkclass();
             checkOverlaps();
         break;

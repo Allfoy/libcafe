@@ -30,8 +30,8 @@ function fetchEventsAndUpdateTime(CalID) {
     fetch(`https://www.googleapis.com/calendar/v3/calendars/${CalID}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${monday}T00:00:00Z&timeMax=${friday}T23:59:59Z`)
         .then(response => response.json())
         .then(data => {
-            const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
-            //const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
+            let events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
+            events = events.filter(function(event){return (!event.summary.includes("rt_"))});
             sortedEvents = events.sort((a, b) => {
                 const dateA = new Date(a.start.dateTime); // Convert dateTime strings to Date objects
                 const dateB = new Date(b.start.dateTime);
@@ -296,6 +296,18 @@ const keywordLinks = {
     },'LOB':{
         actualName:'LOB',
         picto:'🔮'
+    },'ltc':{
+        actualName:'Latin',
+        picto:'🏛'
+    },'gtc':{
+        actualName:'Greek',
+        picto:'🏛'
+    },'beco':{
+        actualName:'Beco',
+        picto:'🏭'
+    },'boekenclub':{
+        actualName:'Bookclub',
+        picto:'📚'
     }
     // Add more keywords and links for silly guy
 };
@@ -341,8 +353,10 @@ function getName(){
         case '3hvsosg4io5fdefbn66meln2un2hu33k':
                 return 'Troy'
         case '32ddu2ndrbe8jtp1olg6rko3f5cntog3':
-                return 'Myrthe'
-        default:
+            return 'Myrthe'
+        case 'k1jvlnvnatotdc1rkba5tkevo8r98gjk':
+                return 'Onah'
+            default:
             return 'who dis?'
     }
 };
