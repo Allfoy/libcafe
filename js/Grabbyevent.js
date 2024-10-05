@@ -286,7 +286,7 @@ function fetchEventsAndUpdateTime(calid) {
                 };
                 let schoolStart =  filteredEvents[0]?.start.dateTime ?? '0' ;
                 let todaysEvents = filteredEvents.filter(function(event){return event.end.dateTime.includes(filteredEvents[0].end.dateTime.replace(/(?=T)(.*?)(?<=Z)/g,''))})
-                let schoolEnd = todaysEvents[todaysEvents.length-1] ?? '01/01/1970 23:59:59';
+                let schoolEnd = todaysEvents[todaysEvents.length-1].end.dateTime ?? '01/01/1970 23:59:59';
                 const conditions = {//put the conditions in an object literal for readability
                     weekend: new Date().getDay() === 6 || new Date().getDay() === 0, //is it weekend?
                     isInBreak: Object.entries(breaks).some(([start, end]) => {return currentTime >= start && currentTime <= end;}), // is it break?
@@ -493,20 +493,15 @@ function startendfree(calid1,nDay){
     // logic for changing to tommorow if it's 10 min after finalevent
             const currentTime = new Date();
             const finalEvent = sortedEvents[sortedEvents.length - 1];
-            if (finalEvent && finalEvent.end && finalEvent.end.dateTime) {
-                const finalEventEndTime = new Date(finalEvent.end.dateTime);
-                finalEventEndTime.setMinutes(finalEventEndTime.getMinutes() + 10); // Add 10 minutes to the final event end time
-                if (currentTime >= finalEventEndTime) {
-                        // Display events for tomorrow
-                        displayTomorrowEvents(getCookie("calendarsId"));
-                } else {
-                    // Display events for nDay
+            const finalEventEndTime = new Date(finalEvent?.end.dateTime);
+            finalEventEndTime.setMinutes(finalEventEndTime.getMinutes() + 10); // Add 10 minutes to the final event end time
+            if (finalEvent && finalEvent.end && finalEvent.end.dateTime && !(currentTime >= finalEventEndTime)) {
+                        // Display events for nDay
                     const firstEvent = sortedEvents[0];
                     const finalEvent = sortedEvents[sortedEvents.length - 1];
                     const freePeriods = findFreePeriods(sortedEvents);
                     displayEvents(nDay,firstEvent, finalEvent);
                     displayFreePeriods(nDay,freePeriods);
-                }
             } else {
                 startendfree(calid1,nDay+1) // so does this same function again
             }        
@@ -514,34 +509,6 @@ function startendfree(calid1,nDay){
         .catch(error => console.error('Error fetching data:', error));
 }
 //startendfree(getCookie("calendarsId"),0)
-// Display events for tomorrow
-function displayTomorrowEvents(calid2) {
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
-    // Fetch events for tomorrow
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calid2}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${tomorrowFormatted}T00:00:00Z&timeMax=${tomorrowFormatted}T23:59:59Z`)
-        .then(response => response.json())
-        .then(data => {
-            const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
-            const filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
-            const sortedEvents = filteredEvents.sort((a, b) => {
-                const dateA = new Date(a.start.dateTime); // Convert dateTime strings to Date objects
-                const dateB = new Date(b.start.dateTime);
-                return dateA - dateB; // Sort based on the dateTime
-            });
-
-            const firstEvent = sortedEvents[0];
-            const finalEvent = sortedEvents[sortedEvents.length - 1];
-            const freePeriods = findFreePeriods(sortedEvents);
-            if(firstEvent == undefined){
-                document.getElementById('events-container').innerHTML = `<p>no events cuz tommorow be free</p>`;
-            }else{
-            displayEvents(1,firstEvent, finalEvent);
-            displayFreePeriods(1,freePeriods);}
-        })
-        .catch(error => console.error('Error fetching data:', error));
-}
 
 // Function to display events on the HTML page
 async function displayEvents(nDay,firstEvent, finalEvent) {
