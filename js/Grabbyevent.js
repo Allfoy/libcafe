@@ -1,6 +1,6 @@
 //let calendarId = 'kvme0ikmjq4825g8ee860tm058clorcg';
 // object literal with keywords and their respective links
-const noBook = {link: 'https://allfoy.github.io/libcafe/home/error2', imageSrc: '../img/bg.jpg'};
+const noBook = {link: '../home/error1.html', imageSrc: '../img/bg.jpg'};
 const keywordLinks = {
     'entl': {
         link: 'https://apps.noordhoff.nl/se/content/book/4e33ffb8-40c9-45fa-a67c-eae545d7dbea/ebooks/d6cafc0b-fb70-438c-8668-c017ee87ff73',
@@ -56,7 +56,7 @@ const keywordLinks = {
         picto : '🔰'
     },
     'maat': {
-        link: 'https://allfoy.github.io/libcafe/home/error2',
+        link: '../home/error1.html',
         imageSrc: '../img/covers/MAAT.jpg',
         actualName: 'Social studies',
         picto : '🌎'
@@ -87,7 +87,7 @@ const keywordLinks = {
         picto : '🏀'
     },
     'kumu':{
-        link: 'https://allfoy.github.io/libcafe/home/error2',
+        link: '../home/error1.html',
         imageSrc: '../img/covers/music.png',
         actualName: 'Music',
         picto : '🎼'
@@ -98,7 +98,7 @@ const keywordLinks = {
         picto : '✏️🕶️🕵️'
     },
     'kua':{
-        link: 'https://allfoy.github.io/libcafe/home/error2',
+        link: '../home/error1.html',
         imageSrc: '../img/covers/KUA.jpg',
         actualName: 'General Arts',
         picto : '🎨'
@@ -363,7 +363,7 @@ function fetchEventsAndUpdateTime(calid) {
                             if(!(document.getElementById('event-container').innerHTML === `<p>No ongoing events.</p>`)){
                                 document.getElementById('event-container').innerHTML = `<p>No ongoing events.</p>`;
                             }
-                        document.getElementById('event-button').href = 'https://allfoy.github.io/libcafe/home/error1'; // Set a default link or disable the button if no ongoing event
+                        document.getElementById('event-button').href = '../home/error1.html'; // Set a default link or disable the button if no ongoing event
                     // first digit 0 code ends
                     // double digit 01 code starts
                         linkAndImage = getLinkAndImageForEvent(upcomingEvent.summary);
@@ -417,7 +417,7 @@ function fetchEventsAndUpdateTime(calid) {
                         if(!(document.getElementById('event-container').innerHTML === `<p>No ongoing events.</p>`)){
                         document.getElementById('event-container').innerHTML = `<p>No ongoing events.</p>`;
                         }
-                        document.getElementById('event-button').href = 'https://allfoy.github.io/libcafe/home/error1'; // Set a default link or disable the button if no ongoing event
+                        document.getElementById('event-button').href = '../home/error1.html'; // Set a default link or disable the button if no ongoing event
                     // first digit 0 code ends
                     //double digit 00 code starts
                         if(!(document.getElementById('upcoming-event-container').innerHTML === '<p>No upcoming events.</p>')){
@@ -644,6 +644,9 @@ document.addEventListener('keydown', function(event) {
         break;
         case 'S':
             window.location.href = "../schedule";
+        break;
+        case 'A':
+            window.location.href = document.getElementById('event-button').href;
         break;
     }
 });

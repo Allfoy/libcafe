@@ -146,9 +146,33 @@
         </div>
 </body>
 <script>
-let counterNumber = 0;
-counting()
-window.scrollTo({top: 40+1*window.innerHeight, left: 0, behavior: "smooth"})
+    let counterNumber = 0;
+    initiate();
+    window.scrollTo({top: 40+1*window.innerHeight, left: 0, behavior: "smooth"})
+function initiate(){
+    const ids = [
+        'kvme0ikmjq4825g8ee860tm058clorcg', // allfoy
+        '0pspeo6e4k6e329k4h56mkam0k9t6gnq', // casper
+        'i32q28ad785oqs2dom81460a186j6uvr', // kevin
+        '3hvsosg4io5fdefbn66meln2un2hu33k', // troy
+        '32ddu2ndrbe8jtp1olg6rko3f5cntog3', // myrthe
+        'k1jvlnvnatotdc1rkba5tkevo8r98gjk', // onah
+        //'????',  // ???
+    ];
+    counterNumber = counterNumber + 1;
+    // counternumber is 0 then after the first initiation its 1 then it'll be 2 forever
+    ids.forEach(id => {
+        fetchEventsAndUpdateTime(id);
+    });
+    const theLoop = setTimeout(initiate,3000);
+    setTimeout(checkOverlaps,4500)
+    document.addEventListener('keydown', function(event) {
+        // when n is pressed
+        if (event.key === 'M') {
+            clearTimeout(theLoop)
+        }
+    });
+};
 map.onclick = function(e) {
     //console.log(e.x, e.y);
     const pix = document.getElementById("pix");
@@ -156,80 +180,6 @@ map.onclick = function(e) {
     pix.innerHTML = `{x:${e.offsetX-5}, y:${e.offsetY-5}}`;
     navigator.clipboard.writeText(pix.innerHTML);
 };
-const theLoop = setInterval(counting,3000);
-const otherLoop = setInterval(checkOverlaps,1500)
-
-const userIds = [
-    'kvme0ikmjq4825g8ee860tm058clorcg', // a
-    '0pspeo6e4k6e329k4h56mkam0k9t6gnq', // c
-    'i32q28ad785oqs2dom81460a186j6uvr', // k
-    '3hvsosg4io5fdefbn66meln2un2hu33k', // t
-    '32ddu2ndrbe8jtp1olg6rko3f5cntog3', // m
-    'k1jvlnvnatotdc1rkba5tkevo8r98gjk'  // o
-];
-
-function counting(){
-    counterNumber = counterNumber + 1;
-}
-
-function useData(filteredEvents,CalID) {
-    var timeInput = document.getElementById('timePicker').value;
-    var isoTime = new Date().toISOString();
-    if(!timeInput){
-        var hours = parseInt(isoTime.substr(11,2)) + 2;
-        var minutes = parseInt(isoTime.substr(14,2));
-    }   else{var times = timeInput.split(":")
-            var hours = parseInt(times[0]);
-            var minutes = parseInt(times[1]);
-        }
-    var slider = new Date();
-    slider.setHours(hours);
-    slider.setMinutes(minutes);
-    document.getElementById("timePicker").addEventListener("blur", function() {
-    this.style.display = "none";
-    });
-    const today = new Date().toISOString().split('T')[0];
-    id = getid(CalID);
-    //NPC
-        if(counterNumber >= 2){
-            let newNumber = counterNumber-2
-            newNumber = filteredEvents.length ? Math.floor((0.5*newNumber)%filteredEvents.length):newNumber;
-            let locationy = filteredEvents[newNumber] ?? getRandomLocation();
-            move('NPC-'+id.id,locationy);
-            if(counterNumber%2 == 0){move('NPC-1',getRandomLocation());move('NPC-2',getRandomLocation());move('NPC-3',getRandomLocation());}
-        }
-    const now = slider;
-    let nowDate = new Date(now);
-    let currentEvent = null;
-    let upcomingEvent = null;
-    for (const event of filteredEvents) {
-        const eventStart = new Date(event.start.dateTime);
-        const eventEnd = new Date(event.end.dateTime);
-        if (eventStart <= now && eventEnd >= now) {
-            currentEvent = event;
-            if(counterNumber ==1){
-            console.info(`${hours}:${minutes.toLocaleString('en-US', {minimumIntegerDigits: 2})} (${id.name}) : ${currentEvent.summary} (${currentEvent.location})`)
-            }
-            move(id.id,currentEvent);
-        }
-    }
-    if (!currentEvent){
-        id = getid(CalID);
-        let locationFree = "p404";
-        const startest = filteredEvents[0]?.start.dateTime ? new Date(filteredEvents[0].start.dateTime).toLocaleTimeString():'00:00:00'; //checks for weekend case
-        const endest = filteredEvents[filteredEvents.length-1]?.end.dateTime ? new Date(filteredEvents[filteredEvents.length-1].end.dateTime).toLocaleTimeString():'00:00:00'; //checks for weekend case
-        if(now.toLocaleTimeString()<= startest||now.toLocaleTimeString()>=endest){
-            locationFree = {location:"p000"};placeAp = `outside school`
-        }else{
-            locationFree = id;placeAp = `within school`
-        }
-        if(counterNumber == 1){
-            console.info(`${hours}:${minutes.toLocaleString('en-US', {minimumIntegerDigits: 2})} (${id.name}) : ${placeAp}`);
-        }
-        move(id.id,locationFree)
-    }
-    setTimeout(useData,3000,filteredEvents,CalID)
-}
 
 function checkOverlaps() {
     var images = ['a', 't', 'k', 'c', 'm','o'];
@@ -249,83 +199,104 @@ function checkOverlaps() {
         }
     }
 }
-
-async function fetchingData(CalID) {
-    try {
-        const response = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${CalID}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${new Date().toISOString().split('T')[0]}T00:00:00Z&timeMax=${new Date().toISOString().split('T')[0]}T23:59:59Z`);
-        const data = await response.json();
-        const events = data.items.filter(event => /^\d/.test(event.summary));
-        let filteredEvents = events.filter(event => !event.summary.includes("rt_"));
-        filteredEvents = filteredEvents.sort((a, b) => {
-            const dateA = new Date(a.start.dateTime);
-            const dateB = new Date(b.start.dateTime);
-            return dateA - dateB;
+function fetchEventsAndUpdateTime(CalID) {
+    // Fetch events from Google Calendar API
+	// Get today's date in the format required by the Google Calendar API
+    var timeInput = document.getElementById('timePicker').value;
+    var isoTime = new Date().toISOString();
+    if(!timeInput){
+        var hours = parseInt(isoTime.substr(11,2)) + 2;
+        var minutes = parseInt(isoTime.substr(14,2));
+    }   else{var times = timeInput.split(":")
+            var hours = parseInt(times[0]);
+            var minutes = parseInt(times[1]);
+        }
+    var slider = new Date();
+    slider.setHours(hours);
+    slider.setMinutes(minutes);
+    document.getElementById("timePicker").addEventListener("blur", function() {
+    this.style.display = "none";
+    });
+//    currentEvent="dead";
+//    currentEvent.location="p000"
+    const today = new Date().toISOString().split('T')[0];
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${CalID}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${today}T00:00:00Z&timeMax=${today}T23:59:59Z`)
+        .then(response => response.json())
+        .then(data => {
+			const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
+            let filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});
+            filteredEvents = filteredEvents.sort((a, b) => {
+                const dateA = new Date(a.start.dateTime); // Convert dateTime strings to Date objects
+                const dateB = new Date(b.start.dateTime);
+                return dateA - dateB; // Sort based on the dateTime
+            });
+            id = getid(CalID);
+            //NPC
+                if(counterNumber >= 2){
+                    let newNumber = counterNumber-2
+                    newNumber = filteredEvents.length ? Math.floor((0.5*newNumber)%filteredEvents.length):newNumber;
+                    let locationy = filteredEvents[newNumber] ?? getRandomLocation();
+                    move('NPC-'+id.id,locationy);
+                    move('NPC-1',getRandomLocation());move('NPC-2',getRandomLocation());move('NPC-3',getRandomLocation());
+                }
+            const now = slider;
+            let nowDate = new Date(now);
+            let currentEvent = null;
+            let upcomingEvent = null;
+			for (const event of filteredEvents) {
+                const eventStart = new Date(event.start.dateTime);
+                const eventEnd = new Date(event.end.dateTime);
+                if (eventStart <= now && eventEnd >= now) {
+                    currentEvent = event;
+                    console.info(`${hours}:${minutes.toLocaleString('en-US', {minimumIntegerDigits: 2})} (${id.name}) : ${currentEvent.summary} (${currentEvent.location})`)
+                    move(id.id,currentEvent);
+                }
+            }
+            if (!currentEvent){
+                id = getid(CalID);
+                let locationFree = "p404";
+                const startest = filteredEvents[0]?.start.dateTime ? new Date(filteredEvents[0].start.dateTime).toLocaleTimeString():'00:00:00'; //checks for weekend case
+                const endest = filteredEvents[filteredEvents.length-1]?.end.dateTime ? new Date(filteredEvents[filteredEvents.length-1].end.dateTime).toLocaleTimeString():'00:00:00'; //checks for weekend case
+                if(now.toLocaleTimeString()<= startest||now.toLocaleTimeString()>=endest){
+                    locationFree = {location:"p000"};placeAp = `outside school`
+                }else{
+                    locationFree = id;placeAp = `within school`
+                }
+                if(counterNumber == 1){
+                    console.info(`${hours}:${minutes.toLocaleString('en-US', {minimumIntegerDigits: 2})} (${id.name}) : ${placeAp}`);
+                }
+                //console.log(now.toLocaleTimeString(), new Date(filteredEvents[0].start.dateTime).toLocaleTimeString(),new Date(filteredEvents[filteredEvents.length-1].end.dateTime).toLocaleTimeString())
+                move(id.id,locationFree)
+            }
+        }).catch(error => {
+            console.error('Error fetching events:', error);
         });
-        //console.info('fetching grahh')
-        return filteredEvents;
-    } catch (error) {
-        console.error('Error fetching events:', error);
-        return ['error'];
-    }
-}
-
-// Fetch data for all user IDs and construct the object
-async function getAllData() {
-    const allData = {};
-    // Fetch data in parallel for all userIds
-    const results = await Promise.all(userIds.map(id => fetchingData(id)));
-    // Populate allData object with results
-    userIds.forEach((id, index) => {
-        allData[id] = results[index];  // Store filtered events for each user ID
-    });
-    return allData;
-}
-
-// Call the function and process each set of filtered events
-getAllData().then(allData => {
-    // Iterate over allData and call useData for each set of filteredEvents with CalID
-    Object.entries(allData).forEach(([CalID, filteredEvents]) => {
-        setInterval(useData(filteredEvents, CalID),5*1000);  // Call useData with filtered events and CalID
-    });
-});
-
+        //setTimeout(fetchEventsAndUpdateTime,1000,CalID);
+};
 
 function move(id,locationy){
+    // determine which object to use aka which buildingscoords
+    //const building = document.getElementById('map').src.substr(17,1) + "coords";`
     let location = locationy.location
     location = location.replace(/[^\w]/g,'')
-    location = location.length ? location.slice(0,4).toLowerCase(): location ;
     const buildingName = location.toLowerCase().substr(0,1) + "coords"; //pcoords
     const building = eval(buildingName); // turns the pcoords string into the object
     const room = location.substr(1,3) // 316
+    // Check if the room code exists in the object literal
     const coords = room in building ? building[room] : move(id,'p000');
-    if(false && counterNumber >= 2 && counterNumber%2 == 0){
-        let previousLocation = coordsToLocation(id)
-        previousLocation = previousLocation ?? location;
-        previousLocation = previousLocation.replace(/^(n|o)/,'p');
-        let previousLevel = previousLocation.replace(/(\D)(.)(.*)/,'$2');
-        previousLevel = previousLevel == 4?'0':previousLevel;
-        const newerLevel = location.replace(/^(.)/,'$1');
-        if(previousLevel !== newerLevel){
-            // go stairs
-            const gamble = Math.floor(Math.random()*2) ?'n':'e';
-            locationStr = previousLocation.toLowerCase().substr(0,1) + gamble + previousLevel;
-            const stairCoord = locationStr in scoords ? scoords[locationStr] : console.error(`issue with stairs ${scoords[locationStr]} or ${locationStr}`);
-            const elem = document.getElementById(id);
-            setTimeout(move2,5000,id,stairCoord)
-            setTimeout(move2,2500,id,coords)
-            // understand async first then do all this using .then
-            //
-        }
-        // tp stairs to stairs
-        //delayed move from stairs to destination
-    }else{move2(id,coords)}
-};
-function move2(id,coords){
+    // use coordsToLocation() to get previous location
+    //compare the two
+    //delayed move to randomly decided stairs
+    // tp stairs to stairs
+    //delayed move from stairs to destination
+
+    // now move it move it
     const elem = document.getElementById(id);
-    elem.style.display = "block";
+    elem.style.display = "block";   
+    // takes width of elemy and width of pix into consideration
     elem.style.left = coords.x -12 + 5 + 'px';
-    elem.style.top = coords.y -12 -7 +'px';
-}
+    elem.style.top = coords.y -12 -6.4 +'px';
+};
 function getid(CalID){
     var id;
     var name;
@@ -363,12 +334,17 @@ function getid(CalID){
                         name = "Onah";
                         location = "p001";
                     break;
+                    // case "?????":
+                    //     //move myrthe pfp element
+                    //     id = "?";
+                    //     name = "???";
+                    // break;
                 }
     return {id, name, location}
 };
 
-function tT(str){ // tT = translateTime to time of the day in minutes
-    str = str.split(':');
+function tT(str){ // tT = translateTime
+    str = str.split(':'); // so end up array 12 : 23
     str = parseInt(str[0])*60+parseInt(str[1]);
     return str;
 }
@@ -508,13 +484,12 @@ const scoords = { // stairs, a northern and an eastern side
     "kn3":{x:340, y:2563},
     "ke3":{x:515, y:2508},
 }
+// make em
+const coords = ['p','e','c','k','n','o','l','s'];
+coords.forEach(coord => {createElem(coord+'coords',coord)});
 
-const coordslet = ['p','e','c','k','n','o'];
-const othercoords = ['l','s']
-coordslet.forEach(coordlet => {createElem(coordlet+'coords',coordlet)});
-othercoords.forEach(othercoord => {createElem(othercoord+'coords',othercoord)});
 function getRandomLocation(){
-    randomBuilding = coordslet[Math.floor(Math.random() * 6)]; // like p
+    randomBuilding = coords[Math.floor(Math.random() * 6)]; // like p
     selectedBuilding = eval(randomBuilding + 'coords'); // like pcoords
     let keys = Object.keys(selectedBuilding); // keys = [110,112,114]
     let randomRoom = keys[Math.floor(Math.random() * keys.length)]; // like 110
@@ -522,22 +497,11 @@ function getRandomLocation(){
     return {location} // p110
 };
 
-function coordsToLocation(id){
-        const elem = document.getElementById(id)
-        let xCOR = parseInt(elem.style.left.slice(0,-2)) +12-5
-        let yCOR = parseInt(elem.style.top.slice(0,-2)) +12+7
-        // loop through letters
-        coordslet.forEach(coordlet => {
-            const coordObject = eval(coordlet + 'coords');
-            //loop through the object entries of say pcoords
-            for (const [locationId, coordn] of Object.entries(coordObject)) {
-                if (coordn.x === xCOR && coordn.y === yCOR) {
-                    const placeName = coordlet+locationId;
-                    return placeName;
-                }
-            }
-        });
-    return null;
+function coordsToLocation(){
+    // grab style.top and style.left
+    // adjust position back to pin
+    // search for it inside like pcoords and the rest except lcoords???
+    return 'p404' // return like p214
 }
 
 function createElem(coords,letter) {
@@ -593,12 +557,7 @@ document.addEventListener('keydown', function(event) {
             document.getElementById("timePicker").style.display = "block";
             document.getElementById("timePicker").focus()
         break;
-        case 'M':
-            clearInterva2(theLoop);
-            clearInterval(otherLoop);
-        break;
     }
 });
-
 </script>
 </html>

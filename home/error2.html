@@ -17,5 +17,13 @@ addEventListener("DOMContentLoaded", () => {
         emojis: ['🚫'],
     }).then(() => jsConfetti.addConfetti({emojis: ['error'],})).then(() => jsConfetti.addConfetti({emojis: ['🚫'],}))
 })
+
+document.addEventListener('keydown', function(event) {
+    switch (event.key) {
+        case 'H':
+            window.location.href = "../home/";
+        break;
+    }
+});
 </script>
 </html>
