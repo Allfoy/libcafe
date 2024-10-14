@@ -10,13 +10,7 @@
 	font-weight: normal;
 	font-style: normal;
 }
-/*
-@font-face {
-    font-family: 'spritz';
-    src: url('/fonts/SpritzAndDelicious_PERSONAL_USE_ONLY.otf');
-}
-doesn't work yet
-*/
+
 @font-face{
 	font-family:blackchancery;
 	font-style:normal;
@@ -273,4 +267,19 @@ iframe {
 	background-color: Transparent;
     border:none;
     cursor:pointer;
+}
+
+.shiftyr{
+	display: block;
+	position: fixed;
+	right: 0%;
+	bottom: 0.17vh;
+	aspect-ratio: 1;
+	font-size: 8pt;
+	font-family: 'Gorgeous Grafix';
+	color: #824b46;
+	background-color: #f7c8a6;
+	border-radius: 50%;
+	border-color: #824b46;
+	z-index: 4;
 }

@@ -116,6 +116,7 @@ var menu = CMenu("#menu1")
 
 
 
+const centerPos = { x: '50%', y: '50%' };
 let mousePos = { x: '50%', y: '50%' };
 
   // Track mouse movement to store the latest mouse position
@@ -129,6 +130,11 @@ $(document).keydown(function(e) {
       menu.show([mousePos.x, mousePos.y]);  // Show the menu at the stored mouse position
       return false;  // Prevents any default behavior (optional)
     }
+});
+
+$('#shiftyr').click(function() {
+    menu.show([centerPos.x, centerPos.y]);
+    return false
 });
 
 $(document).click(function() {
