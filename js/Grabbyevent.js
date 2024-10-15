@@ -39,7 +39,7 @@ const keywordLinks = {
         picto : '🐂'
     },
     'wisb': {
-        link: 'https://apps.noordhoff.nl/se/content/book/0818ce8f-cdb6-468d-b160-6874cfda8372/ebooks/e4405ab2-d6f8-4f64-abf9-d0d327474ab2',
+        link: 'https://apps.noordhoff.nl/se/content/book/c6fe8d56-18bd-4dbd-99a7-8f50c07c82b0/ebooks/82270e1e-14b5-4e5b-bbda-962d46c5f554',
         imageSrc: '../img/covers/MATHB.jpeg',
         actualName: 'Mathematics B',
         picto : '🧮'
