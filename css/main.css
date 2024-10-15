@@ -283,3 +283,7 @@ iframe {
 	border-color: #824b46;
 	z-index: 4;
 }
+
+.weatherwidget-io{
+	z-index: 10;
+}
