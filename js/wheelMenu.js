@@ -17,7 +17,7 @@ var menu = CMenu("#menu1")
             icon: "icon-magister",
             href:{
                 url: "https://porteum.magister.net/magister/#/vandaag/",
-                blank: true
+                blank: false
                 }
         },
         {
@@ -29,7 +29,7 @@ var menu = CMenu("#menu1")
                         icon: "icon-discord",
                         href:{
                             url: "https://www.discord.com/channels/@me",
-                            blank: true
+                            blank: false
                             }
                     },
                     {
@@ -37,7 +37,7 @@ var menu = CMenu("#menu1")
                         icon: "icon-yt",
                         href:{
                             url: "https://www.youtube.com/",
-                            blank: true
+                            blank: false
                             }
                     },
                     {
@@ -45,7 +45,7 @@ var menu = CMenu("#menu1")
                         icon: "icon-whatsapp",
                         href:{
                             url: "https://web.whatsapp.com/",
-                            blank: true
+                            blank: false
                             }
                     },
                     {
@@ -53,7 +53,7 @@ var menu = CMenu("#menu1")
                         icon: "icon-anilist",
                         href:{
                             url: "https://anilist.co/home",
-                            blank: true
+                            blank: false
                             }
                     },
                     {
@@ -68,7 +68,7 @@ var menu = CMenu("#menu1")
             icon: "icon-outlook",
             href:{
                 url: "https://outlook.live.com/mail/0/",
-                blank: true
+                blank: false
                 }
         },
         {
@@ -76,7 +76,7 @@ var menu = CMenu("#menu1")
             icon: "icon-examen",
             href:{
                 url: "https://eindexamensite.nl/dashboard",
-                blank: true
+                blank: false
                 }
         },
         {
@@ -84,7 +84,7 @@ var menu = CMenu("#menu1")
             icon: "icon-priyo",
             href:{
                 url: "https://porteum.onderwijsportalen.nl/dashboard",
-                blank: true
+                blank: false
                 }
         },
         {
@@ -92,7 +92,7 @@ var menu = CMenu("#menu1")
             icon: "icon-numworks",
             href:{
                 url: "https://www.numworks.com/simulator/",
-                blank: true
+                blank: false
                 }
         },
         {
@@ -100,7 +100,7 @@ var menu = CMenu("#menu1")
             icon: "icon-noordhoff",
             href:{
                 url: "https://apps.noordhoff.nl/my/nl/bookshelf?redirectPath=%2Fhome%2Foverview&redirectPlatform=sep/",
-                blank: true
+                blank: false
                 }
         }, 
         {
@@ -108,7 +108,7 @@ var menu = CMenu("#menu1")
             icon: "icon-translate",
             href:{
                 url: "https://translate.google.com/?sl=auto&tl=en&op=translate/",
-                blank: true
+                blank: false
                 }
         },
     ]
