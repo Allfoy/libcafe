@@ -57,7 +57,7 @@
             height: 24px;
             z-index: 3;
             transition: 1.5s;
-            opacity: 0.6;
+            opacity: 0.3;
         }
         .NPC img,.pfp img{
             position: absolute;
@@ -292,7 +292,7 @@ getAllData().then(allData => {
 
 
 function move(id,locationy){
-    let location = locationy.location
+    let location = locationy.location ?? 'p404';
     location = location.replace(/[^\w]/g,'')
     location = location.length ? location.slice(0,4).toLowerCase(): location ;
     const buildingName = location.toLowerCase().substr(0,1) + "coords"; //pcoords
