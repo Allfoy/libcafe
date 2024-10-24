@@ -57,7 +57,7 @@
             height: 24px;
             z-index: 3;
             transition: 1.5s;
-            opacity: 0.3;
+            opacity: 4%;
         }
         .NPC img,.pfp img{
             position: absolute;
@@ -293,6 +293,7 @@ getAllData().then(allData => {
 
 function move(id,locationy){
     let location = locationy.location ?? 'p404';
+    location = location == 'verborgen' && 'p404' || location;
     location = location.replace(/[^\w]/g,'')
     location = location.length ? location.slice(0,4).toLowerCase(): location ;
     const buildingName = location.toLowerCase().substr(0,1) + "coords"; //pcoords
@@ -563,6 +564,11 @@ function blinkclass() {
     classyList.forEach(classy => {
         classy.style.opacity = '80%';
         setTimeout(() => {classy.style.opacity = '4%';}, 2500);}
+    )
+    const NPCList = document.querySelectorAll('.NPC');
+    NPCList.forEach(NPC => {
+        NPC.style.opacity = '80%';
+        setTimeout(() => {NPC.style.opacity = '4%';}, 12000);}
     )
 };
 
