@@ -329,7 +329,6 @@ function dateMessing(filteredEvents){
                 if(!(document.getElementById('event-container').innerHTML === `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${currentEvent.location})</p>`)){
                 document.getElementById('event-container').innerHTML = `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${currentEvent.location})</p>`;
                 }
-                document.getElementById('countdown-container').innerHTML = `<p>${new Date(currentEvent.start.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} to ${new Date(currentEvent.end.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>`;
             // first digit 1 code ends
             // double digit 11 code starts
                 linkAndImage = getLinkAndImageForEvent(upcomingEvent.summary);
@@ -399,12 +398,19 @@ function dateMessing(filteredEvents){
                 document.getElementById('event-button').href = linkAndImage.link;
                 document.getElementById('classIcon').innerHTML = linkAndImage.picto;
                 // Display the current event and time in the container
-                if(!(document.getElementById('event-container').innerHTML === `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>`)){
-                    document.getElementById('event-container').innerHTML = `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${upcomingEvent.location})</p>`;
+                if(!(document.getElementById('event-container').innerHTML === `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${currentEvent.location})</p>`)){
+                    document.getElementById('event-container').innerHTML = `<h2>${linkAndImage.actualName}${linkAndImage.picto}</h2><p>(${currentEvent.location})</p>`;
                 }
-                document.getElementById('countdown-container').innerHTML = `<p>${new Date(currentEvent.start.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} to ${new Date(currentEvent.end.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>`;
             // first digit 1 code ends
             //double digit 10 code starts
+                msInHour = 60 * 60 * 1000;
+                msInMinute = 60 * 1000;
+                msInSecond = 1000;
+                timeUntilEndEvent = new Date(currentEvent.end.dateTime) - now;
+                hoursUntilEndEvent = Math.floor(timeUntilEndEvent / msInHour);
+                minutesUntilEndEvent = Math.floor((timeUntilEndEvent % msInHour) / msInMinute);
+                secondsUntilEndEvent = Math.ceil((timeUntilEndEvent % msInMinute) / msInSecond);
+                document.getElementById('countdown-container').innerHTML = `<p>Time Until This Event Ends: ${hoursUntilEndEvent} h ${minutesUntilEndEvent} min ${secondsUntilEndEvent} s</p>`
                 if(!(document.getElementById('upcoming-event-container').innerHTML === '<p>No upcoming events.</p>')){
                 document.getElementById('upcoming-event-container').innerHTML = '<p>No upcoming events.</p>';
                 }
