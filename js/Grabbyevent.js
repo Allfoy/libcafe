@@ -294,7 +294,7 @@ function dateMessing(filteredEvents){
         };
         let schoolStart =  filteredEvents[0]?.start.dateTime ?? '0' ;
         let todaysEvents = filteredEvents.filter(function(event){return event.end.dateTime.includes(filteredEvents[0].end.dateTime.replace(/(?=T)(.*?)(?<=Z)/g,''))})
-        let schoolEnd = todaysEvents[todaysEvents.length-1].end.dateTime ?? '01/01/1970 23:59:59';
+        let schoolEnd = todaysEvents[todaysEvents.length-1]?.end.dateTime ?? '01/01/1970 23:59:59';
         const conditions = {//put the conditions in an object literal for readability
             weekend: new Date().getDay() === 6 || new Date().getDay() === 0, //is it weekend?
             isInBreak: Object.entries(breaks).some(([start, end]) => {return currentTime >= start && currentTime <= end;}), // is it break?
@@ -416,7 +416,7 @@ function dateMessing(filteredEvents){
                 }
             //double digit 10 code ends
         break;
-        default:// situation 00 = 0
+        case 0:// situation 00 = 0
             // first digit 0 code starts
             if(conditions.weekend){
                 imagesrc = "weekend";//is it weekend
@@ -439,6 +439,13 @@ function dateMessing(filteredEvents){
                 }
             //double digit 00 code ends
         break;
+        default: // situation error
+            console.error('Error determening case')
+            imagesrc = "error";
+            document.getElementById('event-button').href = '../home/error1.html'; // Set a default link or disable the button if no ongoing event
+            document.getElementById('event-container').innerHTML = `<p>Error</p>`;
+            document.getElementById('upcoming-event-container').innerHTML = '<p>Error</p>';
+        break
     }
     setTimeout(dateMessing,1000,filteredEvents)
 }
