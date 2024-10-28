@@ -365,7 +365,8 @@ function dateMessing(filteredEvents){
                     imagesrc = "break";//is it break?
                     }else if(conditions.isBeforeSchool){
                     imagesrc = "beforeschool";
-                    }else if(conditions.isAfterSchool){imagesrc = "afterschool";}
+                    }else if(conditions.isAfterSchool){imagesrc = "afterschool";
+                    }else{imagesrc = "free";}
                     document.getElementById('icony').src = "../img/icony/" + imagesrc + ".jpg";
                     if(!(document.getElementById('event-container').innerHTML === `<p>No ongoing events.</p>`)){
                         document.getElementById('event-container').innerHTML = `<p>No ongoing events.</p>`;
