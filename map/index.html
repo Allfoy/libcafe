@@ -193,7 +193,7 @@ function useData(filteredEvents,CalID) {
     var timeInput = document.getElementById('timePicker').value;
     var isoTime = new Date().toISOString();
     if(!timeInput){
-        var hours = parseInt(isoTime.substr(11,2)) + 2;
+        var hours = parseInt(isoTime.substr(11,2)) + 1;
         var minutes = parseInt(isoTime.substr(14,2));
     }   else{var times = timeInput.split(":")
             var hours = parseInt(times[0]);

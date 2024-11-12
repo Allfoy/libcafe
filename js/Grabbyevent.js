@@ -246,7 +246,8 @@ function fetchEventsAndUpdateTime(calid) {
     fetch(`https://www.googleapis.com/calendar/v3/calendars/${calid}@import.calendar.google.com/events?key=AIzaSyCaky52HRXhv-E5bIuHt5uvWlGPoA-YmvQ&timeMin=${today}T00:00:00Z&timeMax=${tomorrowFormatted}T23:59:59Z`)
         .then(response => response.json())
         .then(data => {
-            const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number
+            //const events = data.items.filter(event => /^\d/.test(event.summary)); // Filter events starting with a number, hidden at toetsweek
+            var events = data.items.filter(function(event){return (!event.summary.includes("toetsweek"))}); // added in toetsweek
             var filteredEvents = events.filter(function(event){return (!event.summary.includes("rt_"))});    
             //second filter for test filteredEvents = filteredEvents.filter(function(event){return (!event.summary.includes("filterthisstring"))});
             filteredEvents = filteredEvents.sort((a, b) => {
