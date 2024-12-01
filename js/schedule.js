@@ -1,5 +1,10 @@
 // here some code for the cookie
 // this works by checking if this specific cookie exist, if it don't make one, another bit of code for switching
+initiatef()
+async function initiatef(){
+    document.getElementById('dateInput').valueAsDate = new Date();
+    keywordLinks = await fetch('../json/events.json').then(response => response.json())
+}
 function CalIDcookie(){
     if(!(document.cookie.split(";").some((item) => item.trim().startsWith("calendarsId" + "=")))){
         var CalID = prompt("What is your calendarID?","kvme0ikmjq4825g8ee860tm058clorcg");
@@ -15,13 +20,8 @@ function CalIDcookie(){
         fetchEventsAndUpdateTime(getCookie("calendarsId"));
         // showTime();
     }
-        //'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
-        //'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
-        //'myrthe': CalID = '32ddu2ndrbe8jtp1olg6rko3f5cntog3'; user = 'Myrthe';break;
-		//'troy'  : CalID = '3hvsosg4io5fdefbn66meln2un2hu33k'; user = 'Troy'  ;break;
 };
 
-document.getElementById('dateInput').valueAsDate = new Date();
 
 function fetchEventsAndUpdateTime(CalID) {
     // Fetch events from Google Calendar API
@@ -83,10 +83,6 @@ function CalIDcookie2(){
         const friendName = getName()
         document.getElementById('events').innerHTML += `<p class="friendName">${friendName}</p>`;
     }
-        //'kevin' : CalID = 'i32q28ad785oqs2dom81460a186j6uvr'; user = 'Kevin' ;break;
-        //'allfoy': CalID = 'kvme0ikmjq4825g8ee860tm058clorcg'; user = 'Allfoy';break;
-        //'myrthe': CalID = '32ddu2ndrbe8jtp1olg6rko3f5cntog3'; user = 'Myrthe';break;
-		//'troy'  : CalID = '3hvsosg4io5fdefbn66meln2un2hu33k'; user = 'Troy'  ;break;
 };
 // read cookie functie
 function getCookie(cname) {
@@ -180,138 +176,6 @@ function tT(str){ // tT = translateTime
     str = parseInt(str[0])*60+parseInt(str[1]);
     return str;
 }
-const noBook = {link: 'https://allfoy.github.io/libcafe/home/error2', imageSrc: '../img/bg.jpg'};
-const keywordLinks = {
-    'entl': {
-        actualName: 'English',
-        picto : '🍵'
-    },
-    'nat': {
-        actualName: 'Physics',
-        picto : '🍎'
-    },
-    'schk': {
-        actualName: 'Chemistry',
-        picto : '🧪'
-    },
-    'biol': {
-        actualName: 'Biology',
-        picto : '🌱'
-    },
-    'netl': {
-        actualName: 'Dutch',
-        picto : '🌷'
-    },
-    'sptl': {
-        actualName: 'Spanish',
-        picto : '🐂'
-    },
-    'wisb': {
-        actualName: 'Mathematics B',
-        picto : '🧮'
-    },
-    'wisd': {
-        actualName:'Mathematics D',
-        picto : '🧮'
-    },
-    'me': {
-        actualName: 'Mentorles',
-        picto : '🔰'
-    },
-    'maat': {
-        actualName: 'Social studies',
-        picto : '🌎'
-    },
-    'ckv':{
-        actualName: 'CKV',
-        picto : '🎥'
-    },
-    'rt':{
-        actualName: 'Route-uur',
-        picto : '🥱'
-    },
-    'wisa':{
-        actualName: 'Mathematics A',
-        picto : '🧮'
-    },
-    'econ':{
-        actualName: 'Economics',
-        picto : '💸'
-    },
-    'lo':{
-        actualName: 'PE',
-        picto : '🏀'
-    },
-    'kumu':{
-        actualName: 'Music',
-        picto : '🎼'
-    },
-    'kubv':{
-        actualName: 'Sketchy',
-        picto : '✏️🕶️🕵️'
-    },
-    'kua':{
-        actualName: 'General Arts',
-        picto : '🎨'
-    },
-    'ak':{
-        actualName: 'Geography',
-        picto : '🪨'
-    },
-    'ges':{
-        actualName: 'History',
-        picto : '🕰️'
-    },
-    'maw':{
-        actualName: 'Social sciences',
-        picto : '🤓'
-    },
-    '-wi':{
-        actualName: 'Mathematics rt',
-        picto : '🧮'
-    },
-    'CKV':{
-        actualName: 'CKV event',
-        picto : '🎥'
-    },
-    'Zelfstudie':{
-        actualName: 'Zelfstudie',
-        picto : '📖'
-    },
-    'exact':{
-        actualName: 'Exact',
-        picto : '🎯'
-    },'fatl':{
-        actualName:'French',
-        picto : '🥐'
-    },'delf':{
-        actualName:'French crazy mode',
-        picto : '🥐'
-    },'PWS':{
-        actualName:'PWS',
-        picto: '📑'
-    },'workshop':{
-        actualName:'Workshop',
-        picto:'🛠️'
-    },'LOB':{
-        actualName:'LOB',
-        picto:'🔮'
-    },'ltc':{
-        actualName:'Latin',
-        picto:'🏛'
-    },'gtc':{
-        actualName:'Greek',
-        picto:'🏛'
-    },'beco':{
-        actualName:'Beco',
-        picto:'🏭'
-    },'boekenclub':{
-        actualName:'Bookclub',
-        picto:'📚'
-    }
-    // Add more keywords and links for silly guy
-};
-
 function getLinkAndImageForEvent(title) {
     // Check if any keyword in the title matches, and return the corresponding link and image source
     for (const keyword in keywordLinks) {

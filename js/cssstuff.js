@@ -19,7 +19,7 @@ function locateybbat(){
 }
 
 function mobilemode(){
-if ((window.innerWidth <= 1500) || (window.innerHeight <= 700)){
+if ((window.innerWidth < 1132) || (window.innerHeight < 742)){
     console.log("your screen is smaller: " + window.innerWidth +" by "+ window.innerHeight);
     // relocate the tabs
     var ybbat = document.getElementById('ybbat');

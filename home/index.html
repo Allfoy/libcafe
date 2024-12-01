@@ -12,17 +12,20 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
 		<link href="https://fonts.cdnfonts.com/css/gorgeous-grafix" rel="stylesheet">
 		<link rel="shortcut icon" href="../img/favicon.ico">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Noto+Emoji&display=swap" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="../css/main.css" />
-		<link rel="stylesheet" type="text/css" href="../css/book.css" />
-		<link rel="stylesheet" type="text/css" href="../css/book2.css" />
-		<link rel="stylesheet" type="text/css" href="../css/schoolswitch.css" />
+		<!-- <link rel="stylesheet" type="text/css" href="../css/book.css" />
+		<link rel="stylesheet" type="text/css" href="../css/book2.css" /> -->
+		<link rel="stylesheet" type="text/css" href="../css/merged.css" />
 		<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 		<script src="https://use.fontawesome.com/1ddffe7916.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/wheelMenuBack.css" /> <!--take this to modify it later -->
 		<link rel="stylesheet" type="text/css" href="../css/wheelMenu.css" />
 		<style>
-			::-webkit-scrollbar-button{
-				background: #814b46;
+			::-webkit-scrollbar-button:single-button:vertical:decrement{
+				background: var(--color-4);
 				height: 24.275px;
 			}
 		</style>
@@ -45,6 +48,7 @@
 			<div id="eventz-container"></div>
 		</div>
 		<header>
+			<div class="temp" id="rainfront"></div>
 			<div class="title"><h1>Libcafe <span>a library for us</span></h1></div>	
 			<ul class="radio-switch" >
 				<li class="radio-switch__item">
@@ -59,8 +63,8 @@
 			</ul>
 			<div class="dayimage" id="dayimage">
 				<div class="weekday" id="weekday">errorday</div>
-				<img class="icony" id="icony" src="https://fakeimg.pl/200x100/cccccc/000000" width="200px"></img>
-				<img class="freeIcony" id="freeIcony" src="https://fakeimg.pl/200x100/cccccc/ff0000"></img>
+				<img class="icony" id="icony" src="https://fakeimg.pl/200x100/cccccc/000000" width="200px">
+				<img class="freeIcony" id="freeIcony" src="https://fakeimg.pl/200x100/cccccc/ff0000">
 			</div>
 			<button class="classIcon" id="classIcon" onclick="confetti()">☕</button>
 			<div><a href="../schedule/">full schedule</a></div>
@@ -68,593 +72,12 @@
 			<a href="../friend/">friend</a>
 		</header>
 		<div class="component">
-			<ul class="align" id="bookList"> <!-- list for school-->
-				<li>
-					<figure class='book'>
-
-						<!-- Front adaptive -->
-
-						<ul class='hardcover_front' id="adaptive">
-							<li>
-								<img id="adaptivebi" src="../img/bg.jpg" alt="" width="100%" height="100%">	
-							</li>
-							<li></li>
-						</ul>
-
-						<!-- Pages -->
-
-						<ul class='page' id="adaptive">
-							<li></li>
-							<li>
-								<button class="btn" id="event-button" onclick="redirectToLink()">Open</button>
-							</li>
-							<li></li>
-							<li></li>
-							<li></li>
-						</ul>
-
-						<!-- Back -->
-
-						<ul class='hardcover_back' id="adaptive">
-							<li></li>
-							<li></li>
-						</ul>
-						<ul class='book_spine' id="adaptive">
-							<li></li>
-							<li></li>
-						</ul>
-						<figcaption>
-							<h1>Adaptive</h1>
-							<span>By Allfoy</span>
-							<p>An adaptive book which goes to the current class' book, how convenient!</p>
-						</figcaption>
-					</figure>
-				</li>
-				<li>
-					<figure class='book'>
-
-					<!-- Front chem -->
-
-						<ul class='hardcover_front'>
-							<li>
-									<img src="../img/covers/CHEM.jpeg" alt="" width="100%" height="100%">
-							</li>
-							<li></li>
-						</ul>
-
-					<!-- Pages -->
-
-						<ul class='page'>
-							<li></li>
-							<li id="schk"></li>
-							<li></li>
-							<li></li>
-						</ul>
-
-					<!-- Back -->
-
-						<ul class='hardcover_back'>
-							<li></li>
-							<li></li>
-						</ul>
-						<ul class='book_spine'>
-							<li></li>
-							<li></li>
-						</ul>
-						<figcaption>
-							<h1>Chemistry</h1>
-							<span>By Noordhoff</span>
-							<p>The officially recognized chemistry book for 6VWO</p>
-						</figcaption>
-					</figure>
-				</li>
-				<li>
-					<figure class='book'>
-
-					<!-- Front bio -->
-
-						<ul class='hardcover_front'>
-							<li>
-								<img src="../img/covers/BIO.jpeg" alt="" width="100%" height="100%">
-							</li>
-							<li></li>
-						</ul>
-
-					<!-- Pages -->
-
-						<ul class='page'>
-							<li></li>
-							<li id="biol"></li>
-							<li></li>
-							<li></li>
-						</ul>
-
-					<!-- Back -->
-
-						<ul class='hardcover_back'>
-							<li></li>
-							<li></li>
-						</ul>
-						<ul class='book_spine'>
-							<li></li>
-							<li></li>
-						</ul>
-						<figcaption>
-							<h1>Biology</h1>
-							<span>By Noordhoff</span>
-							<p>The officially recognized Biology book for 6VWO</p>
-						</figcaption>
-					</figure>
-				</li>
-				<li>
-					<figure class='book'>
-
-					<!-- Front physics -->
-
-						<ul class='hardcover_front'>
-							<li>
-								<img src="../img/covers/physics.jpg" alt="" width="100%" height="100%">
-							</li>
-							<li></li>
-						</ul>
-
-					<!-- Pages -->
-
-						<ul class='page'>
-							<li></li>
-							<li id="nat"></li>
-							<li></li>
-							<li></li>
-						</ul>
-
-					<!-- Back -->
-
-						<ul class='hardcover_back'>
-							<li></li>
-							<li></li>
-						</ul>
-						<ul class='book_spine'>
-							<li></li>
-							<li></li>
-						</ul>
-						<figcaption>
-							<h1>Physics</h1>
-							<span>By Boom voortgezet onderwijs</span>
-							<p>The officially recognized Physics book for 6VWO</p>
-						</figcaption>
-					</figure>
-				</li>
-				<li>
-					<figure class='book'>
-
-					<!-- Front eng -->
-
-						<ul class='hardcover_front'>
-							<li>
-								<img src="../img/covers/ENG.jpeg" alt="" width="100%" height="100%">
-							</li>
-							<li></li>
-						</ul>
-
-					<!-- Pages -->
-
-						<ul class='page'>
-							<li></li>
-							<li id="entl"></li>
-							<li></li>
-							<li></li>
-						</ul>
-
-					<!-- Back -->
-
-						<ul class='hardcover_back'>
-							<li></li>
-							<li></li>
-						</ul>
-						<ul class='book_spine'>
-							<li></li>
-							<li></li>
-						</ul>
-						<figcaption>
-							<h1>English</h1>
-							<span>By Noordhoff</span>
-							<p>The officially recognized English book for 6VWO</p>
-						</figcaption>
-					</figure>
-				</li>
-				<li>
-					<figure class='book'>
-
-					<!-- Front Span -->
-
-						<ul class='hardcover_front'>
-							<li>
-								<img src="../img/covers/SPAN.jpeg" alt="" width="100%" height="100%">
-							</li>
-							<li></li>
-						</ul>
-
-					<!-- Pages -->
-
-						<ul class='page'>
-							<li></li>
-							<li id="sptl"></li>
-							<li></li>
-							<li></li>
-						</ul>
-
-					<!-- Back -->
-
-						<ul class='hardcover_back'>
-							<li></li>
-							<li></li>
-						</ul>
-						<ul class='book_spine'>
-							<li></li>
-							<li></li>
-						</ul>
-						<figcaption>
-							<h1>Spanish</h1>
-							<span>By Noordhoff</span>
-							<p>Spanish or vanish</p>
-						</figcaption>
-					</figure>
-					</li>
-					<li>
-					<figure class='book'>
-
-					<!-- Front Dutch -->
-
-						<ul class='hardcover_front'>
-							<li>
-								<img src="../img/covers/DUTCH.jpeg" alt="" width="100%" height="100%">
-							</li>
-							<li></li>
-						</ul>
-
-					<!-- Pages -->
-
-						<ul class='page'>
-							<li></li>
-							<li id="netl"></li>
-							<li></li>
-							<li></li>
-							<li></li>
-						</ul>
-
-					<!-- Back -->
-
-						<ul class='hardcover_back'>
-							<li></li>
-							<li></li>
-						</ul>
-						<ul class='book_spine'>
-							<li></li>
-							<li></li>
-						</ul>
-						<figcaption>
-							<h1>Dutch</h1>
-							<span>By Noordhoff</span>
-							<p>The officially recognized Dutch book for VWO BB</p>
-						</figcaption>
-					</figure>
-					</li>
-					<li>
-					<figure class='book'>
-
-					<!-- Front MathB -->
-
-						<ul class='hardcover_front'>
-							<li>
-								<img src="../img/covers/MATHB.jpeg" alt="" width="100%" height="100%">
-							</li>
-							<li></li>
-						</ul>
-
-					<!-- Pages -->
-
-						<ul class='page'>
-							<li></li>
-							<li id="wisb"></li>
-							<li></li>
-							<li></li>
-						</ul>
-
-					<!-- Back -->
-
-						<ul class='hardcover_back'>
-							<li></li>
-							<li></li>
-						</ul>
-						<ul class='book_spine'>
-							<li></li>
-							<li></li>
-						</ul>
-						<figcaption>
-							<h1>MathB</h1>
-							<span>By Noordhoff</span>
-							<p>The officially recognized MathB book for 6VWO</p>
-						</figcaption>
-					</figure>
-					</li>
-					<li>
-					<figure class='book'>
-
-					<!-- Front MathD -->
-
-						<ul class='hardcover_front'>
-							<li>
-								<img src="../img/covers/MATHD.jpeg" alt="" width="100%" height="100%">
-							</li>
-							<li></li>
-						</ul>
-
-					<!-- Pages -->
-
-						<ul class='page'>
-							<li></li>
-							<li id="wisd"></li>
-							<li></li>
-							<li></li>
-						</ul>
-
-					<!-- Back -->
-
-						<ul class='hardcover_back'>
-							<li></li>
-							<li></li>
-						</ul>
-						<ul class='book_spine'>
-							<li></li>
-							<li></li>
-						</ul>
-						<figcaption>
-							<h1>MathD</h1>
-							<span>By Noordhoff</span>
-							<p>The officially recognized MathD book for 6VWO</p>
-						</figcaption>
-					</figure>
-				</li>
-				
-			</ul>
-			<ul class="align" id="foodList">
-				<li>
-					<figure class='book'>
-
-						<!-- Front binas -->
-
-						<ul class='hardcover_front' id="binas">
-							<li>
-								<img src="../img/covers/binascover.jpg" alt="" width="100%" height="100%">	
-							</li>
-							<li></li>
-						</ul>
-
-						<!-- Pages -->
-
-						<ul class='page' id="binas">
-							<li></li>
-							<li>
-								<a class="btn" href="../locals/BINAS.pdf">Open</a>
-							</li>
-							<li></li>
-							<li></li>
-							<li></li>
-						</ul>
-
-						<!-- Back -->
-
-						<ul class='hardcover_back' id="binas">
-							<li></li>
-							<li></li>
-						</ul>
-						<ul class='book_spine' id="binas">
-							<li></li>
-							<li></li>
-						</ul>
-						<figcaption>
-							<h1>BiNaS</h1>
-							<span>By Our Scientists</span>
-							<p>The BiNaS Scientists knew exactly what they were doing here. </p>
-						</figcaption>
-					</figure>
-				</li>
-				<li>
-					<figure class='book'>
-
-						<!-- Front PTA -->
-
-						<ul class='hardcover_front' id="PTA">
-							<li>
-								<img src="../img/covers/PTA.png" alt="" width="100%" height="100%">
-							</li>
-							<li></li>
-						</ul>
-
-						<!-- Pages -->
-
-						<ul class='page' id="PTA">
-							<li></li>
-							<li>
-								<a class="btn" href="../locals/PTA craziest.pdf">PTA</a>
-							</li>
-							<li>
-								<a class="btn2" href="../locals/Examenregel.pdf">Examen</a>
-							</li>
-							<li></li>
-							<li></li>
-						</ul>
-
-						<!-- Back -->
-
-						<ul class='hardcover_back' id="PTA">
-							<li></li>
-							<li></li>
-						</ul>
-						<ul class='book_spine' id="PTA">
-							<li></li>
-							<li></li>
-						</ul>
-						<figcaption>
-							<h1>The new PTA</h1>
-							<span>By Allfoy</span>
-							<p>this is the official 5vwo testschedule + the PTA and PTD Merged for the subjects NT&NG+SP+MathD+KUA </p>
-						</figcaption>
-					</figure>
-				</li>
-				<li>
-					<figure class='book'>
-
-						<!-- Front -->
-
-						<ul class='paperback_front'>
-							<li>
-								<img src="../img/bg.jpg" alt="" width="100%" height="100%">
-							</li>
-							<li></li>
-						</ul>
-
-						<!-- Pages -->
-
-						<ul class='ruled_paper'>
-							<li></li>
-							<li>
-								<a class="btn" href="https://cloudconvert.com/">Open</a>
-							</li>
-							<li></li>
-							<li></li>
-							<li></li>
-						</ul>
-
-						<!-- Back -->
-
-						<ul class='paperback_back'>
-							<li>
-								<img src="../img/bg.jpg" alt="" width="100%" height="100%">
-							</li>
-							<li></li>
-						</ul>
-						<figcaption>
-							<h1>CloudConvert</h1>
-							<span>By Lunaweb GmbH</span>
-							<p>CloudConvert is an online file converter. Supports nearly all audio, video, document, ebook, archive, image, spreadsheet, and presentation formats.</p>
-						</figcaption>
-					</figure>
-				</li>
-				<li>
-					<figure class='book'>
-
-						<!-- Front -->
-
-						<ul class='paperback_front'>
-							<li>
-								<img src="../img/paper.jpg" alt="" width="100%" height="100%">
-							</li>
-							<li></li>
-						</ul>
-
-						<!-- Pages -->
-
-						<ul class='ruled_paper'>
-							<li></li>
-							<li>
-								<a class="btn" href="https://pasteboard.co/">Open</a>
-							</li>
-							<li></li>
-							<li></li>
-							<li></li>
-						</ul>
-
-						<!-- Back -->
-
-						<ul class='paperback_back'>
-							<li>
-								<img src="../img/paper.jpg" alt="" width="100%" height="100%">
-							</li>
-							<li></li>
-						</ul>
-						<figcaption>
-							<h1>Pasteboard</h1>
-							<span>By Joel Besada</span>
-							<p>Clipboard and drag & drop image sharing web app</p>
-						</figcaption>
-					</figure>
-				</li>
-				<li>
-					<figure class='book'>
-
-						<!-- Front -->
-
-						<ul class='paperback_front green'>
-							<li></li>
-							<li></li>
-						</ul>
-
-						<!-- Pages -->
-
-						<ul class='ruled_paper'>
-							<li></li>
-							<li>
-								<a class="btn" href="https://www.mathcha.io/editor">Open</a>
-							</li>
-							<li></li>
-							<li></li>
-							<li></li>
-						</ul>
-
-						<!-- Back -->
-
-						<ul class='paperback_back green'>
-							<li></li>
-							<li></li>
-						</ul>
-						<figcaption>
-							<h1>Mathcha</h1>
-							<span>By Bui Duc Nha</span>
-							<p>Online Mathematics Editor, a fast way to write and share mathematics</p>
-						</figcaption>
-					</figure>
-				</li>
-				<li>
-					<figure class='book'>
-
-						<!-- Front -->
-
-						<ul class='paperback_front red'>
-							<li></li>
-							<li></li>
-						</ul>
-
-						<!-- Pages -->
-
-						<ul class='ruled_paper'>
-							<li></li>
-							<li>
-								<a class="btn" href="https://skribbl.io/?4VCGC9OC">Open</a>
-							</li>
-							<li></li>
-							<li></li>
-							<li></li>
-						</ul>
-
-						<!-- Back -->
-
-						<ul class='paperback_back red'>
-							<li></li>
-							<li></li>
-						</ul>
-						<figcaption>
-							<h1>Skribbl</h1>
-							<span>By Skribbl</span>
-							<p>skribbl.io is a free online multiplayer drawing and guessing pictionary game.</p>
-						</figcaption>
-					</figure>
-				</li>
-			</ul>
+			<div id="bookListContainer"><h1 style="text-align: center;">loading...</h1></div>
+			<div id="foodListContainer"><h1 style="text-align: center;">loading...</h1></div>
 			<button class="centeredbutton" onclick="switchcookie()">switch user</button>
 			<!--<div class="iframer" id="numworksy"><iframe src="https://www.numworks.com/simulator/embed/" width="368px" height="720px"></iframe><script src="https://www.numworks.com/simulator/embed.js"></script></div>
 			<button class="centeredbutton" onclick="toggleIframe('numworksy')">Toggle numworks</button> -->
-			<br></br>
+			<br>
 			<button class="shiftyr" id="shiftyr">shift-z</button>
 			<div>
 				<a class="weatherwidget-io" id="weather" href="https://forecast7.com/en/52d525d47/lelystad/" data-label_1="LELYSTAD" data-label_2="WEATHER" data-font="Trebuchet MS" data-icons="Climacons Animated" data-days="3" data-basecolor="rgb(129, 75, 70)" data-textcolor="#f9f1e3" data-highcolor="#f9f1e3" data-lowcolor="#f9f1e3" data-suncolor="#f9f1e3" data-mooncolor="#f9f1e3" data-cloudcolor="#f9f1e3" data-raincolor="#f9f1e3" data-snowcolor="#f9f1e3" >LELYSTAD WEATHER</a>
@@ -663,50 +86,63 @@
 			
 		</div>
 		<div id="menu1" class="menu1"></div>
-		<script src="../js/wheelMenu.js"></script>
-		<script src="../js/closelogging.js"></script>
-		<script src="../js/cssstuff.js"></script>
-		<script src="../js/schoolswitch.js"></script>
-		<script src="../js/Grabbyevent.js"></script>
-		<script src="../js/main.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
-		<script> 
-			const jsConfetti = new JSConfetti();
-			function confetti(){
-				const classIcon = document.getElementById('classIcon'); 
-				var text = classIcon.textContent;
-				/*switch(day) day go make text = string*/
-				if(text != '☕'){
-					jsConfetti.addConfetti({emojis:[text]})//.then(() => jsConfetti.clearCanvas());
-				}else{
-					jsConfetti.addConfetti({confettiRadius: 5,confettiNumber: 150*2,})//.then(() => jsConfetti.clearCanvas());
-				}
+	</body>
+	<script src="../js/wheelMenu.js"></script>
+	<script src="../js/closelogging.js"></script>
+	<script src="../js/cssstuff.js"></script>
+	<script src="../js/schoolswitch.js"></script>
+	<script src="../js/Grabbyevent.js"></script>
+	<script src="../js/main.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+	<script> 
+		const jsConfetti = new JSConfetti();
+		function confetti(){
+			const classIcon = document.getElementById('classIcon'); 
+			var text = classIcon.textContent;
+			/*switch(day) day go make text = string*/
+			if(text != '☕'){
+				jsConfetti.addConfetti({emojis:[text]})//.then(() => jsConfetti.clearCanvas());
+			}else{
+				jsConfetti.addConfetti({confettiRadius: 5,confettiNumber: 150*2,})//.then(() => jsConfetti.clearCanvas());
 			}
-			
-		</script>
-		<script>
-				let firstTime = true;
-				// Callback function to execute when mutations/changes are observed
-				const callback = function(mutationsList, observer) {
-					for(let mutation of mutationsList) {
-						if (mutation.type === 'childList' || mutation.type === 'subtree') { //  condition: directchild OR child of nth child
-							if (firstTime) {
-								firstTime = false;
-								break;
-							}else {
-								setTimeout(confetti, 1000);
-								break;// not exactly sure why it's exiting the loop but possibly so it doesn't spam confetti?
-							}
+		}
+		
+	</script>
+	<script>
+			let firstTime = true;
+			// Callback function to execute when mutations/changes are observed
+			const callback = function(mutationsList, observer) {
+				for(let mutation of mutationsList) {
+					if (mutation.type === 'childList' || mutation.type === 'subtree') { //  condition: directchild OR child of nth child
+						if (firstTime) {
+							firstTime = false;
+							break;
+						}else {
+							setTimeout(confetti, 1000);
+							break;// not exactly sure why it's exiting the loop but possibly so it doesn't spam confetti?
 						}
 					}
-				};
+				}
+			};
 
-				// Create an observer instance linked to the callback function
-				const observer = new MutationObserver(callback);
+			// Create an observer instance linked to the callback function
+			const observer = new MutationObserver(callback);
 
-				// Start observing the target node for configured mutations
-				observer.observe(document.getElementById('event-container'), { attributes: true, childList: true, subtree: true });
-		</script>
-		<script>CalIDcookie();</script>
-	</body>
+			// Start observing the target node for configured mutations
+			observer.observe(document.getElementById('event-container'), { attributes: true, childList: true, subtree: true });
+	</script>
+	<script>
+		function loadContent(id, file) {
+			fetch(file)
+			.then(response => response.text())
+			.then(data => {
+				document.getElementById(id).innerHTML = data;
+			})
+			.catch(error => console.error('Error loading content:', error));
+		}
+		// Load the bookList and foodList content
+		loadContent('bookListContainer', './bookList.html');
+		loadContent('foodListContainer', './foodList.html');
+	</script>
+	<script>CalIDcookie();</script>
 </html>
