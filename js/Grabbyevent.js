@@ -10,12 +10,12 @@ let keywordLinks = {
 };
 let themesList = {'':'loading...'};
 let themeflag = 0;
-intialStart();
-async function intialStart() {
+async function intialStart(friend) {
     // CalIDcookie() has to be inpage for some reason
     document.getElementById("classIcon").style.fontFamily = getCookie('emfont');
     keywordLinks = await fetch('../json/events.json').then(response => response.json());
     themesList = await fetch('../json/themeslist.json').then(response => response.json());
+    friend ? CalIDcookie2() : CalIDcookie();
     createLinks();
     document.addEventListener("keydown", function (event) {
         switch (event.key) {
