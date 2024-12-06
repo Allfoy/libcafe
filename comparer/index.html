@@ -125,6 +125,15 @@ function startendfree(name, CalID, nDay) {
             const freePeriods = findFreePeriods(sortedEvents);
             displayEvents(nDay, name, firstEvent, finalEvent, freePeriods)
         } else {
+            if(nDay===20){
+                document.getElementById(`events-container-${name}`).innerHTML = `
+                <h1 style="text-align:center;">${name}</h1>
+                    <h2>Events of ${nDay} days later</h2>
+                    <br><br><br>
+                    <p> ${name} is on vacation??</p>
+                `;
+                return
+            }
             startendfree(name, CalID, nDay + 1); // so does this same function again
         }
     })
@@ -330,9 +339,8 @@ function reveal(name){
         case 'Kevin'   : createfriend('i32q28ad785oqs2dom81460a186j6uvr'); break;
         case 'Allfoy'  : createfriend('kvme0ikmjq4825g8ee860tm058clorcg'); break;
         case 'Myrthe'  : createfriend('32ddu2ndrbe8jtp1olg6rko3f5cntog3'); break;
-		case 'Troy'    : ;createfriend('3hvsosg4io5fdefbn66meln2un2hu33k'); break;
-        case 'Onah'    : ;createfriend('k1jvlnvnatotdc1rkba5tkevo8r98gjk'); break;
-        // k1jvlnvnatotdc1rkba5tkevo8r98gjk
+		case 'Troy'    : createfriend('3hvsosg4io5fdefbn66meln2un2hu33k'); break;
+        case 'Onah'    : createfriend('k1jvlnvnatotdc1rkba5tkevo8r98gjk'); break;
 		case 'Casper'  : var password = prompt("Casper has set it to private, enter a password","password"); if(password == "35271"){createfriend('0pspeo6e4k6e329k4h56mkam0k9t6gnq');break;}else{break;};
         
     }
