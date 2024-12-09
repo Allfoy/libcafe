@@ -21,22 +21,15 @@
     }
     .hovery {
         --g: 6px;     /* the gap */
-        --b: 6px;    /* border thickness*/
+        --b: 5px;    /* border thickness*/
         --c: #bd815f; /* the color */
-        
-        
         padding: calc(var(--g) + var(--b));
-        --_c: #0000 0 25%, var(--c) 0 50%;
-        --_g1: repeating-linear-gradient(90deg ,var(--_c)) repeat-x;
-        --_g2: repeating-linear-gradient(180deg,var(--_c)) repeat-y;
-        background:
-            var(--_g1) var(--_p, 25%) 0   ,var(--_g2) 0    var(--_p,125%),
-            var(--_g1) var(--_p,125%) 100%,var(--_g2) 100% var(--_p, 25%);
-        background-size: 200% var(--b),var(--b) 200%;
         cursor: pointer;
         filter: hue-rotate(7200deg);
         transition: .3s;
+        border-style: solid;
         border-radius: 15px;
+        border-color: var(--c);
         background-color: color-mix(in srgb, var(--color-01) 70%, transparent);
     }
     .hovery:hover {
@@ -127,13 +120,14 @@ function startendfree(name, CalID, nDay) {
         } else {
             if(nDay===20){
                 document.getElementById(`events-container-${name}`).innerHTML = `
-                <h1 style="text-align:center;">${name}</h1>
+                    <h1 style="text-align:center;font-family:'andy';font-style:italic">${name}</h1>
                     <h2>Events of ${nDay} days later</h2>
                     <br><br><br>
-                    <p> ${name} is on vacation??</p>
+                    <p style="text-align:center"> ${name} is on vacation??</p>
                 `;
                 return
             }
+            document.getElementById(`events-container-${name}`).innerHTML = `<h1 style="text-align:center;font-family:'andy';font-style:italic">${name}</h1><br><br><br><p style="text-align:center;">Loading...</p>`;
             startendfree(name, CalID, nDay + 1); // so does this same function again
         }
     })
@@ -245,10 +239,12 @@ async function displayEvents(nDay, name, firstEvent, finalEvent, freePeriods) {
     startAdvised = await AdvisedEquipment(formattedStartTime, 1);
     endAdvised = await AdvisedEquipment(formattedEndTime, 0);
     eventsContainer.innerHTML = `
-    <h1 style="text-align:center;">${name}</h1>
+    <h1 style="text-align:center;font-family:'andy';font-style:italic">${name}</h1>
         ${header}
-        <p><strong>First Event:</strong> ${firstInfo.actualName}${firstInfo.picto}</p><p> <strong>Start Time:</strong> ${formattedStartTime}</p><p> ${startAdvised}</p>
-        <p><strong>Final Event:</strong> ${finalInfo.actualName}${finalInfo.picto}</p><p> <strong>End Time:</strong> ${formattedEndTime}</p><p> ${endAdvised}</p>
+        <h4 style="text-align:center">—Start info—</h4>
+        <div style="border-style:inset;border-color:#f5904291"><p><strong>Event:</strong> ${firstInfo.actualName}${firstInfo.picto}</p><p> <strong>Time:</strong> ${formattedStartTime}</p><p> ${startAdvised}</p></div>
+        <h4 style="text-align:center">—End info—</h4>
+        <div style="border-style:inset;border-color:#f5904291"><p><strong>Event:</strong> ${finalInfo.actualName}${finalInfo.picto}</p><p> <strong>Time:</strong> ${formattedEndTime}</p><p> ${endAdvised}</p></div>
     `;
     eventsContainer.innerHTML += "<h3 style='text-align:center;'>Free Periods</h3>";
     let flag = false; // set to false as there's no icony system for this yet
@@ -323,8 +319,8 @@ async function AdvisedEquipment(time, startDay) {
         // rain check
         const advice =
             hourdata.will_it_rain === 1
-                ? `${hourdata.chance_of_rain} ${hourdata.condition.text} ☔`
-                : `${hourdata.temp_c}°C and ${hourdata.condition.text} 🕶️ `;
+                ? `<p><strong>Temp: </strong>${hourdata.temp_c}°C</p><p>${hourdata.chance_of_rain} ${hourdata.condition.text} ☔</p>`
+                : `<p><strong>Temp: </strong>${hourdata.temp_c}°C</p><p>${hourdata.condition.text} 🕶️ </p>`;
         return advice;
     } catch (error) {
         console.error("Error fetching weather data:", error);

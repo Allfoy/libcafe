@@ -38,13 +38,13 @@
     "wisb": {
         "link": "https://apps.noordhoff.nl/se/content/book/c6fe8d56-18bd-4dbd-99a7-8f50c07c82b0/ebooks/82270e1e-14b5-4e5b-bbda-962d46c5f554",
         "imageSrc": "../img/covers/MATHB.jpeg",
-        "actualName": "Mathematics B",
+        "actualName": "Math B",
         "picto": "🧮"
     },
     "wisd": {
         "link": "https://apps.noordhoff.nl/se/content/book/7dabacb4-cac5-410d-86cb-1ec2fc5aa80a/ebooks/4298dc06-3dd2-4ee7-a4c8-b923bc8622fb",
         "imageSrc": "../img/covers/MATHD.jpeg",
-        "actualName": "Mathematics D",
+        "actualName": "Math D",
         "picto": "🧮"
     },
     "me": {
@@ -74,7 +74,7 @@
     "wisa": {
         "link": "../home/error1.html",
         "imageSrc": "../img/bg.jpg",
-        "actualName": "Mathematics A",
+        "actualName": "Math A",
         "picto": "🧮"
     },
     "econ": {
@@ -128,7 +128,7 @@
     "-wi": {
         "link": "https://apps.noordhoff.nl/se/content/book/0818ce8f-cdb6-468d-b160-6874cfda8372/ebooks/e4405ab2-d6f8-4f64-abf9-d0d327474ab2",
         "imageSrc": "../img/covers/MATHB.jpeg",
-        "actualName": "Mathematics rt",
+        "actualName": "Math rt",
         "picto": "🧮"
     },
     "CKV": {
@@ -158,7 +158,7 @@
     "delf": {
         "link": "../home/error1.html",
         "imageSrc": "../img/bg.jpg",
-        "actualName": "French crazy mode",
+        "actualName": "French++",
         "picto": "🥐"
     },
     "PWS": {

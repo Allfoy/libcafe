@@ -168,6 +168,12 @@ $(document).keydown(function (e) {
     }
 });
 
+document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    menu.show([mousePos.x, mousePos.y])
+}
+);
+
 $("#shiftyr").click(function () {
     menu.show([centerPos.x, centerPos.y]);
     return false;
