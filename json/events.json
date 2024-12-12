@@ -202,5 +202,10 @@
         "imageSrc": "../img/bg.jpg",
         "actualName": "Bookclub",
         "picto": "📚"
+    },"Stil": {
+        "link": "../home/error1.html",
+        "imageSrc": "../img/bg.jpg",
+        "actualName": "Silent rt",
+        "picto": "🤫"
     }
 }

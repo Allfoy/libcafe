@@ -515,7 +515,8 @@ function getLinkAndImageForEvent(title) {
     }
     // Return a default link and image source if no match is found
     return {
-        ...noBook,
+        link: "../home/error1.html",
+        imageSrc: "../img/bg.jpg",
         actualName:
             title.replace(regex, "$1").charAt(0).toUpperCase() +
             title.replace(regex, "$1").slice(1),

@@ -121,7 +121,7 @@ function startendfree(name, CalID, nDay) {
             if(nDay===20){
                 document.getElementById(`events-container-${name}`).innerHTML = `
                     <h1 style="text-align:center;font-family:'andy';font-style:italic">${name}</h1>
-                    <h2>Events of ${nDay} days later</h2>
+                    <h3 style="text-decoration: overline;text-align:center">${nDay} days later</h3>
                     <br><br><br>
                     <p style="text-align:center"> ${name} is on vacation??</p>
                 `;
@@ -226,10 +226,10 @@ async function displayEvents(nDay, name, firstEvent, finalEvent, freePeriods) {
     let endAdvised = `loading...`;
     let header =
         nDay == 0
-            ? `<h2>Events of Today</h2>`
+            ? `<h3 style="text-decoration: overline;text-align:center">Today</h3>`
             : nDay == 1
-            ? `<h3>Events of Tomorrow</h3>`
-            : `<h2>Events of ${nDay} days later</h2>`;
+            ? `<h3 style="text-decoration: overline;text-align:center">Tomorrow</h3>`
+            : `<h3 style="text-decoration: overline;text-align:center">${nDay} days later</h3>`;
     eventsContainer.innerHTML = `
     <h1 style="text-align:center;">${name}</h1>
         ${header}
@@ -292,7 +292,8 @@ function getLinkAndImageForEvent(title) {
     }
     // Return a default link and image source if no match is found
     return {
-        ...noBook,
+        link: "../home/error1.html",
+        imageSrc: "../img/bg.jpg",
         actualName:
             title.replace(regex, "$1").charAt(0).toUpperCase() +
             title.replace(regex, "$1").slice(1),
