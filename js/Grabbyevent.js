@@ -586,6 +586,14 @@ function startendfree(calid1, nDay) {
                 displayEvents(nDay, firstEvent, finalEvent);
                 displayFreePeriods(nDay, freePeriods);
             } else {
+                if(nDay===20){
+                    document.getElementById(`ybbat`).innerHTML = `
+                        <h2 style="text-align:center;font-family:'andy';font-style:italic;">YOU are on vacation??</h2>
+                        <h3 style="text-decoration: overline;text-align:center">&nbsp&nbsp&nbsp&nbsp&nbsp ${nDay} days empty &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</h3>
+                    `;
+                    return
+                }
+                document.getElementById(`ybbat`).innerHTML = `<h1 style="text-align:center;font-family:'andy';font-style:italic">Loading...</h1>`;
                 startendfree(calid1, nDay + 1); // so does this same function again
             }
         })
