@@ -593,7 +593,7 @@ function startendfree(calid1, nDay) {
                     `;
                     return
                 }
-                document.getElementById(`ybbat`).innerHTML = `<h1 style="text-align:center;font-family:'andy';font-style:italic">Loading...</h1>`;
+                document.getElementById(`events-container`).innerHTML = `<h1 style="text-align:center;font-family:'andy';font-style:italic">Loading...</h1>`;
                 startendfree(calid1, nDay + 1); // so does this same function again
             }
         })
