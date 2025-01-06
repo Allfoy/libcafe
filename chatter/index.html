@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Chatter</title>
+		<link rel="stylesheet" type="text/css" href="./index.css" />
+	</head>
+	<body>
+        <ul class="navbar">
+            <li><a href="../libcafe/home">Libcafe</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+		<div id="chat-container">
+			<ul id="messages"><div style="position:absolute;left: 43%;text-align: center;color: whitesmoke;font-size: xx-large;top: 40%;">Loading...</div></ul>
+			<form id="chat-form">
+				<input
+					id="message-input"
+					type="text"
+					placeholder="Type a message"
+                    autocomplete="one-time-code"
+					required />
+				<button id="message-send" type="submit">Send</button>
+			</form>
+		</div>
+		<!-- <script src="https://chatter-ioha.onrender.com/socket.io/socket.io.js"></script> -->
+		<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+		<script>
+			initiate();
+			function initiate() {
+                makeCookie();
+                const username = getCookie("username");
+                const socket = io("https://chatter-ioha.onrender.com");
+				// Display previous messages
+				socket.on("previousMessages", (messages) => {
+					messages.forEach((msg) => displayMessage(msg));
+				});
+
+                // remove loading cuh loaded
+                document.getElementById("messages").innerHTML=``;
+				// Display incoming messages
+				socket.on("chatMessage", (msg) => displayMessage(msg));
+				const chatForm = document.getElementById("chat-form");
+				chatForm.addEventListener("submit", (e) => {
+					e.preventDefault();
+					const message = document.getElementById("message-input").value;
+					socket.emit("chatMessage", { username, message });
+					chatForm.reset();
+				});
+			}
+			function displayMessage({ username, message }) {
+				const messagesList = document.getElementById("messages");
+				const li = document.createElement("li");
+				li.innerHTML = `<p class="name">${username}</p><p class="text">${message}</p></div>`;
+				messagesList.appendChild(li);
+                li.scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+                const names= document.querySelectorAll('.name');
+                names.forEach(name => {
+                    if(name.textContent == getCookie("username")){
+                        name.parentElement.setAttribute("id","you");
+                    };
+                });
+			}
+			function makeCookie() {
+				if (
+					!document.cookie
+						.split(";")
+						.some((item) => item.trim().startsWith("username" + "="))
+				) {
+					var username = prompt(
+						"What is your username",
+						""
+					);
+					const d = new Date();
+					d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000);
+					let expires = "expires=" + d.toUTCString();
+					document.cookie =
+						"username" + "=" + username + ";" + expires + ";path=/";
+					console.log("we have found a cookie: " + document.cookie);
+				} else {
+					console.log("we have found the cookie:" + getCookie("username"));
+				}
+			}
+			function getCookie(cname) {
+				let name = cname + "=";
+				let decodedCookie = decodeURIComponent(document.cookie);
+				let ca = decodedCookie.split(";");
+				for (let i = 0; i < ca.length; i++) {
+					let c = ca[i];
+					while (c.charAt(0) == " ") {
+						c = c.substring(1);
+					}
+					if (c.indexOf(name) == 0) {
+						return c.substring(name.length, c.length);
+					}
+				}
+				return "";
+			}
+		</script>
+	</body>
+</html>
