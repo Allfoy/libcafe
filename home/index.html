@@ -66,7 +66,7 @@
 				<img class="icony" id="icony" src="https://fakeimg.pl/200x100/cccccc/000000" width="200px">
 				<img class="freeIcony" id="freeIcony" src="https://fakeimg.pl/200x100/cccccc/ff0000">
 			</div>
-			<button class="classIcon" id="classIcon" onclick="confetti()">☕</button>
+			<button class="classIcon" id="classIcon">☕</button>
 			<div><a href="../schedule/">full schedule</a></div>
 			<div class="center"><h6>   </h6>  </div> <!--emptyline after switch-->
 			<a href="../friend/">friend</a>
@@ -94,7 +94,16 @@
 	<script src="../js/Grabbyevent.js"></script>
 	<script src="../js/main.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
-	<script> 
+	<script>
+        
+        document.getElementById('classIcon').addEventListener('click', () => {
+            socket.emit('classIconClicked');
+        });
+        socket.on('confetti', () => {
+            confetti();
+        });
+        
+        
 		const jsConfetti = new JSConfetti();
 		function confetti(){
 			const classIcon = document.getElementById('classIcon'); 
