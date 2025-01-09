@@ -116,9 +116,13 @@
             const timeNow = new Date();
             const timeDifference = timeNow.getTime() - timeStart.getTime();
             const timeDifferenceS = timeDifference.toString().replace(/(.{3}$)/gm,",$1")
-            document.getElementById('shiftyr').innerHTML = timeDifferenceS;
-            if(socket.connected){return}
-            setTimeout(getElapsedTime, 1000); //every second supposedly?
+            document.getElementById('shiftyr').innerHTML =  `Connecting.. \n ${timeDifferenceS}`;
+            if(socket.connected){
+                document.getElementById('shiftyr').innerHTML =  `Connected! \n ${timeDifferenceS}`;
+                socket.emit('serverStartTime',{'timeDay':timeNow.getTime(),'timeDifference':timeDifference});
+                return
+            }
+            setTimeout(getElapsedTime, 1000); //every second
         }
 		const jsConfetti = new JSConfetti();
 		function confetti(){

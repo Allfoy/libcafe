@@ -305,6 +305,7 @@ p.note {
     aspect-ratio: 1;
     font-size: 8pt;
     font-weight: 900;
+    white-space: pre-line;
     color: var(--color-2);
     background-color: var(--color-6);
     border-radius: 50%;
