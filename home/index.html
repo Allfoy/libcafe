@@ -101,13 +101,25 @@
 
         document.getElementById('classIcon').addEventListener('click', () => {
             // send signal to server
-            socket.emit('classIconClicked');
+            if (socket.connected) {
+                socket.emit('classIconClicked');
+            } else {
+                confetti()
+            }
         });
         socket.on('confetti', () => {
             confetti();
         });
-        
-        
+        timeStart = new Date()
+        getElapsedTime();
+        function getElapsedTime(){
+            const timeNow = new Date();
+            const timeDifference = timeNow.getTime() - timeStart.getTime();
+            const timeDifferenceS = timeDifference.toString().replace(/(.{3}$)/gm,",$1")
+            document.getElementById('shiftyr').innerHTML = timeDifferenceS;
+            if(socket.connected){return}
+            setTimeout(getElapsedTime, 1000); //every second supposedly?
+        }
 		const jsConfetti = new JSConfetti();
 		function confetti(){
 			const classIcon = document.getElementById('classIcon'); 

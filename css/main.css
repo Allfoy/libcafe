@@ -299,11 +299,12 @@ p.note {
 .shiftyr {
     display: block;
     position: fixed;
+    padding: 5px;
     right: 0%;
     bottom: 0.17vh;
     aspect-ratio: 1;
     font-size: 8pt;
-    font-family: "Gorgeous Grafix";
+    font-weight: 900;
     color: var(--color-2);
     background-color: var(--color-6);
     border-radius: 50%;
