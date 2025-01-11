@@ -119,7 +119,7 @@
             document.getElementById('shiftyr').innerHTML =  `Connecting.. \n ${timeDifferenceS}`;
             if(socket.connected){
                 document.getElementById('shiftyr').innerHTML =  `Connected! \n ${timeDifferenceS}`;
-                socket.emit('serverStartTime',{'timeDay':timeNow.getTime(),'timeDifference':timeDifference});
+                socket.emit('serverStartTime',{'timeDay':timeNow.toLocaleTimeString(),'timeDifference':timeDifference});
                 return
             }
             setTimeout(getElapsedTime, 1000); //every second
