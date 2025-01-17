@@ -113,13 +113,9 @@
         timeStart = new Date()
         getElapsedTime();
         function getElapsedTime(){
-            const timeNow = new Date();
-            const timeDifference = timeNow.getTime() - timeStart.getTime();
-            const timeDifferenceS = timeDifference.toString().replace(/(.{3}$)/gm,",$1")
-            document.getElementById('shiftyr').innerHTML =  `Connecting.. \n ${timeDifferenceS}`;
+            document.getElementById('shiftyr').innerHTML =  `Connecting..`;
             if(socket.connected){
-                document.getElementById('shiftyr').innerHTML =  `Connected! \n ${timeDifferenceS}`;
-                socket.emit('serverStartTime',{'timeDay':timeNow.toLocaleTimeString(),'timeDifference':timeDifference});
+                document.getElementById('shiftyr').innerHTML =  `Connected!`;
                 return
             }
             setTimeout(getElapsedTime, 1000); //every second
