@@ -1,173 +1,254 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js" style="scroll-behavior: smooth;">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-		<title>Home, a library for us.</title>
-		<meta name="google-site-verification" content="DQK0fsiUOZwhaUL_Bz30YEZyywlLwzqBWWaW1DbWnjs" />
-		<meta name="description" content="A little library currently only for school" />
-		<meta name="keywords" content="library, idk what this does rn" />
-		<meta name="author" content="Allfoy" />
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
-		<link href="https://fonts.cdnfonts.com/css/gorgeous-grafix" rel="stylesheet">
-		<link rel="shortcut icon" href="../img/favicon.ico">
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Noto+Emoji&display=swap" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="../css/main.css" />
-		<!-- <link rel="stylesheet" type="text/css" href="../css/book.css" />
-		<link rel="stylesheet" type="text/css" href="../css/book2.css" /> -->
-		<link rel="stylesheet" type="text/css" href="../css/merged.css" />
-		<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-		<script src="https://use.fontawesome.com/1ddffe7916.js"></script>
-		<link rel="stylesheet" type="text/css" href="../css/wheelMenuBack.css" /> <!--take this to modify it later -->
-		<link rel="stylesheet" type="text/css" href="../css/wheelMenu.css" />
-		<style>
-			::-webkit-scrollbar-button:single-button:vertical:decrement{
-				background: var(--color-4);
-				height: 24.275px;
-			}
-		</style>
-		<script src="https://rawgit.com/yandongCoder/circular-menu/master/dist/js/circular-menu.js"></script>
-	</head>
-	<body>
-		<div class="container">
-			<div class="navbar">
-				<a class="codrops-icon codrops-icon-prev" href="../map/"><span>To the map</span></a>
-				<span class="right"><a class="codrops-icon codrops-icon-drop" href="../comparer/"><span>to the comparer</span></a></span>
-			</div>
-			<div class="tabby" id="tabby" onclick="hidey('tabby')">
-				<div id="event-container"></div>
-				<div id="time-container"></div>
-				<div id="upcoming-event-container"></div>
-				<div id="countdown-container"></div>
-		</div>
-		<div class="ybbat" id="ybbat" onclick="hidey('ybbat')">
-			<div id="events-container"></div>
-			<div id="eventz-container"></div>
-		</div>
-		<header>
-			<div class="temp" id="rainfront"></div>
-			<div class="title"><h1>Libcafe <span>a library for us</span></h1></div>	
-			<ul class="radio-switch" >
-				<li class="radio-switch__item">
-					<input class="radio-switch__input ri5-sr-only" type="radio" name="radio-switch-name" id="radio-1" value="" onclick="radio1()" checked>
-					<label class="radio-switch__label" for="radio-1">Books</label>
-				</li>
-				<li class="radio-switch__item">
-					<input class="radio-switch__input ri5-sr-only" type="radio" name="radio-switch-name" id="radio-2" value="" onclick="radio2()">
-					<label class="radio-switch__label" for="radio-2">Files</label>
-					<div aria-hidden="true" class="radio-switch__marker"></div>
-				</li>
-			</ul>
-			<div class="dayimage" id="dayimage">
-				<div class="weekday" id="weekday">errorday</div>
-				<img class="icony" id="icony" src="https://fakeimg.pl/200x100/cccccc/000000" width="200px">
-				<img class="freeIcony" id="freeIcony" src="https://fakeimg.pl/200x100/cccccc/ff0000">
-			</div>
-			<button class="classIcon" id="classIcon">☕</button>
-			<div><a href="../schedule/">full schedule</a></div>
-			<div class="center"><h6>   </h6>  </div> <!--emptyline after switch-->
-			<a href="../friend/">friend</a>
-		</header>
-		<div class="component">
-			<div id="bookListContainer"><h1 style="text-align: center;">loading...</h1></div>
-			<div id="foodListContainer"><h1 style="text-align: center;">loading...</h1></div>
-			<button class="centeredbutton" onclick="switchcookie()">switch user</button>
-			<!--<div class="iframer" id="numworksy"><iframe src="https://www.numworks.com/simulator/embed/" width="368px" height="720px"></iframe><script src="https://www.numworks.com/simulator/embed.js"></script></div>
-			<button class="centeredbutton" onclick="toggleIframe('numworksy')">Toggle numworks</button> -->
-			<br>
-			<button class="shiftyr" id="shiftyr">shift-z</button>
-			<div>
-				<a class="weatherwidget-io" id="weather" href="https://forecast7.com/en/52d525d47/lelystad/" data-label_1="LELYSTAD" data-label_2="WEATHER" data-font="Trebuchet MS" data-icons="Climacons Animated" data-days="3" data-basecolor="rgb(129, 75, 70)" data-textcolor="#f9f1e3" data-highcolor="#f9f1e3" data-lowcolor="#f9f1e3" data-suncolor="#f9f1e3" data-mooncolor="#f9f1e3" data-cloudcolor="#f9f1e3" data-raincolor="#f9f1e3" data-snowcolor="#f9f1e3" >LELYSTAD WEATHER</a>
-				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');</script>
-			</div>
-			
-		</div>
-		<div id="menu1" class="menu1"></div>
-	</body>
-	<script src="../js/wheelMenu.js"></script>
-	<script src="../js/closelogging.js"></script>
-	<script src="../js/cssstuff.js"></script>
-	<script src="../js/schoolswitch.js"></script>
-	<script src="../js/Grabbyevent.js"></script>
-	<script src="../js/main.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
-	<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-    <script>
-        // yknow set the server
-        const socket = io("https://chatter-ioha.onrender.com");
 
-        document.getElementById('classIcon').addEventListener('click', () => {
-            // send signal to server
-            if (socket.connected) {
-                socket.emit('classIconClicked');
-            } else {
-                confetti()
-            }
-        });
-        socket.on('confetti', () => {
-            confetti();
-        });
-        timeStart = new Date()
-        getElapsedTime();
-        function getElapsedTime(){
-            document.getElementById('shiftyr').innerHTML =  `Connecting..`;
-            if(socket.connected){
-                document.getElementById('shiftyr').innerHTML =  `Connected!`;
-                return
-            }
-            setTimeout(getElapsedTime, 1000); //every second
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home, a library for us.</title>
+    <meta name="google-site-verification" content="DQK0fsiUOZwhaUL_Bz30YEZyywlLwzqBWWaW1DbWnjs" />
+    <meta name="description" content="A little library currently only for school" />
+    <meta name="keywords" content="library, links, libcafe, allfoy, idk what this does rn" />
+    <meta name="author" content="Allfoy" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <link href="https://fonts.cdnfonts.com/css/gorgeous-grafix" rel="stylesheet">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Noto+Emoji&display=swap"
+        rel="stylesheet">
+    <script src="https://use.fontawesome.com/1ddffe7916.js"></script>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(#111, #000);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            cursor: none;
         }
-		const jsConfetti = new JSConfetti();
-		function confetti(){
-			const classIcon = document.getElementById('classIcon'); 
-			var text = classIcon.textContent;
-			/*switch(day) day go make text = string*/
-			if(text != '☕'){
-				jsConfetti.addConfetti({emojis:[text]})//.then(() => jsConfetti.clearCanvas());
-			}else{
-				jsConfetti.addConfetti({confettiRadius: 5,confettiNumber: 150*2,})//.then(() => jsConfetti.clearCanvas());
-			}
-		}
-		
-	</script>
-	<script>
-			let firstTime = true;
-			// Callback function to execute when mutations/changes are observed
-			const callback = function(mutationsList, observer) {
-				for(let mutation of mutationsList) {
-					if (mutation.type === 'childList' || mutation.type === 'subtree') { //  condition: directchild OR child of nth child
-						if (firstTime) {
-							firstTime = false;
-							break;
-						}else {
-							setTimeout(confetti, 1000);
-							break;// not exactly sure why it's exiting the loop but possibly so it doesn't spam confetti?
-						}
-					}
-				}
-			};
 
-			// Create an observer instance linked to the callback function
-			const observer = new MutationObserver(callback);
+        a {
+            text-decoration: none;
+            cursor: none;
+        }
 
-			// Start observing the target node for configured mutations
-			observer.observe(document.getElementById('event-container'), { attributes: true, childList: true, subtree: true });
-	</script>
-	<script>
-		function loadContent(id, file) {
-			fetch(file)
-			.then(response => response.text())
-			.then(data => {
-				document.getElementById(id).innerHTML = data;
-			})
-			.catch(error => console.error('Error loading content:', error));
-		}
-		// Load the bookList and foodList content
-		loadContent('bookListContainer', './bookList.html');
-		loadContent('foodListContainer', './foodList.html');
-	</script>
-	<script>intialStart(0);</script>
+
+        #cursorPt {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 7px;
+            height: 7px;
+            pointer-events: none;
+            z-index: 9999;
+            background: #79f2e7;
+            border-radius: 50%;
+            visibility: hidden;
+        }
+
+        #cursor {
+            --color: #4ed5b4;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            pointer-events: none;
+            z-index: 9999;
+            visibility: hidden;
+
+            background-image: linear-gradient(to right, var(--color) 10px, transparent 0),
+                linear-gradient(to bottom, var(--color) 10px, transparent 0),
+                linear-gradient(to left, var(--color) 10px, transparent 0),
+                linear-gradient(to bottom, var(--color) 10px, transparent 0),
+                linear-gradient(to right, var(--color) 10px, transparent 0),
+                linear-gradient(to top, var(--color) 10px, transparent 0),
+                linear-gradient(to left, var(--color) 10px, transparent 0),
+                linear-gradient(to top, var(--color) 10px, transparent 0);
+
+            background-repeat: no-repeat;
+            background-position: top left, top left, top right, top right, bottom left,
+                bottom left, bottom right, bottom right;
+            background-size: 20px 2px, 2px 20px, 20px 2px, 2px 20px, 20px 2px, 2px 20px,
+                20px 2px, 2px 20px;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .target {
+            position: relative;
+            width: 150px;
+            height: 80px;
+            border: 2px solid var(--btn-color, #888);
+            color: var(--btn-color, #888);
+            transition: 300ms;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-transform: uppercase;
+            font-family: sans-serif;
+            user-select: none;
+            box-shadow: 0 0 10px var(--btn-color, #888);
+        }
+
+        .target:hover {
+            border-color: #fff;
+            color: #fff;
+            box-shadow: 0 0 20px var(--btn-color, #888);
+        }
+
+        #cursor, #cursorPt {
+  filter: drop-shadow(0 0 6px var(--color, #4ed5b4))
+          drop-shadow(0 0 10px var(--color, #4ed5b4));
+  transition: filter 0.3s ease;
+}
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="cursor"></div>
+        <div id="cursorPt"></div>
+        <div class="button-row">
+            <a class="target" style="--btn-color: #ffd24d;" href="menubatch://runbatchfile">Menu</a>
+            <a class="target" style="--btn-color: #ff3939;" href="https://www.youtube.com">youtube</a>
+            <a class="target" style="--btn-color: #884dff;" href="https://discord.com/channels/@me">Discord</a>
+            <a class="target" style="--btn-color: #2cfe5d;" href="https://web.whatsapp.com/">Whatsapp</a>
+            <a class="target" style="--btn-color: #0b00e6;" href="https://outlook.live.com/mail/0/">Outlook</a>
+        </div>
+
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+    const cursor = document.getElementById("cursor");
+    const cursorPt = document.getElementById("cursorPt");
+    const targets = document.querySelectorAll(".target");
+
+    const CURSOR_WIDTH = cursor.getBoundingClientRect().width;
+    const CURSOR_PT_WIDTH = cursorPt.getBoundingClientRect().width;
+
+    let isOverTarget = false;
+    let rotationTween;
+    let exitTween = null;
+    let enterTween = null;
+
+    // Initial rotation loop using GSAP
+    function startRotation() {
+        gsap.set(cursor, { rotation: 0 });
+        rotationTween = gsap.to(cursor, {
+            rotation: 180,
+            duration: 1.2,
+            repeat: -1,
+            ease: "linear",
+            transformOrigin: "center center"
+        });
+    }
+
+    function stopRotation() {
+        if (rotationTween) rotationTween.kill();
+    }
+
+    document.addEventListener("mousemove", (e) => {
+        gsap.to(cursor, { autoAlpha: 1 });
+        gsap.to(cursorPt, { autoAlpha: 1 });
+        if (!isOverTarget) {
+            gsap.to(cursor, {
+                x: e.clientX - CURSOR_WIDTH / 2,
+                y: e.clientY - CURSOR_WIDTH / 2,
+                duration: 0.1,
+                ease: "expo.out"
+            });
+        }
+        gsap.to(cursorPt, {
+            x: e.clientX - CURSOR_PT_WIDTH / 2,
+            y: e.clientY - CURSOR_PT_WIDTH / 2,
+            duration: 0.1,
+            ease: "expo.out"
+        });
+    });
+
+    targets.forEach(target => {
+        target.addEventListener("mouseenter", () => {
+            isOverTarget = true;
+            stopRotation();
+            cursorPt.style.backgroundColor = 'red';
+            cursor.style.setProperty('--color', 'red');
+            cursor.style.filter = 'drop-shadow(0 0 6px red) drop-shadow(0 0 10px red)';
+            cursorPt.style.filter = 'drop-shadow(0 0 6px red) drop-shadow(0 0 10px red)';
+            const rect = target.getBoundingClientRect();
+            
+            if (exitTween) exitTween.kill();
+            enterTween = gsap.to(cursor, {
+                width: rect.width,
+                height: rect.height,
+                borderColor: "red",
+                rotation: 360,
+                duration: 0.2,
+                ease: "easeOut"
+            });
+        });
+
+        target.addEventListener("mousemove", (e) => {
+            const rect = target.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const dx = e.clientX - cx;
+            const dy = e.clientY - cy;
+
+            gsap.to(cursor, {
+                x: window.scrollX + rect.left + dx * 0.09,
+                y: window.scrollY + rect.top + dy * 0.09,
+                scale: 1.1,
+                duration: 0.1,
+                ease: "power2.out"
+            });
+        });
+
+
+        target.addEventListener("mouseleave", () => {
+            isOverTarget = false;
+            cursorPt.style.backgroundColor = '#79f2e7';
+            cursor.style.setProperty('--color', '#4ed5b4');
+            cursor.style.filter = 'drop-shadow(0 0 6px var(--color)) drop-shadow(0 0 10px var(--color))';
+            cursorPt.style.filter = 'drop-shadow(0 0 6px #79f2e7) drop-shadow(0 0 10px #79f2e7)';
+            exitTween = gsap.to(cursor, {
+                width: 30,
+                height: 30,
+                duration: 0.5,
+                ease: "elastic.out(1, .9)"
+            });
+
+            startRotation();
+        });
+    });
+
+
+    startRotation();
+    document.addEventListener("keydown", (e) => {
+    const key = parseInt(e.key);
+    if (key >= 1 && key <= targets.length) {
+        const link = targets[key - 1].getAttribute("href");
+        if (link) {
+            window.location.href = link;
+        }
+    }
+});
+
+</script>
+
 </html>

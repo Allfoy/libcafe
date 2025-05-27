@@ -19,7 +19,7 @@ var menu = CMenu("#menu1").config({
             },
         },
         {
-            title: "Schooln't",
+            title: "Schoolnnnn't",
             icon: "fa fa-folder",
             menus: [
                 {
