@@ -23,7 +23,10 @@
             margin: 0;
             height: 100vh;
             overflow: hidden;
-            background: linear-gradient(#111, #000);
+            /* background: linear-gradient(#111, #000); */
+            background-image:url(../img/Suyaki\ Ebony\ Stretcher\ 2910\ x\ 1800\ mm\ Nakamoto\ Forestry\ texture.jpg);
+            background-repeat:round;
+            background-size: 50vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -77,6 +80,26 @@
                 20px 2px, 2px 20px;
         }
 
+        .clock{
+            position:absolute;
+            left: 0;
+            right: 0;
+            color: white;
+            display:block;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 30%;
+            height: fit-content;
+            margin: auto;
+            padding: 15vh 0;
+            font-size: 5.5em;
+        }
+
+        #time{
+            color: #79f2e7;
+            text-shadow: 0 0 30px #79f2e7;
+        }
         .button-row {
             display: flex;
             justify-content: center;
@@ -99,6 +122,7 @@
             text-transform: uppercase;
             font-family: sans-serif;
             user-select: none;
+            background-color:#0000003c;
             box-shadow: 0 0 10px var(--btn-color, #888);
         }
 
@@ -109,10 +133,10 @@
         }
 
         #cursor, #cursorPt {
-  filter: drop-shadow(0 0 6px var(--color, #4ed5b4))
-          drop-shadow(0 0 10px var(--color, #4ed5b4));
-  transition: filter 0.3s ease;
-}
+            filter: drop-shadow(0 0 6px var(--color, #4ed5b4))
+            drop-shadow(0 0 10px var(--color, #4ed5b4));
+            transition: filter 0.3s ease;
+        }
 
 
 
@@ -123,6 +147,9 @@
     <div class="container">
         <div id="cursor"></div>
         <div id="cursorPt"></div>
+        <div class="clock">
+            <div id="time">00:00:00</div>
+        </div>
         <div class="button-row">
             <a class="target" style="--btn-color: #ffd24d;" href="menubatch://runbatchfile">Menu</a>
             <a class="target" style="--btn-color: #ff3939;" href="https://www.youtube.com">youtube</a>
@@ -249,6 +276,12 @@
     }
 });
 
-</script>
+function updateTime(){
+    let now = new Date().toTimeString().substring(0,8);
+    document.getElementById('time').innerHTML=now;
+}
+
+setInterval(updateTime,500)
+    </script>
 
 </html>
