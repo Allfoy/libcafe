@@ -1,0 +1,58 @@
+{
+    "items": [
+        {
+        "type": "link",
+        "name": "Computer Programming",
+        "url": "../folders/CoPu",
+        "image": "https://picsum.photos/200"
+        },
+        {
+        "type": "link",
+        "name": "Logic & Sets",
+        "url": "../folders/LoSe",
+        "image": "https://picsum.photos/200"
+        },
+        {
+        "type": "link",
+        "name": "Files",
+        "url": "../local/University/",
+        "image": "https://picsum.photos/200"
+        },
+        { 
+        "type": "link", 
+        "name": "Schedule", 
+        "url": "https://rooster.vu.nl/schedule", 
+        "image": "https://picsum.photos/200"
+        },
+        {
+        "type": "link",
+        "name": "Canvas",
+        "url": "https://canvas.vu.nl/",
+        "image": "https://picsum.photos/200"
+        },
+        {
+        "type": "link", 
+        "name": "Menu",
+        "url": "menubatch://runbatchfile", 
+        "image": "https://picsum.photos/200" 
+        },
+        {
+        "type": "link", 
+        "name": "Youtube",
+        "url": "https://youtube.com", 
+        "image": "https://picsum.photos/200"
+        },
+        {
+        "type": "link", 
+        "name": "Discord",
+        "url": "https://discord.com/channels/@me", 
+        "image": "https://picsum.photos/200"
+        },
+        {
+        "type": "link", 
+        "name": "Whatsapp",
+        "url": "https://web.whatsapp.com/", 
+        "image": "https://picsum.photos/200"
+        }
+    ]
+}
