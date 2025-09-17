@@ -1,58 +1,88 @@
 {
     "items": [
         {
-        "type": "link",
+        "type": "file",
         "name": "Computer Programming",
-        "url": "../folders/CoPu",
-        "image": "https://picsum.photos/200"
+        "icon": "",
+        "url": "folders/CoPu",
+        "image": "picsum.photos/200"
         },
         {
-        "type": "link",
+        "type": "file",
         "name": "Logic & Sets",
-        "url": "../folders/LoSe",
-        "image": "https://picsum.photos/200"
+        "icon": "",
+        "url": "folders/LoSe",
+        "image": "picsum.photos/200"
         },
         {
-        "type": "link",
+        "type": "file",
         "name": "Files",
-        "url": "../local/University/",
-        "image": "https://picsum.photos/200"
+        "icon": ".com",
+        "url": "",
+        "image": "picsum.photos/200"
         },
         { 
         "type": "link", 
         "name": "Schedule", 
-        "url": "https://rooster.vu.nl/schedule", 
-        "image": "https://picsum.photos/200"
+        "icon": "https://favicone.com/rooster.vu.nl?s=256",
+        "url": "rooster.vu.nl/schedule", 
+        "image": "picsum.photos/200"
         },
         {
         "type": "link",
         "name": "Canvas",
-        "url": "https://canvas.vu.nl/",
-        "image": "https://picsum.photos/200"
+        "icon": "https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico",
+        "url": "canvas.vu.nl/",
+        "image": "picsum.photos/200"
         },
         {
-        "type": "link", 
+        "type": "script", 
         "name": "Menu",
+        "icon": "",
         "url": "menubatch://runbatchfile", 
-        "image": "https://picsum.photos/200" 
+        "image": "picsum.photos/200" 
         },
         {
         "type": "link", 
         "name": "Youtube",
-        "url": "https://youtube.com", 
-        "image": "https://picsum.photos/200"
+        "icon": "https://favicone.com/youtube.com?s=256",
+        "url": "youtube.com", 
+        "image": "picsum.photos/200"
         },
         {
         "type": "link", 
         "name": "Discord",
-        "url": "https://discord.com/channels/@me", 
-        "image": "https://picsum.photos/200"
+        "icon": "https://favicone.com/discord.com?s=256",
+        "url": "discord.com/channels/@me", 
+        "image": "picsum.photos/200"
         },
         {
         "type": "link", 
         "name": "Whatsapp",
-        "url": "https://web.whatsapp.com/", 
-        "image": "https://picsum.photos/200"
+        "icon": "https://favicone.com/whatsapp.com?s=256",
+        "url": "web.whatsapp.com/", 
+        "image": "picsum.photos/200"
+        },
+        {
+        "type": "link",
+        "name": "More links",
+        "icon": "https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico",
+        "url": "canvas.vu.nl/",
+        "image": "picsum.photos/200"
+        },
+        {
+        "type": "link",
+        "name": "to make it",
+        "icon": "https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico",
+        "url": "canvas.vu.nl/",
+        "image": "picsum.photos/200"
+        },
+        {
+        "type": "link",
+        "name": "look better",
+        "icon": "https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico",
+        "url": "canvas.vu.nl/",
+        "image": "picsum.photos/200"
         }
     ]
 }

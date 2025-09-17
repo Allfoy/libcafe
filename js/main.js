@@ -6,7 +6,25 @@ async function GenerateGridElements(){
     const gridItem = gridInfo.items;
 
     for (i = 0; i <= gridInfo.items.length-1;i++){
-        document.getElementById("grid").innerHTML += `<a href="${gridItem[i].url}" style="background-image:url('https://picsum.photos/id/${Math.floor(Math.random()*1085)}/900/402/');background-size: contain;">${gridItem[i].name}</a>`;
+        switch (gridItem[i].type) {
+            case "link":
+                prefix = 'https://';
+                favicon = gridItem[i].icon;
+            break;
+            case "file":
+                prefix = '../';
+                favicon = '../../favicon/favicon.ico';
+            break;
+            case "script":
+                prefix = '';
+                favicon = '../../favicon/favicon-16x16.png';
+            break;
+            default:
+                prefix = '';
+                favicon = '../../favicon/favicon.ico';
+            break;
+        }
+        document.getElementById("grid").innerHTML += `<a href="${prefix}${gridItem[i].url}" style="background-image:url('${favicon}');background-size: cover;">${gridItem[i].name}</a>`;
     }
 }
 
