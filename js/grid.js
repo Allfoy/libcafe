@@ -5,6 +5,9 @@ async function GenerateGridElements(){
     const gridInfo = await response.json();
     const gridItem = gridInfo.items;
 
+    let prefix = '';
+    let favicon = '../favicon/favicon.ico';
+    let id = 'gridItem';
     for (i = 0; i <= gridInfo.items.length-1;i++){
         switch (gridItem[i].type) {
             case "link":
@@ -13,18 +16,20 @@ async function GenerateGridElements(){
             break;
             case "file":
                 prefix = '../';
-                favicon = '../../favicon/favicon.ico';
+                favicon = '../favicon/favicon.ico';
             break;
             case "script":
                 prefix = '';
-                favicon = '../../favicon/favicon-16x16.png';
+                favicon = '../favicon/favicon-16x16.png';
+            break;
+            case "JS":
+                id = gridItem[i].id;
+                favicon = '../img/Javascript_Logo.png';
             break;
             default:
-                prefix = '';
-                favicon = '../../favicon/favicon.ico';
             break;
         }
-        document.getElementById("grid").innerHTML += `<a href="${prefix}${gridItem[i].url}" style="background-image:url('${favicon}');background-size: cover;">${gridItem[i].name}</a>`;
+        document.getElementById("grid").innerHTML += `<a href="${prefix}${gridItem[i].url}" id="${id}" style="background-image:url('${favicon}');background-size: contain;">${gridItem[i].name}</a>`;
     }
 }
 

@@ -1,88 +1,69 @@
 {
     "items": [
-        {
-        "type": "file",
-        "name": "Computer Programming",
-        "icon": "",
-        "url": "folders/CoPu",
-        "image": "picsum.photos/200"
-        },
-        {
-        "type": "file",
-        "name": "Logic & Sets",
-        "icon": "",
-        "url": "folders/LoSe",
-        "image": "picsum.photos/200"
-        },
-        {
-        "type": "file",
-        "name": "Files",
-        "icon": ".com",
-        "url": "",
-        "image": "picsum.photos/200"
-        },
         { 
         "type": "link", 
         "name": "Schedule", 
         "icon": "https://favicone.com/rooster.vu.nl?s=256",
-        "url": "rooster.vu.nl/schedule", 
-        "image": "picsum.photos/200"
+        "url": "rooster.vu.nl/schedule"
         },
         {
         "type": "link",
         "name": "Canvas",
         "icon": "https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico",
-        "url": "canvas.vu.nl/",
-        "image": "picsum.photos/200"
+        "url": "canvas.vu.nl/"
         },
         {
         "type": "script", 
         "name": "Menu",
-        "icon": "",
-        "url": "menubatch://runbatchfile", 
-        "image": "picsum.photos/200" 
+        "url": "menubatch://runbatchfile"
         },
         {
         "type": "link", 
         "name": "Youtube",
         "icon": "https://favicone.com/youtube.com?s=256",
-        "url": "youtube.com", 
-        "image": "picsum.photos/200"
+        "url": "youtube.com"
         },
         {
         "type": "link", 
         "name": "Discord",
         "icon": "https://favicone.com/discord.com?s=256",
-        "url": "discord.com/channels/@me", 
-        "image": "picsum.photos/200"
+        "url": "discord.com/channels/@me"
         },
         {
         "type": "link", 
         "name": "Whatsapp",
         "icon": "https://favicone.com/whatsapp.com?s=256",
-        "url": "web.whatsapp.com/", 
-        "image": "picsum.photos/200"
+        "url": "web.whatsapp.com/"
         },
         {
-        "type": "link",
+        "type": "JS",
         "name": "More links",
-        "icon": "https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico",
-        "url": "canvas.vu.nl/",
-        "image": "picsum.photos/200"
+        "url": "canvas.vu.nl/"
         },
         {
-        "type": "link",
+        "type": "JS",
         "name": "to make it",
-        "icon": "https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico",
-        "url": "canvas.vu.nl/",
-        "image": "picsum.photos/200"
+        "url": "canvas.vu.nl/"
         },
         {
-        "type": "link",
+        "type": "JS",
         "name": "look better",
-        "icon": "https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico",
-        "url": "canvas.vu.nl/",
-        "image": "picsum.photos/200"
+        "url": "canvas.vu.nl/"
+        },
+        {
+        "type": "JS",
+        "name": "More links",
+        "url": "canvas.vu.nl/"
+        },
+        {
+        "type": "JS",
+        "name": "to make it",
+        "url": "canvas.vu.nl/"
+        },
+        {
+        "type": "JS",
+        "name": "look better",
+        "url": "canvas.vu.nl/"
         }
     ]
 }
