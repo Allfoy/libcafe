@@ -1,0 +1,652 @@
+/*
+mobile first:
+*/
+
+@font-face {
+	font-family: "Star Wars";
+	font-style: normal;
+	font-weight: 400;
+	src: url("https://fonts.cdnfonts.com/s/88396/Star Wars.woff") format("woff");
+}
+
+
+/* modal library ---> https://micromodal.vercel.app/ */
+/* Naming methodology = BEM ---> https://getbem.com/ */
+
+.modal {
+    display: none;
+}
+
+.modal.is-open {
+    display: block;
+}
+
+.modal__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal__container {
+    background-color: #fff;
+    padding: 30px;
+    max-width: 500px;
+    max-height: 100vh;
+    border-radius: 4px;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal__title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.25;
+    color: rgb(30, 40, 60);
+}
+
+.modal__close {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    font-size: 2rem;
+}
+
+.modal__content {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+    color: rgba(0,0,0,.8);
+}
+
+/* Modal form overrides */
+
+.modal__content .formAdd,
+.modal__content .formUp {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    height: auto;
+    padding: 0;
+    text-align: left;
+    background: none;
+}
+
+.modal__content label {
+    display: block;
+    margin-bottom: 5px;
+    color: rgb(50, 50, 50);
+    font-weight: 600;
+}
+
+.modal__content input[type="text"],
+.modal__content input[type="url"],
+.modal__content input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.modal__content input[type="submit"] {
+    width: auto;
+    padding: 10px 20px;
+    margin-top: 10px;
+    align-self: center;
+}
+
+.modal__content .radioGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.modal__content .radioGroup input {
+    width: auto;
+    margin-right: 8px;
+}
+
+.modal__content .radioGroup label {
+    display: inline;
+    font-weight: normal;
+    margin: 0;
+    color: rgb(50, 50, 50);
+    text-shadow: none;  
+}
+
+.modal__content br {
+    display: none;
+}
+
+
+
+
+body {
+    display: grid;
+    margin: 0px;
+	background-color: rgb(40, 60, 80);
+    color: whitesmoke; /*will be inherited by most*/
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+abbr {
+    text-decoration: none;
+}
+
+h1, h2 {
+    width: fit-content;
+	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    text-align: center;
+    margin: auto;
+}
+
+tbody dl {
+    padding: 1vw;
+}
+
+dt {
+    display: inline;
+    font-weight: bold;
+    color: #fff;
+    margin-top: 0.5em;
+    font-size: clamp(14px, 3vw, 20px);
+}
+
+dd::before {
+    content: "-- ";
+}
+
+dd {
+    display: inline;
+    margin-left: 0.5em;
+    color: #aaa;
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+dd::after {
+    content: "";
+    display: block;
+}
+
+header h1 {
+    width: initial;
+    font-size: 27px;
+    text-align: left;
+    margin: initial;
+}
+
+header img {
+    height: 27px;
+    aspect-ratio: 1;
+    margin: 0% .5%;
+    padding: .5%;
+    float: inline-start;
+}
+
+.navigation {
+    width: fit-content;
+}
+
+nav {
+    font-size: 75%;
+}
+
+nav > ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* list-style: circle outside url("https://www.iconsdb.com/icons/download/white/link-16.gif"); doesn't work during http testing, seems to need https, therefore encoded in base64*/
+    list-style: circle outside url("data:image/gif;base64,R0lGODlhEAAQAIAAAPz+/P7//yH5BAEAAAEALAAAAAAQABAAAAIgjI+pCQ2L3pGLGgtnVjg423UeV5GTY26aurbpuH3sHBQAOw==")
+}
+
+nav > ul > li {
+    margin: 10px;
+}
+
+nav ol {
+    display: flex;
+    flex-direction: column;
+    list-style-type: upper-roman;
+    list-style-position: inside;
+    list-style-image: none;
+    text-indent: -5px;
+}
+
+ol > li {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-right: 3px;
+    margin-left: 3px;
+}
+
+nav a {
+    margin: 4px;
+    text-decoration: underline;
+}
+
+nav a:link {
+	color: hsl(339, 100%, 75%);
+}
+nav a:visited {
+	color: hsl(339, 80%, 50%);
+}
+nav a:hover {
+	color: hsl(339, 100%, 92%);
+}
+nav a:active {
+	color: red;
+}
+
+nav a:focus {
+	border: 1px solid blue;
+}
+
+.year-filter-btn {
+    border: 1px solid gray;
+}
+
+
+caption {
+    font-size: clamp(16px, 4vw, 24px);
+}
+figcaption {
+	font-style: italic;
+	color: white;
+}
+
+figure {
+    margin: 2vw;
+}
+
+table figure img {
+	height: 15vw;
+	aspect-ratio: 2/3;
+    vertical-align: baseline;
+}
+
+table {
+    width: 100vw;
+	caption-side: top;
+	border-top: 2px groove black;
+	border-spacing: 0px;
+    font-size: clamp(12px, 1vw, 16px);
+}
+
+table pre {
+    margin: .25vw;
+}
+
+tr, td {
+    width: fit-content;
+    border: .5px solid rgb(0, 0, 0);
+}
+
+thead th {
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    font-size: clamp(14px, 1.5vw, 18px);
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+tbody img {
+	border-width: 2px;
+	border-color: rgb(234, 240, 46);
+	border-style: solid;
+}
+
+tbody figure {
+    transition: transform 0.3s ease 0.1s;
+}
+
+tbody figure:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease 0.1s;
+}
+
+tbody td:first-child {
+	background: url("https://cdn.architextures.org/textures/23/5/floral-motif-wallpaper-none-p71ruw-1200.jpg") 40% / 10em #8a0a0a repeat scroll border-box;
+    height: 15vw;
+	aspect-ratio: 2/3;
+}
+tbody td:nth-child(2) {
+    font-size: clamp(16px, 3vw, 22px);
+}
+
+tbody td:nth-child(2), tbody td:nth-child(3) {
+    text-align: center;
+}
+
+tbody td:nth-child(3) {
+    background-image: url("https://www.transparenttextures.com/patterns/gplay.png");
+    background-color: #2c3e50;
+    color: white;
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    font-size: 10px;
+}
+
+tbody td:nth-child(4) {
+    background-image: url("https://www.transparenttextures.com/patterns/diagmonds.png");
+    background-color: #333;
+    color: white;
+} 
+
+tbody td:nth-child(5) {
+	background-image: url("https://mcdn.wallpapersafari.com/medium/96/60/ZBf0Im.jpg");
+	background-color: #000000;
+	background-repeat: repeat;
+	color: rgb(255, 232, 31);
+	text-align: center;
+	padding: 0px 2%;
+	font-family: "Star Wars", sans-serif;
+}
+
+tbody tr:nth-child(even) td:nth-child(5) {
+    transform: scaleY(-1);
+}
+
+tbody tr:nth-child(even) td:nth-child(5) p {
+    transform: scaleY(-1);
+}
+
+tfoot tr {
+    background: url(https://cdn.architextures.org/textures/25/1/starry-sky-petrol-sandberg-wallpaper-4fkn42.jpg) 40% / 10em #221395 round fixed border-box;
+    color:gold;
+    text-shadow: 0 0 4px #ff0000;
+}
+
+.formAdd,.formUp {
+    width: 100%;
+    justify-content: stretch;
+    text-transform: capitalize;
+    font-size: small;
+}
+.formAdd, .formUp {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+::placeholder {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+input {
+    width: 80%;
+    margin: auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.formUp label {
+    justify-self: center;
+    align-self: center;
+}
+.formUp input {
+    justify-self: center;
+    align-self: center;
+}
+.formUp input[type=submit] {
+    grid-row: 2 / span 1;
+}
+
+input[type=submit] {
+    background-color: gold;
+    border-color: yellow;
+    text-transform: capitalize;
+}
+
+.radioGroup {
+    display: grid;
+    grid-template-rows: auto auto auto auto auto;
+    grid-template-columns: auto auto;
+    gap: 5px;
+    font-size: smaller;
+}
+
+.radioGroup label {
+    grid-column: 2 / span 1;
+    width: fit-content;
+    justify-self: left;
+    color: white;
+    text-shadow: 0 0 6px black;
+}
+.radioGroup input {
+    grid-column: 1 / span 1;
+    width: fit-content;
+    justify-self: right;
+}
+
+.ads img {
+    width: 99vw;
+    aspect-ratio: 2;
+    border: .5vw solid white;
+}
+
+.ad-image {
+    width: 100%;
+    height: 300px;
+    background-image: url('https://antavo.com/wp-content/uploads/2022/08/coca-cola-best-ads.png');
+    background-size: cover;
+}
+
+@media (min-width: 576px) {
+    .ad-image {
+        background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/95ac0133361529.56a8e1071c98a.jpg');
+    }
+}
+
+footer {
+    font: 8px Arial, sans-serif;
+}
+footer span {
+    font-variant: small-caps;
+}
+
+@media (min-width: 576px) {
+    body {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-template-rows: auto auto auto;
+
+    }
+    section.header {
+        grid-column: 1 / span 3;
+        grid-row: 1 / span 1;
+    }
+    section.navigation {
+        grid-column: 1 / span 1;
+        grid-row: 2 / span 1;
+        width: 10vw;
+        margin-top: 100%;
+    }
+    section.mainpage {
+        grid-column: 2 / span 1;
+        grid-row: 2 / span 1;
+    }
+    section.ads {
+        grid-column: 3 / span 1;
+        grid-row: 2 / span 1;
+        border-width: .15vw;
+        margin: 100% .35vw;
+    }
+    section.footer {
+        grid-column: 1 / span 3;
+        grid-row: 3 / span 1;
+        width: 100%;
+        text-align: center;
+    }
+    header h1 {
+        display: inline;
+        font-size: 27px;
+        padding: .5%;
+        vertical-align: middle;
+    }
+    section.navigation h2 {
+        font-size: clamp(14px, 2vw, 20px);
+    }
+    nav {
+        font-size: clamp(10px, 0.8vw, 14px);
+        padding: 0;
+        margin: 0 1vw;
+    }
+    nav ul {
+        padding: 9px;
+    }
+    nav ul li {
+        margin: 0;
+    }
+    nav ol {
+        padding: 4px;
+    }
+    
+    table {
+        width: 70vw;
+        margin: 0;
+    }
+    dt {
+        font-size: inherit;
+    }
+    dd {
+        display: inline;
+    }
+    tr, td {
+    border: 2px solid rgb(0, 0, 0);
+    }
+    tbody td:nth-child(2) {
+        font-size: inherit;
+    }
+    tbody td:nth-child(5) {
+        padding: .5vw 8%;
+    }
+    tbody td:nth-child(3) {
+    writing-mode:horizontal-tb;
+    text-orientation: upright;
+    font-size: clamp(12px, 1vw, 16px);
+    }
+    tfoot br {
+        display: none;
+    }
+    .formAdd, .formUp {
+        width: 100%;
+        height: 3.49vw;
+        font-size: clamp(10px, 0.8vw, 14px);
+        padding: .5vw;
+        text-align: center;
+    }
+    .formUp {
+        height: 9vw;
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto auto;
+        grid-auto-flow: column;
+        gap: 0;
+    }
+    input {
+        width: 10vw;
+        height: .8vw;
+        margin: 0;
+        padding: .15vw;
+    }
+    input[type=submit] {
+        width: 5vw;
+        height: 2.4vw;
+        font-size: clamp(12px, 1vw, 16px);
+    }
+    ::placeholder {
+       font-size: clamp(12px, 1vw, 16px);
+    }
+    section.ads img {
+        width: 17vw;
+        aspect-ratio: 525/751;
+        top: 30%;
+        position: sticky;
+    }
+    section.ads h2 {
+        font-size: clamp(16px, 2.2vw, 22px);
+        margin: .25vw auto;
+    }
+} 
+
+
+/*firefox doesn't support widows and orphans*/
+@media print {
+    * {
+        orphans: 5;
+        widows: 1;
+    }
+    nav {
+        display: none;
+    }
+    table {
+        page-break-before: always;
+        break-before: page; /*MDN aliasing*/
+        page-break-after:auto;
+        break-after:auto;
+    }
+     tfoot {
+        display: none;
+    }
+    tr {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    tbody td:nth-child(5) {
+        color: black;
+        text-align: justify;
+        font-family: initial;
+    }
+    tfoot tr {
+        color:black;
+        text-shadow: initial;
+    }
+    
+    input[type=submit] {
+        border: 1px solid black;
+    }
+    
+    .ads {
+        display: none;
+    }
+
+    footer {
+        display: none;
+    }
+}
+
+/* the mandatory absolute font-sizes obviously cause issues on smaller smaller devices so that's why the below this exists */
+@media (max-width: 210px) {
+    nav {
+        font-size: clamp(12px, 4.5vw, 18px);
+    }
+    nav ul {
+        padding: 0;
+    }
+    header h1, h2 {
+        font-size: clamp(14px, 7vw, 24px);
+    }
+    footer {
+        font-size: clamp(8px, 1vw, 12px);
+    }
+}
