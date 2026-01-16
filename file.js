@@ -15,7 +15,8 @@
 
         // adding media
         const formAdd = document.getElementById("Add");
-        formAdd.addEventListener("submit", async function (event) {
+        document.getElementById("submitAdd").addEventListener("click", async function (event) {
+            console.info("HEYYYY")
             event.preventDefault();
             if (!formAdd.reportValidity()) {
                 console.info("Not a valid ADD form");
@@ -48,7 +49,7 @@
 
         // update a media
         const formUp = document.getElementById("Up");
-        formUp.addEventListener("submit", async function (event) {
+        document.getElementById("submitUp").addEventListener("click", async function (event) {
             event.preventDefault();
             // code to find the selected radio cause it's silly for some reason
             // could technically use the ... operator (convert nodeList to array?) and .some() to make it shorter but there's no need for that
